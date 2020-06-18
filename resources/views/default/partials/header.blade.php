@@ -9,10 +9,14 @@
     .bds_main_menu{
         box-shadow: 0 4px 4px 0 rgba(0,0,0,0.25);
     }
-    /* .bds-button{
-        line-height: 21px !important;
-        height: 42px;
-    } */
+    .bds-button span{
+        background: #3fa148;
+        padding: 4px 8px;
+        box-shadow: 0 4px 4px rgba(0,0,0,0.25);
+        border-radius: 5px;
+        color: #fff;
+        font-weight: 500;
+    }
 </style>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light bds_main_menu">
@@ -86,7 +90,7 @@
             </div>
         </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
+    <form class="my-2 my-lg-0">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item active">
               <a class="nav-link" href="#">Đăng nhập <span class="sr-only">(current)</span></a>
@@ -94,8 +98,13 @@
             <li class="nav-item">
               <a class="nav-link" href="#">Đăng ký</a>
             </li>
-          </ul>
-      <button class="btn btn-success my-2 my-sm-0" type="submit">Tạo tin rao vặt</button>
+            <li class="nav-item">
+                <a class="nav-link bds-button" href="#">
+                    <span> Tạo tin rao vặt </span>    
+                </a>
+            </li>
+        </ul>
+      {{-- <button class="btn btn-success my-2 my-sm-0" type="submit">Tạo tin rao vặt</button> --}}
     </form>
   </div>
 </nav>
