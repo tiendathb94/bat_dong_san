@@ -14,14 +14,14 @@
 <body>
 
 <div class="grid">
-@include('partials.header')
+@include('default.partials.header')
 
 <!-- CONTENT -->
     <div class="container">
         @yield('content')
     </div>
 
-    @include('partials.footer')
+    @include('default.partials.footer')
 </div>
 
 <script src="{{ asset('js/app.js') . '?m=' . filemtime('js/app.js') }}"></script>
