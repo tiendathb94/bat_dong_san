@@ -1,0 +1,28 @@
+version: '3'
+services:
+
+  #PHP Service
+  laravel-batdongsan:
+    build:
+      context: .
+      dockerfile: apache/Dockerfile
+    container_name: laravel-batdongsan
+    ports:
+      - 80:80
+    hostname: laravel-batdongsan
+    tty: true
+    links:
+      - batdongsan-mysql
+    working_dir: /home/quyen/workspace/project/hoikientruc/batdongsan
+    volumes:
+      - /home/quyen/workspace/project/hoikientruc/batdongsan:/home/quyen/workspace/project/hoikientruc/batdongsan
+
+  #MYSQL
+  batdongsan-mysql:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    volumes:
+      - /home/quyen/workspace/project/hoikientruc/mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
