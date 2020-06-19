@@ -1,5 +1,196 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
 
+* {
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+}
+
+:root {
+  --primary-color: #139ff0;
+  --footer-background-color: #024073;
+  --white-color: #ffffff;
+}
+
+footer {
+  background-color: var(--footer-background-color);
+  padding: 20px 0 25px;
+  color: var(--white-color);
+}
+
+footer .card {
+  background-color: var(--footer-background-color) !important;
+}
+
+footer .card-header {
+  background-color: var(--footer-background-color) !important;
+}
+
+.footer__logo {
+  margin-bottom: 20px;
+}
+
+.footer__logo a {
+  display: block;
+}
+
+.footer__company {
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 20px;
+  margin-bottom: 12px;
+}
+
+.footer__company-name {
+  margin: 0;
+}
+
+.footer__add {
+  line-height: 20px;
+  margin-bottom: 14px;
+  padding-left: 25px;
+  font-size: 1.4rem;
+  position: relative;
+}
+
+.footer__add span {
+  width: 25px;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.footer__add span img {
+  width: 16px;
+  height: 16px;
+}
+
+.footer__social {
+  display: flex;
+  align-items: center;
+}
+
+.footer__social .footer__social-logo img {
+  width: 109px;
+  height: 42px;
+  margin-right: 40px;
+  margin-left: 0;
+}
+
+.footer__social .footer__social-list {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  list-style: none;
+}
+
+.footer__social .footer__social-item a {
+  display: block;
+}
+
+.footer__social .footer__social-item img {
+  width: 16px;
+  height: 20px;
+  margin: 0 10px;
+}
+
+.footer__header {
+  font-size: 1.5rem;
+  line-height: 20px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.footer__contentLeft .footer__content-listLeft {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer__contentLeft .footer__content-itemLeft {
+  line-height: 20px;
+}
+
+.footer__contentLeft .footer__content-itemLeft a {
+  font-size: 1.4rem;
+  color: #fff;
+}
+
+.footer__contentLeft .footer__content-itemLeft a:hover {
+  text-decoration: none;
+}
+
+.footer__contentRight-title {
+  font-size: 1.4rem;
+  margin-bottom: 5px;
+}
+
+.footer__title {
+  margin: 18px 0 9px;
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 19px;
+}
+
+.footer__app {
+  display: flex;
+}
+
+.footer__app a {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.footer__contentRight .footer__content-listRight {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer__contentRight .footer__content-itemRight {
+  margin-bottom: 5px;
+  line-height: 20px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.footer__contentRight .footer__content-itemRight img {
+  margin-right: 8px;
+}
+
+#accordion {
+  width: 100%;
+}
+
+.footer__contentRight-accordion {
+  font-size: 1.6rem !important;
+}
+
+.footer_branch {
+  margin-bottom: 10px;
+}
+
+.footer_branch .footer_branch-name {
+  font-weight: bold;
+  font-size: 1.3rem;
+  line-height: 20px;
+  margin-bottom: 8px;
+}
+
+.footer_branch .branch-add {
+  font-size: 1.4rem;
+}
+
+.footer_content_info {
+  font-size: 1.4rem;
+}
+
 /*!
  * Bootstrap v4.5.0 (https://getbootstrap.com/)
  * Copyright 2011-2020 The Bootstrap Authors

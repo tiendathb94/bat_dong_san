@@ -12,11 +12,10 @@
 </head>
 
 <body>
-
 <div class="grid">
-@include('default.partials.header')
+    @include('default.partials.header')
 
-<!-- CONTENT -->
+    <!-- CONTENT -->
     <div class="container">
         @yield('content')
     </div>
