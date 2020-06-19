@@ -23,9 +23,13 @@ class CreateNewsTable extends Migration
             $table->string('thumbnail', 255);
             $table->unsignedBigInteger('user_id');
             $table->tinyInteger('status');
+            $table->unsignedBigInteger('project_id')->nullable();
             $table->timestamps();
+
+            // Index & constraint
             $table->foreign('user_id')->on('users')->references('id')->onDelete('cascade');
             $table->foreign('category_id')->on('categories')->references('id')->onDelete('cascade');
+            $table->foreign('project_id')->on('projects')->references('id')->onDelete('cascade');
             $table->index('slug');
             $table->index('status');
             $table->index('user_id');
