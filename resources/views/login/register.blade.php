@@ -22,8 +22,55 @@
         .content{
             margin-top: 50px
         }
-        form{
-            font-size: 18px
+        .form-group{
+            margin-bottom: 16px;
+        }
+        label{
+            margin-bottom: 4px;
+        }
+        .label{
+            font-weight: 600
+
+        }
+        form, input, button{
+            font-size: 16px !important
+        }
+        .form-check{
+            display: inline-block ;
+        }
+        .form-check label{
+           margin-left: 4px;
+           margin-right: 20px
+        }
+        .form-check input{
+            vertical-align: bottom
+        }
+        .form-check-input{
+            margin-top: 5px !important
+        }
+        
+        h2{
+            font-weight: 800;
+        }
+        @media only screen and (max-width: 414px){
+            button{
+                width: 100%;
+                margin-top: 16px
+            }
+            
+            .bds-img-bn{
+                display: none;
+            }
+            .main{
+                margin-top: 25px;
+            }
+            .navbar-toggler{
+                display: none;
+            }
+        }
+        
+        .term{
+            font-size: 14px
         }
     </style>
 </head>
@@ -32,7 +79,7 @@
 
 <div class="grid">
     <nav class="navbar navbar-expand-lg navbar-light bg-light top">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="{{ route('home') }}">
             <img src="https://file4.batdongsan.com.vn/images/newhome/logobds04.svg" alt="">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,86 +104,81 @@
 
         <div class="row main">
             <div class="col-sm-7">
-                <img class="img-fluid" src="http://static.tapchitaichinh.vn/800x450/images/upload/tranhuyentrang/04242020/13_ylgk.jpg" alt="">
+                <img class="img-fluid bds-img-bn" src="http://static.tapchitaichinh.vn/800x450/images/upload/tranhuyentrang/04242020/13_ylgk.jpg" alt="">
                 @if (count($errors) > 0)
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                @if ($message = Session::get('success'))
+                    <div class="alert alert-success">
+                        <p>{{ $message }}</p>
+                    </div>
+                @endif
             </div>
             <div class="col-sm-5">
                 <form action="{{ route('registerStore') }}" method="POST">
+                    <h2 class="text-center">Đăng ký tài khoản</h2>
                     @csrf
-                    @if ($message = Session::get('success'))
-                        <div class="alert alert-success">
-                            <p>{{ $message }}</p>
-                        </div>
-                
-                    @endif
+
                     <div class="form-group">
-                        <label >Tên đăng nhập</label>
-                        <input type="text" class="form-control" name="name"  placeholder="Tên đăng nhập">
+                        <label for="name" class="label">Tên đầy đủ</label>
+                        <input name="fullname" id="name" type="text" class="form-control"  placeholder="Tên đầy đủ">
                     </div>
 
                     <div class="form-group">
-                        <label >Địa chỉ email</label>
-                        <input type="email" class="form-control" name="email"  placeholder="Địa chỉ email">
-                    </div>
-
-                    <div class="form-row form-group">
-                        <div class="col">
-                            <label for="exampleInputPassword1">Mật khẩu</label>
-                            <input type="password" name="password" class="form-control" placeholder="****">
-                        </div>
-                        <div class="col">
-                            <label for="exampleInputPassword1">Nhập lại mật khẩu</label>
-                            <input name="confirm_password" type="password" class="form-control" placeholder="****">
-                        </div>
+                        <label for="mail" class="label" >Địa chỉ email</label>
+                        <input type="email" id="mail" class="form-control" name="email"  placeholder="Địa chỉ email">
                     </div>
 
                     <div class="form-group">
-                        <label >Tên đầy đủ</label>
-                        <input name="fullname" type="text" class="form-control"  placeholder="Tên đầy đủ">
+                        <label for="pass" class="label">Mật khẩu</label>
+                        <input id="pass" type="password" name="password" class="form-control" placeholder="****">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="repass" class="label">Nhập lại mật khẩu</label>
+                        <input id="repass" name="confirm_password" type="password" class="form-control" placeholder="****">
                     </div>
                     
                     <fieldset class="form-group">
                         <div class="row">
-                            <div class="col-5">
+                            <div class="col-12">
                                 <div class="row">
-                                    <legend class="col-form-label col-sm-2 pt-0">Giới tính</legend>
-                                    <div class="col-sm-10">
+                                    <legend class="col-form-label col-sm-3 pt-0 label" >Giới tính: </legend>
+                                    <div class="col-sm-9">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="gender"  value="1" checked>
-                                        <label class="form-check-label" for="gridRadios1">
-                                            Nam
+                                        <input class="form-check-input" type="radio" name="gender" id="gender1"  value="1" checked>
+                                        <label class="form-check-label" for="gender1">
+                                             Nam
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="gender" value="2">
-                                        <label class="form-check-label" for="gridRadios2">
-                                            Nữ
+                                        <input class="form-check-input" type="radio" name="gender" id="gender2" value="2">
+                                        <label class="form-check-label" for="gender2">
+                                             Nữ
                                         </label>
                                     </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-7">
+                            <div class="col-12">
                                 <div class="row">
-                                    <legend class="col-form-label col-sm-3 pt-0">Tài khoản</legend>
+                                    <legend class="col-form-label col-sm-3 pt-0 label">Tài khoản: </legend>
                                     <div class="col-sm-9">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="type"  value="1" checked>
-                                        <label class="form-check-label" for="gridRadios1">
+                                        <input class="form-check-input" type="radio" name="type" id="type1"  value="1" checked>
+                                        <label class="form-check-label" for="type1">
                                             Cá nhân
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="type" value="2">
-                                        <label class="form-check-label" for="gridRadios2">
+                                        <input class="form-check-input" type="radio" name="type" id="type2" value="2">
+                                        <label class="form-check-label" for="type2">
                                             Doanh nghiệp
                                         </label>
                                     </div>
@@ -147,14 +189,14 @@
                     </fieldset>
 
                     <div class="form-group">
-                        <label >CMND/ Mã số thuế</label>
-                        <input type="text" name="tax" class="form-control"  placeholder="CMND/ Mã số thuế">
+                        <label for="tax" class="label">CMND/ Mã số thuế</label>
+                        <input id="tax" type="text" name="tax" class="form-control"  placeholder="CMND/ Mã số thuế">
                     </div>
 
                     <button type="submit" class="btn btn-primary">Đăng ký ngay</button>
                     
                 </form>
-                <div>
+                <div class="term">
                     <br>
                     <span style="color: #3fa148 ">Chú ý:</span> Thông tin Tên đăng nhập, email, số điện thoại di động không thể thay đổi sau khi đăng ký.
                     <br>
@@ -174,7 +216,7 @@
                 <p style="font-size: 18px; line-height: 1.4;"><i class="fa fa-check-circle"></i> Không cắt phí với mọi hình thức</p>
                 </div>
                 <div class="col-md-5">
-                <img style="padding: 8em 3em;" src="https://www.devwork.vn/public/images/OBJECTS.png" >
+                <img class="img-fluid" src="https://www.devwork.vn/public/images/OBJECTS.png" >
                 </div>
             </div>
             </div>

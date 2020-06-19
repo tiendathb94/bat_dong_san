@@ -25,6 +25,55 @@
         form{
             font-size: 18px
         }
+        .form-group{
+            margin-bottom: 16px;
+        }
+        label{
+            margin-bottom: 4px;
+        }
+        .label{
+            font-weight: 600
+
+        }
+        form, input, button{
+            font-size: 16px !important
+        }
+        .form-check{
+            display: inline-block ;
+        }
+        .form-check label{
+           margin-left: 4px;
+           margin-right: 20px
+        }
+        .form-check input{
+            vertical-align: bottom
+        }
+        .form-check-input{
+            margin-top: 5px !important
+        }
+        
+        h2{
+            font-weight: 800;
+        }
+        @media only screen and (max-width: 414px){
+            button{
+                width: 100%;
+                margin-top: 16px
+            }
+            
+            .bds-img-bn{
+                display: none;
+            }
+            .main{
+                margin-top: 25px;
+            }
+            .navbar-toggler{
+                display: none;
+            }
+        }
+        .term{
+            font-size: 14px
+        }
     </style>
 </head>
 
@@ -32,7 +81,7 @@
 
 <div class="grid">
     <nav class="navbar navbar-expand-lg navbar-light bg-light top">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="{{ route('home') }}">
             <img src="https://file4.batdongsan.com.vn/images/newhome/logobds04.svg" alt="">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,7 +106,7 @@
 
         <div class="row main">
             <div class="col-sm-7">
-                <img class="img-fluid" src="http://static.tapchitaichinh.vn/800x450/images/upload/tranhuyentrang/04242020/13_ylgk.jpg" alt="">
+                <img class="img-fluid bds-img-bn" src="http://static.tapchitaichinh.vn/800x450/images/upload/tranhuyentrang/04242020/13_ylgk.jpg" alt="">
                 @if (count($errors) > 0)
                         <div class="alert alert-danger">
                             <ul>
@@ -79,18 +128,18 @@
                     @endif
 
                     <div class="form-group">
-                        <label >Địa chỉ email</label>
+                        <label class="label">Địa chỉ email</label>
                         <input type="email" class="form-control" name="email"  placeholder="Địa chỉ email">
                     </div>
                     
                     <div class="form-group">
-                        <label >Địa chỉ email</label>
+                        <label class="label">Địa chỉ email</label>
                         <input type="password" class="form-control" name="password"  placeholder="*******">
                     </div>
                     <button type="submit" class="btn btn-primary">Đăng nhập ngay</button>
                     
                 </form>
-                <div>
+                <div class="term">
                     <br>
                     <span style="color: #3fa148 ">Chú ý:</span> Thông tin Tên đăng nhập, email, số điện thoại di động không thể thay đổi sau khi đăng ký.
                     <br>
@@ -110,7 +159,7 @@
                 <p style="font-size: 18px; line-height: 1.4;"><i class="fa fa-check-circle"></i> Không cắt phí với mọi hình thức</p>
                 </div>
                 <div class="col-md-5">
-                <img style="padding: 8em 3em;" src="https://www.devwork.vn/public/images/OBJECTS.png" >
+                <img class="img-fluid" src="https://www.devwork.vn/public/images/OBJECTS.png" >
                 </div>
             </div>
             </div>
