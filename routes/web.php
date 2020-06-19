@@ -22,3 +22,7 @@ Route::post('/dang-ky-tai-khoan', 'AuthController@registerStore')->name('registe
 
 Route::get('/dang-nhap', 'AuthController@loginForm')->name('loginForm');
 Route::post('/dang-nhap', 'AuthController@loginStore')->name('loginStore');
+
+Route::get('/dang-xuat', 'AuthController@logout')->name('logout');
+
+Route::get('/mail', 'AuthController@confirm')->name('confirm');
