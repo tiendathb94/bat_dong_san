@@ -16,6 +16,9 @@ class CreateProjectTabsTable extends Migration
         Schema::create('project_tabs', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('name', 255);
+            $table->string('template', 255);
+            $table->longText('contents');
         });
     }
 
