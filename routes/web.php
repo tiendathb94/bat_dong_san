@@ -15,4 +15,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('default.layouts.default');
-});
+})->name('home');
+
+Route::get('/dang-ky-tai-khoan', 'AuthController@registerForm')->name('registerForm');
+Route::post('/dang-ky-tai-khoan', 'AuthController@registerStore')->name('registerStore');
+
+Route::get('/dang-nhap', 'AuthController@loginForm')->name('loginForm');
+Route::post('/dang-nhap', 'AuthController@loginStore')->name('loginStore');

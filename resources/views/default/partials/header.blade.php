@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="{{ asset('css/app.css') . '?m=' . filemtime('css/app.css') }}">
 <style>
     .bds_main_menu ul li a{
         font-weight: bold;
@@ -92,19 +91,20 @@
     </ul>
     <form class="my-2 my-lg-0">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          @if(!Auth::user())
             <li class="nav-item active">
               <a class="nav-link" href="#">Đăng nhập <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Đăng ký</a>
             </li>
+          @endif
             <li class="nav-item">
                 <a class="nav-link bds-button" href="#">
                     <span> Tạo tin rao vặt </span>    
                 </a>
             </li>
         </ul>
-      {{-- <button class="btn btn-success my-2 my-sm-0" type="submit">Tạo tin rao vặt</button> --}}
     </form>
   </div>
 </nav>
