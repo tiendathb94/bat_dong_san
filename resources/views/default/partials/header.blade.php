@@ -93,10 +93,10 @@
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
           @if(!Auth::user())
             <li class="nav-item active">
-              <a class="nav-link" href="#">Đăng nhập <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="{{ route('loginForm') }}">Đăng nhập <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Đăng ký</a>
+              <a class="nav-link" href="{{ route('registerForm') }}">Đăng ký</a>
             </li>
           @endif
             <li class="nav-item">
