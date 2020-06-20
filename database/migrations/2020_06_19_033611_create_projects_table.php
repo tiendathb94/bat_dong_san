@@ -28,6 +28,8 @@ class CreateProjectsTable extends Migration
             $table->longText('project_overview');
             $table->tinyInteger('status');
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('investor_id');
+            $table->unsignedTinyInteger('investor_type');
 
             // Index
             $table->index('status');
@@ -38,6 +40,7 @@ class CreateProjectsTable extends Migration
             // Constraint
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('investor_id')->references('id')->on('investors');
         });
     }
 
