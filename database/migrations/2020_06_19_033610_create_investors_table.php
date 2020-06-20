@@ -21,9 +21,11 @@ class CreateInvestorsTable extends Migration
             $table->string('phone', 15);
             $table->string('email', 255);
             $table->string('website', 255);
+            $table->unsignedBigInteger('user_id');
             $table->string('logo', 255);
             $table->string('overview', 255);
             $table->foreign('address_id')->references('id')->on('addresses');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
