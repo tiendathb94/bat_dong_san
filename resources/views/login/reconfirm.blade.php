@@ -35,10 +35,6 @@
                     <input type="email" class="form-control" name="email" value="{{old('email')}}" placeholder="Địa chỉ email">
                 </div>
                 
-                <div class="form-group">
-                    <label class="label">Địa chỉ email</label>
-                    <input type="password" class="form-control" name="password"  placeholder="*******">
-                </div>
                 <button type="submit" class="btn btn-primary">Đăng nhập ngay</button>
                 
             </form>
