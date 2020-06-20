@@ -100,6 +100,9 @@
             </li>
           @endif
             <li class="nav-item">
+              <a class="nav-link" href="{{ route('logout') }}">Đăng xuất</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link bds-button" href="#">
                     <span> Tạo tin rao vặt </span>    
                 </a>
