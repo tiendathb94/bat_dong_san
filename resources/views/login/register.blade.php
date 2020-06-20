@@ -72,6 +72,9 @@
         .term{
             font-size: 14px
         }
+        .alert{
+            font-size: 16px;
+        }
     </style>
 </head>
 
@@ -105,34 +108,39 @@
         <div class="row main">
             <div class="col-sm-7">
                 <img class="img-fluid bds-img-bn" src="http://static.tapchitaichinh.vn/800x450/images/upload/tranhuyentrang/04242020/13_ylgk.jpg" alt="">
-                @if (count($errors) > 0)
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-                @if ($message = Session::get('success'))
-                    <div class="alert alert-success">
-                        <p>{{ $message }}</p>
-                    </div>
-                @endif
             </div>
             <div class="col-sm-5">
                 <form action="{{ route('registerStore') }}" method="POST">
                     <h2 class="text-center">Đăng ký tài khoản</h2>
                     @csrf
+                    @if (count($errors) > 0)
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    @if ($message = Session::get('success'))
+                        <div class="alert alert-success">
+                            <p>{{ $message }}</p>
+                        </div>
+                    @endif
+                    @if ($error = Session::get('error'))
+                        <div class="alert alert-danger">
+                            <p>{{ $error }}</p>
+                        </div>
+                    @endif
 
                     <div class="form-group">
                         <label for="name" class="label">Tên đầy đủ</label>
-                        <input name="fullname" id="name" type="text" class="form-control"  placeholder="Tên đầy đủ">
+                        <input name="fullname" id="name" type="text" value="{{old('fullname')}}" class="form-control"  placeholder="Tên đầy đủ">
                     </div>
 
                     <div class="form-group">
                         <label for="mail" class="label" >Địa chỉ email</label>
-                        <input type="email" id="mail" class="form-control" name="email"  placeholder="Địa chỉ email">
+                        <input type="email" id="mail" value="{{old('email')}}" class="form-control" name="email"  placeholder="Địa chỉ email">
                     </div>
 
                     <div class="form-group">
@@ -190,7 +198,7 @@
 
                     <div class="form-group">
                         <label for="tax" class="label">CMND/ Mã số thuế</label>
-                        <input id="tax" type="text" name="tax" class="form-control"  placeholder="CMND/ Mã số thuế">
+                        <input id="tax" type="text" name="tax" class="form-control"  placeholder="CMND/ Mã số thuế" value="{{old('tax')}}">
                     </div>
 
                     <button type="submit" class="btn btn-primary">Đăng ký ngay</button>

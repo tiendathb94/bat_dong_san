@@ -74,6 +74,9 @@
         .term{
             font-size: 14px
         }
+        .alert{
+            font-size: 16px;
+        }
     </style>
 </head>
 
@@ -107,7 +110,11 @@
         <div class="row main">
             <div class="col-sm-7">
                 <img class="img-fluid bds-img-bn" src="http://static.tapchitaichinh.vn/800x450/images/upload/tranhuyentrang/04242020/13_ylgk.jpg" alt="">
-                @if (count($errors) > 0)
+            </div>
+            <div class="col-sm-5">
+                <form action="{{ route('loginStore') }}" method="POST">
+                    @csrf
+                    @if (count($errors) > 0)
                         <div class="alert alert-danger">
                             <ul>
                                 @foreach ($errors->all() as $error)
@@ -116,20 +123,21 @@
                             </ul>
                         </div>
                     @endif
-            </div>
-            <div class="col-sm-5">
-                <form action="{{ route('loginStore') }}" method="POST">
-                    @csrf
                     @if ($message = Session::get('success'))
                         <div class="alert alert-success">
                             <p>{{ $message }}</p>
                         </div>
-                
+                    @endif
+                    
+                    @if ($error = Session::get('error'))
+                        <div class="alert alert-danger">
+                            <p>{{ $error }}</p>
+                        </div>
                     @endif
 
                     <div class="form-group">
                         <label class="label">Địa chỉ email</label>
-                        <input type="email" class="form-control" name="email"  placeholder="Địa chỉ email">
+                        <input type="email" class="form-control" name="email" value="{{old('email')}}" placeholder="Địa chỉ email">
                     </div>
                     
                     <div class="form-group">

@@ -25,7 +25,6 @@ class AuthController extends Controller
 
         request()->validate([
             'email' => 'required|email|unique:users',
-            // 'name' => 'required|max:255|min:8',
             'password' => 'max:30|min:8|required_with:confirm_password|same:confirm_password',
             'confirm_password' => 'max:30|min:8',
             'fullname' =>  'required',
@@ -37,16 +36,14 @@ class AuthController extends Controller
             'email.required' => 'Email không được để trống',
             'email.unique' => 'Email đã tồn tại',
             'email.email'=> 'Email không đúng định dạng',
-            // 'name.required' => 'Tên không được để trống',
-            // 'name.max' => 'Tên tối đa 255 ký tự',
-            // 'name.muin'=> 'Tên tối thiểu 8 ký tự',
             'password.max' => 'Mật khẩu tối đa 30 ký tự',
             'password.min' => 'Mật khẩu tối thiểu 8 ký tự',
             'password.required_with' => 'Mật khẩu không được để trống',
             'password.same' => 'Mật khẩu Không trùng khớp',
             'confirm_password.max' => 'Mật khẩu tối đa 30 ký tự',
             'confirm_password.min' => 'Mật khẩu tối thiểu 8 ký tự', 
-            'fullname.required'=> 'Tên đầy đủ không được để trống'
+            'fullname.required'=> 'Tên đầy đủ không được để trống',
+            'tax.required' => 'Mã số thuế / CMND không được để trống'
         ]);
         
         $dataSave = $request->only('email', 'fullname','tax');
@@ -58,10 +55,13 @@ class AuthController extends Controller
         
         $data = $this->user->create($dataSave);
 
-        $this->dispatch(new SendWelcomeEmail($data));
+        if($data){
+            $this->dispatch(new SendWelcomeEmail($data));
+            return back()->with('success', 'Đăng ký tài khoản thành công! Xác thực tài khoản tại email!');
+        }
 
-
-        return back()->with('success', 'Đăng ký tài khoản thành công! Xác thực tài khoản tại email!');
+        $request->flash();
+        return back()->with('error', 'Đăng ký thất bại mời thử lại!');
 
     }
 
@@ -77,7 +77,8 @@ class AuthController extends Controller
 
             return redirect()->route('home');
         }
-    
+        $request->flash();
+        return back()->with('error', 'Sai tài khoản hoặc mật khẩu!');
     }
 
     public function logout( Request $request ) {
