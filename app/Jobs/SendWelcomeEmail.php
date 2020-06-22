@@ -38,7 +38,7 @@ class SendWelcomeEmail implements ShouldQueue
             'email'=> $this->user->email,
             'remember_token'=> $this->user->remember_token,
         );
-        Mail::send('templateEmail.welcome', ['data' => $data] , function($message){
+        Mail::send('templateEmail.welcome', ['data' => $data] , function($message) {
             $message->from('test1@gmail.com', 'Dũng Virgo');
             $message->to($this->user->email)->subject('Xác thực tài khoản');
         });

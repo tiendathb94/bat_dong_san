@@ -23,31 +23,31 @@ class AuthController extends Controller
 
     public function registerStore( Request $request ) {
 
+        request()->validate([
+            'email' => 'required|email|unique:users',
+            'password' => 'max:30|min:8|required_with:confirm_password|same:confirm_password',
+            'confirm_password' => 'max:30|min:8',
+            'fullname' =>  'required',
+            'gender' => 'required',
+            'type' => 'required',
+            'tax'   => 'required'
+        ],
+        [
+            'email.required' => 'Email không được để trống',
+            'email.unique' => 'Email đã tồn tại',
+            'email.email'=> 'Email không đúng định dạng',
+            'password.max' => 'Mật khẩu tối đa 30 ký tự',
+            'password.min' => 'Mật khẩu tối thiểu 8 ký tự',
+            'password.required_with' => 'Mật khẩu không được để trống',
+            'password.same' => 'Mật khẩu Không trùng khớp',
+            'confirm_password.max' => 'Mật khẩu tối đa 30 ký tự',
+            'confirm_password.min' => 'Mật khẩu tối thiểu 8 ký tự', 
+            'fullname.required'=> 'Tên đầy đủ không được để trống',
+            'tax.required' => 'Mã số thuế / CMND không được để trống'
+        ]);
+        
         try {
 
-            request()->validate([
-                'email' => 'required|email|unique:users',
-                'password' => 'max:30|min:8|required_with:confirm_password|same:confirm_password',
-                'confirm_password' => 'max:30|min:8',
-                'fullname' =>  'required',
-                'gender' => 'required',
-                'type' => 'required',
-                'tax'   => 'required'
-            ],
-            [
-                'email.required' => 'Email không được để trống',
-                'email.unique' => 'Email đã tồn tại',
-                'email.email'=> 'Email không đúng định dạng',
-                'password.max' => 'Mật khẩu tối đa 30 ký tự',
-                'password.min' => 'Mật khẩu tối thiểu 8 ký tự',
-                'password.required_with' => 'Mật khẩu không được để trống',
-                'password.same' => 'Mật khẩu Không trùng khớp',
-                'confirm_password.max' => 'Mật khẩu tối đa 30 ký tự',
-                'confirm_password.min' => 'Mật khẩu tối thiểu 8 ký tự', 
-                'fullname.required'=> 'Tên đầy đủ không được để trống',
-                'tax.required' => 'Mã số thuế / CMND không được để trống'
-            ]);
-            
             $dataSave = $request->only('email', 'fullname','tax');
 
             $dataSave['type'] = (int) $request->type;
