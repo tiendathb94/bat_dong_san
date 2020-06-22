@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 $routes = scandir(base_path('routes/web'));
 
 foreach($routes as $route) {
