@@ -26,3 +26,9 @@ Route::post('/dang-nhap', 'AuthController@loginStore')->name('loginStore');
 Route::get('/dang-xuat', 'AuthController@logout')->name('logout');
 
 Route::get('/confirm-mail', 'AuthController@confirm')->name('confirm');
+
+
+
+// Route::group([ 'prefix'=>'abc', 'middleware' => ['permission', 'email'] ], function () {
+// permission
+// });
