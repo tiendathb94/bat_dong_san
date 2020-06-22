@@ -13,6 +13,8 @@ Route::get('/confirm-mail', 'AuthController@confirm')->name('confirm');
 
 
 
-// Route::group([ 'prefix'=>'abc', 'middleware' => ['permission', 'email'] ], function () {
+Route::group([ 'prefix'=>'abc', 'middleware' => ['permission', 'email'] ], function () {
+Route::get('/test', 'AuthController@confirm')->name('test');
+
 // permission
-// });
+});
