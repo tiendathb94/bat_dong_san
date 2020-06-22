@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('default.layouts.default');
-});
+$routes = scandir(base_path('routes/web'));
+
+foreach($routes as $route) {
+    if (!in_array($route, ['.', '..'])) {
+        require_once(base_path("routes/web/$route"));
+    }
+}
