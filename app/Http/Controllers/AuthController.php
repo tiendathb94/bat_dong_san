@@ -18,6 +18,11 @@ class AuthController extends Controller
     }
 
     public function registerForm() {
+
+        if( Auth::user() ) {
+            return view('home');
+        }
+
         return view('login.register');
     }
 

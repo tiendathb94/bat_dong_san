@@ -34,7 +34,7 @@ class SendWelcomeEmail implements ShouldQueue
      */
     public function handle()
     {
-        $data= array(
+        $data = array(
             'email'=> $this->user->email,
             'remember_token'=> $this->user->remember_token,
         );
