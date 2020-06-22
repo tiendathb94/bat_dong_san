@@ -16,7 +16,7 @@
     @include('default.partials.header')
 
     <!-- CONTENT -->
-    <div class="container">
+    <div class="container page-main-container">
         @yield('content')
     </div>
 
