@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import AddressForm from "../../../containers/address_form"
+import CategoryField from '../../../containers/category_field'
+import { Editor } from 'react-draft-wysiwyg'
 
 class CreateForm extends Component {
     constructor (props) {
@@ -14,6 +16,10 @@ class CreateForm extends Component {
         this.setState({ formValues: { ...this.state.formValues, address: address } })
     }
 
+    onChangeCategory = (event) => {
+        this.setState({ formValues: { ...this.state.formValues, category: event.target.value } })
+    }
+
     setFormFieldValue = (event) => {
         this.setState({ formValues: { ...this.state.formValues, [event.target.name]: event.target.value } })
     }
@@ -21,43 +27,72 @@ class CreateForm extends Component {
     render () {
         return (
             <div>
-                <div className="container">
-                    <div className="row">
-                        <div className="form-group col">
-                            <label>Tên dự án</label>
-                            <input
-                                value={this.state.formValues.long_name}
-                                onChange={this.setFormFieldValue}
-                                placeholder="Nhập tên dự án"
-                                className="form-control"
-                            />
+                <div>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col">
+                                <h3>Thông tin cơ bản</h3>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="form-group col">
+                                <label>Tên dự án</label>
+                                <input
+                                    name="long_name"
+                                    value={this.state.formValues.long_name}
+                                    onChange={this.setFormFieldValue}
+                                    placeholder="Nhập tên dự án"
+                                    className="form-control"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="row">
+                            <div className="form-group col">
+                                <label>Tên ngắn của dự án</label>
+                                <input
+                                    name="short_name"
+                                    value={this.state.formValues.short_name}
+                                    onChange={this.setFormFieldValue}
+                                    placeholder="Nhập tên ngắn của dự án"
+                                    className="form-control"
+                                />
+                            </div>
+
+                            <div className="form-group col">
+                                <label>Quy mô dự án</label>
+                                <input
+                                    name="project_scale"
+                                    value={this.state.formValues.project_scale}
+                                    onChange={this.setFormFieldValue}
+                                    placeholder="Mô tả quy mô dự án"
+                                    className="form-control"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="row">
+                            <div className="col">
+                                <CategoryField
+                                    label="Loại hình phát triển"
+                                    destinationEntity="App\Entities\Project"
+                                    onChange={this.onChangeCategory}
+                                />
+                            </div>
                         </div>
                     </div>
 
-                    <div className="row">
-                        <div className="form-group col">
-                            <label>Tên ngắn của dự án</label>
-                            <input
-                                value={this.state.formValues.short_name}
-                                onChange={this.setFormFieldValue}
-                                placeholder="Nhập tên ngắn của dự án"
-                                className="form-control"
-                            />
-                        </div>
+                    <AddressForm onSync={this.onSyncAddress}/>
 
-                        <div className="form-group col">
-                            <label>Quy mô dự án</label>
-                            <input
-                                value={this.state.formValues.project_scale}
-                                onChange={this.setFormFieldValue}
-                                placeholder="Mô tả quy mô dự án"
-                                className="form-control"
-                            />
+                    <div className="container">
+                        <div className="row">
+                            <div className="col">
+                                <label>Giới thiệu dự án</label>
+                                <Editor/>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <AddressForm onSync={this.onSyncAddress}/>
             </div>
         )
     }

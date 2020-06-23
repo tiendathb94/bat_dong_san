@@ -1,5 +1,5 @@
-const mix = require('laravel-mix');
-require('laravel-mix-react-css-modules');
+const mix = require('laravel-mix')
+require('laravel-mix-react-css-modules')
 
 /*
  |--------------------------------------------------------------------------
@@ -14,11 +14,12 @@ require('laravel-mix-react-css-modules');
 
 mix.react('resources/js/app.js', 'public/js')
     .react('resources/js/pages/project/create.js', 'public/js/pages/project')
-    .sass('resources/sass/app.scss', 'public/css');
+    .sass('resources/sass/app.scss', 'public/css')
+    .sass('resources/sass/pages/project/create.scss', 'public/css/pages/project')
 
 
 // CSS module library
-mix.reactCSSModules();
+mix.reactCSSModules()
 
 // Copy directories
-mix.copyDirectory('resources/images', 'public/images');
+mix.copyDirectory('resources/images', 'public/images')
