@@ -1,5 +1,7 @@
 <?php
 
+Route::get('/auth/redirect/{provider}', 'SocialController@redirect');
+Route::get('/callback/{provider}', 'SocialController@callback');
 
 Route::get('/dang-ky-tai-khoan', 'AuthController@registerForm')->name('registerForm');
 Route::post('/dang-ky-tai-khoan', 'AuthController@registerStore')->name('registerStore');
