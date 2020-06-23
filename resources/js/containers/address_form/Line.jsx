@@ -10,6 +10,10 @@ class Line extends Component {
         }
     }
 
+    static getDerivedStateFromProps (props) {
+        return { value: props.value }
+    }
+
     onChange = (event) => {
         if (this.props.onChange) {
             this.props.onChange(event)
@@ -21,9 +25,14 @@ class Line extends Component {
 
     render () {
         return (
-            <div>
+            <div className="form-group">
                 <label>Đường/Phố</label>
-                <input value={this.state.value} onChange={this.onChange} placeholder="Nhập đường phố"/>
+                <input
+                    value={this.state.value}
+                    onChange={this.onChange}
+                    placeholder="Nhập đường phố"
+                    className="form-control"
+                />
             </div>
         )
     }

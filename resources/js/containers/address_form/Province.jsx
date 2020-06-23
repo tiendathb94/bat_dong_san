@@ -32,9 +32,9 @@ class Province extends Component {
 
     render () {
         return (
-            <div>
+            <div className="form-group">
                 <label>Tỉnh/Thành phố</label>
-                <select onChange={this.onChange} value={this.state.value}>
+                <select onChange={this.onChange} value={this.state.value} className="form-control">
                     <option>-- Tỉnh/Thành phố --</option>
                     {
                         this.state.provinces && this.state.provinces.map((province) => (

@@ -1,9 +1,11 @@
 @extends('default.layouts.default')
 
-@section('content')
-    <div id="project-create-form-container">
+@section('page_title')
+    Đăng dự án
+@endsection
 
-    </div>
+@section('content')
+    <div id="project-create-form-container"></div>
 @endsection
 
 @push('scripts')

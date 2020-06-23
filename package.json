@@ -27,6 +27,7 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
+        "classnames": "^2.2.6",
         "laravel-mix-react-css-modules": "^2.0.0"
     }
 }
