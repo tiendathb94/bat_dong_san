@@ -22,7 +22,7 @@ class AddressController extends Controller
         $provinceId = $request->get('province_id');
 
         if ($provinceId < 1) {
-            return response()->json(['error' => true, 'message' => 'Cần gửi lên province id']);
+            return response()->json(['error' => true, 'message' => 'Cần gửi lên province id'], 400);
         }
 
         $districts = District::query()->select(['name', 'id', 'province_id'])->where('province_id', '=', $provinceId);
@@ -35,7 +35,7 @@ class AddressController extends Controller
         $districtId = $request->get('district_id');
 
         if ($districtId < 1) {
-            return response()->json(['error' => true, 'message' => 'Cần gửi lên district id']);
+            return response()->json(['error' => true, 'message' => 'Cần gửi lên district id'], 400);
         }
 
         $wards = Ward::query()->select(['name', 'id', 'district_id'])->where('district_id', '=', $districtId);
