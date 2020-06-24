@@ -43,12 +43,13 @@ class TabManager extends Component {
             const tabContentFormRawValues = { name: tabContent.name, layout: tabContent.layout }
 
             if (tabContent.values) {
+                tabContentFormRawValues.contents = {}
                 for (const k in tabContent.values) {
                     const value = tabContent.values[k]
                     if (value instanceof EditorState) {
-                        tabContentFormRawValues[k] = draftToHtml(convertToRaw(value.getCurrentContent()))
+                        tabContentFormRawValues.contents[k] = draftToHtml(convertToRaw(value.getCurrentContent()))
                     } else {
-                        tabContentFormRawValues[k] = value
+                        tabContentFormRawValues.contents[k] = value
                     }
                 }
             }

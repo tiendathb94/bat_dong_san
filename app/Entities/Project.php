@@ -3,9 +3,17 @@
 namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
+
 
 class Project extends Model
 {
+    use Sluggable;
+
+    const StatusPending = 1;
+    const StatusApproved = 2;
+    const StatusDeclined = 3;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -13,7 +21,7 @@ class Project extends Model
      */
     protected $fillable = [
         'long_name', 'short_name', 'project_scale', 'total_area',
-        'total_area', 'category_id', 'price', 'price_unit', 'latitude', 'longitude',
+        'category_id', 'price', 'price_unit', 'latitude', 'longitude',
         'project_overview', 'status', 'user_id', 'investor_id', 'investor_type'
     ];
 
@@ -31,6 +39,11 @@ class Project extends Model
 
     public function tabs()
     {
-        return $this->belongsToMany('App\Entities\ProjectTab');
+        return $this->hasMany('App\Entities\ProjectTab');
+    }
+
+    public function sluggable()
+    {
+        return ['slug' => ['source' => 'long_name']];
     }
 }

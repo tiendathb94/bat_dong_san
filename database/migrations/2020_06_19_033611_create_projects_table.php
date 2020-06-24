@@ -17,19 +17,20 @@ class CreateProjectsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('long_name', 255);
-            $table->string('short_name', 255);
-            $table->string('project_scale', 255);
-            $table->unsignedDouble('total_area');
+            $table->string('short_name', 255)->nullable();
+            $table->string('slug', 255);
+            $table->string('project_scale', 255)->nullable();
+            $table->unsignedDouble('total_area')->nullable();
             $table->unsignedBigInteger('category_id');
             $table->unsignedDouble('price');
             $table->tinyInteger('price_unit');
-            $table->decimal('latitude');
-            $table->decimal('longitude');
+            $table->decimal('latitude')->nullable();
+            $table->decimal('longitude')->nullable();
             $table->longText('project_overview');
             $table->tinyInteger('status');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('investor_id');
-            $table->unsignedTinyInteger('investor_type');
+            $table->unsignedBigInteger('investor_id')->nullable();
+            $table->unsignedTinyInteger('investor_type')->nullable();
 
             // Index
             $table->index('status');

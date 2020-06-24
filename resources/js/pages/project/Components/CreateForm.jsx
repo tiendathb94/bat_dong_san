@@ -2,10 +2,12 @@ import React, { Component } from 'react'
 import AddressForm from "../../../containers/address_form"
 import CategoryField from '../../../containers/category_field'
 import { Editor } from 'react-draft-wysiwyg'
-import { EditorState } from 'draft-js'
+import { convertToRaw, EditorState } from 'draft-js'
 import TabManager from "./tab_manager"
 import axios from 'axios'
 import config from "../../../config"
+import draftToHtml from "draftjs-to-html"
+import { cloneDeep } from 'lodash'
 
 class CreateForm extends Component {
     constructor (props) {
@@ -21,11 +23,21 @@ class CreateForm extends Component {
     }
 
     onSyncAddress = (address) => {
-        this.setState({ formValues: { ...this.state.formValues, address: address } })
+        this.setState({
+            formValues: {
+                ...this.state.formValues,
+                address: {
+                    province_id: address.provinceId,
+                    district_id: address.districtId,
+                    ward_id: address.wardId,
+                    address: address.line,
+                }
+            }
+        })
     }
 
     onChangeCategory = (event) => {
-        this.setState({ formValues: { ...this.state.formValues, category: event.target.value } })
+        this.setState({ formValues: { ...this.state.formValues, category_id: event.target.value } })
     }
 
     onProjectOverviewChange = (editorState) => {
@@ -37,7 +49,8 @@ class CreateForm extends Component {
     }
 
     onClickSaveProjectButton = async () => {
-        const values = this.state.formValues
+        const values = cloneDeep(this.state.formValues)
+        values.project_overview = draftToHtml(convertToRaw(this.state.formValues.project_overview.getCurrentContent()))
         values.tab_contents = this.tabManager.current.getTabContentsFormRawValues()
 
         const response = await axios.post(`${config.api.baseUrl}/project/create`, values)
@@ -113,6 +126,34 @@ class CreateForm extends Component {
                                     placeholder="Mô tả quy mô dự án"
                                     className="form-control"
                                 />
+                            </div>
+                        </div>
+
+                        <div className="row">
+                            <div className="form-group col col-sm-12 col-md-6">
+                                <label>Giá</label>
+                                <input
+                                    name="price"
+                                    value={this.state.formValues.price || ''}
+                                    onChange={this.setFormFieldValue}
+                                    placeholder="Nhập giá của dự án"
+                                    className="form-control"
+                                />
+                            </div>
+                            <div className="col form-group col-sm-12 col-md-6">
+                                <label>Đơn vị giá</label>
+                                <select
+                                    value={this.state.formValues.price_unit || ''}
+                                    name="price_unit"
+                                    onChange={this.setFormFieldValue}
+                                    className="form-control"
+                                >
+                                    <option>-- Chọn đơn vị giá --</option>
+                                    <option value="1">Triệu</option>
+                                    <option value="2">Tỷ</option>
+                                    <option value="3">Trăm nghìn/m2</option>
+                                    <option value="4">Triệu/m2</option>
+                                </select>
                             </div>
                         </div>
                     </div>

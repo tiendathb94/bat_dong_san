@@ -32,6 +32,7 @@ RUN apt-get update && apt-get install -y \
         && docker-php-ext-install -j$(nproc) gd
 
 RUN apt-get install -y libmcrypt-dev && pecl install mcrypt-1.0.3 && docker-php-ext-enable mcrypt
+RUN composer global require hirak/prestissimo
 
 ENV PATH $PATH:/opt/nodejs/bin
 
