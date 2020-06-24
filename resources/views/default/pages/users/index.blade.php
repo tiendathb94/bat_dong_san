@@ -23,7 +23,7 @@
                         </div> -->
                         <div class="userpoint-menu">
                             <div class="userpoint-menu-level">
-                                <label style="background-image:url(/trang-ca-nhan/Images/UserPoint/rate-1.0.png);">Tài khoản: Thường</label>
+                                <label style="background-image:url(/images/rate-1.0.png);">Tài khoản: Thường</label>
                             </div>
                             <!-- <div class="userpoint-menu-point">
                                 <label>0</label>

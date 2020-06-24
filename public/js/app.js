@@ -65875,17 +65875,29 @@ if (document.getElementById('example')) {
 
 /***/ }),
 
+/***/ "./resources/sass/pages/users/index.scss":
+/*!***********************************************!*\
+  !*** ./resources/sass/pages/users/index.scss ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ 0:
-/*!********************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/pages/project/create.scss ./resources/sass/pages/auth/reset-password.scss ***!
-  \********************************************************************************************************************************************************/
+/*!************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/pages/project/create.scss ./resources/sass/pages/users/index.scss ./resources/sass/pages/auth/reset-password.scss ***!
+  \************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Code\bat_dong_san\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! D:\Code\bat_dong_san\resources\sass\app.scss */"./resources/sass/app.scss");
-__webpack_require__(/*! D:\Code\bat_dong_san\resources\sass\pages\project\create.scss */"./resources/sass/pages/project/create.scss");
-module.exports = __webpack_require__(/*! D:\Code\bat_dong_san\resources\sass\pages\auth\reset-password.scss */"./resources/sass/pages/auth/reset-password.scss");
+__webpack_require__(/*! D:\web\bat_dong_san\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! D:\web\bat_dong_san\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\web\bat_dong_san\resources\sass\pages\project\create.scss */"./resources/sass/pages/project/create.scss");
+__webpack_require__(/*! D:\web\bat_dong_san\resources\sass\pages\users\index.scss */"./resources/sass/pages/users/index.scss");
+module.exports = __webpack_require__(/*! D:\web\bat_dong_san\resources\sass\pages\auth\reset-password.scss */"./resources/sass/pages/auth/reset-password.scss");
 
 
 /***/ })
