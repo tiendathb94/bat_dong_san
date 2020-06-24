@@ -21,6 +21,6 @@ class VerifyEmail
             return $next($request);
         }
 
-        return redirect()->route('loginForm')->with('error', 'Tài khoản chưa xác thực!');
+        return redirect()->route('login')->with('error', 'Tài khoản chưa xác thực!');
     }
 }

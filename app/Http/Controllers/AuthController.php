@@ -46,11 +46,11 @@ class AuthController extends Controller
             'password.required_with' => 'Mật khẩu không được để trống',
             'password.same' => 'Mật khẩu Không trùng khớp',
             'confirm_password.max' => 'Mật khẩu tối đa 30 ký tự',
-            'confirm_password.min' => 'Mật khẩu tối thiểu 8 ký tự', 
+            'confirm_password.min' => 'Mật khẩu tối thiểu 8 ký tự',
             'fullname.required'=> 'Tên đầy đủ không được để trống',
             'tax.required' => 'Mã số thuế / CMND không được để trống'
         ]);
-        
+
         try {
 
             $dataSave = $request->only('email', 'fullname','tax');
@@ -59,14 +59,14 @@ class AuthController extends Controller
             $dataSave['gender'] = (int) $request->gender;
             $dataSave['password'] = bcrypt($request->password);
             $dataSave['remember_token'] =  (new Token())->Unique('users', 'remember_token', 60);
-                
+
             DB::beginTransaction();
 
             DB::table('users')->insert($dataSave);
 
             Mail::send('templateEmail.welcome', ['dataSave' => $dataSave], function ($m) use ($dataSave) {
                 $m->from('hello@app.com', 'Bất động sản');
-    
+
                 $m->to($dataSave['email'], $dataSave['fullname'])->subject('Thông báo xác thực tài khoản!');
             });
 
@@ -90,9 +90,9 @@ class AuthController extends Controller
 
         return view('login.login');
     }
-    
+
     public function loginStore( Request $request ) {
-        
+
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
@@ -104,11 +104,11 @@ class AuthController extends Controller
     }
 
     public function logout( Request $request ) {
-        
+
         Auth::logout();
 
         return redirect()->route('home');
-    
+
     }
 
     public function confirm(Request $request) {
@@ -120,10 +120,10 @@ class AuthController extends Controller
                     'email_verified_at' => now(),
                     'remember_token' => (new Token())->Unique('users', 'remember_token', 60)
                 ]);
-            return redirect()->route('loginForm')->with('success', 'Xác thực thành công! mời đăng nhập để tiếp tục!');
+            return redirect()->route('login')->with('success', 'Xác thực thành công! mời đăng nhập để tiếp tục!');
             }
         }
-        return redirect()->route('loginForm')->with('error', 'Xác thực không thành công!');
+        return redirect()->route('login')->with('error', 'Xác thực không thành công!');
     }
 
 

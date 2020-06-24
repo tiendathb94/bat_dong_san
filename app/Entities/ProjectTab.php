@@ -12,4 +12,6 @@ class ProjectTab extends Model
      * @var array
      */
     protected $fillable = ['name', 'template', 'contents'];
+
+    protected $casts = ['contents' => 'array'];
 }
