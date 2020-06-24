@@ -2,5 +2,6 @@
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
     "/css/pages/project/create.css": "/css/pages/project/create.css",
+    "/css/pages/auth/reset-password.css": "/css/pages/auth/reset-password.css",
     "/js/pages/project/create.js": "/js/pages/project/create.js"
 }

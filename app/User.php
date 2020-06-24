@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'email', 'password','fullname','gender','type','tax','remember_token',
+        'name', 'email', 'password','fullname','gender','type','tax','remember_token','reset_password_token'
     ];
 
     /**
@@ -37,6 +37,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function getRequestResetPasswordCacheKey()
+    {
+        return "request_reset_password_for_user_$this->id";
+    }
     public function roles()
     {
         return $this->belongsToMany(Role::class);

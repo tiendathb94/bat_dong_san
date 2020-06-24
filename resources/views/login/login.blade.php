@@ -29,6 +29,22 @@
                         <p>{{ $error }}</p>
                     </div>
                 @endif
+                
+                @if ($success = session('success_message'))
+                    <div class="alert alert-success">
+                        <ul class="list_notification">
+                            <li>{{ $success }}</li>
+                        </ul>
+                    </div>
+                @endif
+
+                @if ($error = session('error_message'))
+                    <div class="alert alert-danger">
+                        <ul class="list_notification">
+                            <li>{{ $error }}</li>
+                        </ul>
+                    </div>
+                @endif
 
                 <div class="form-group">
                     <label class="label">Địa chỉ email</label>
@@ -39,7 +55,10 @@
                     <label class="label">Địa chỉ email</label>
                     <input type="password" class="form-control" name="password"  placeholder="*******">
                 </div>
-                <button type="submit" class="btn btn-primary">Đăng nhập ngay</button>
+                <div class="btn_submit">
+                    <button type="submit" class="btn btn-primary">Đăng nhập ngay</button>
+                    <a href="/reset-password" class="reset_pw">Quên mật khẩu</a>
+                </div>
                 
             </form>
             <div class="term">
