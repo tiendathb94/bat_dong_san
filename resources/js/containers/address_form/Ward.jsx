@@ -2,13 +2,16 @@ import React, { Component } from 'react'
 import axios from "axios"
 import config from "../../config"
 import PropTypes from 'prop-types'
+import classnames from "classnames"
+import Styles from "./address_form.module.scss"
 
 class Ward extends Component {
     constructor (props) {
         super(props)
 
         this.state = {
-            wards: []
+            wards: [],
+            loading: false,
         }
     }
 
@@ -24,11 +27,13 @@ class Ward extends Component {
 
     async fetchWards () {
         if (!this.props.districtId) {
+            this.setState({ wards: [] })
             return
         }
 
+        this.setState({ loading: true, wards: [] })
         const response = await axios.get(`${config.api.baseUrl}/address/wards-by-district?district_id=${this.props.districtId}`)
-        this.setState({ wards: response.data })
+        this.setState({ wards: response.data, loading: false })
     }
 
     onChange = (event) => {
@@ -41,9 +46,20 @@ class Ward extends Component {
 
     render () {
         return (
-            <div>
+            <div className="form-group">
+                {
+                    this.state.loading && <div className={classnames('spinner-border', Styles.Loading)} role="status">
+                        <span className="sr-only">Loading...</span>
+                    </div>
+                }
+
                 <label>Phường/Xã</label>
-                <select onChange={this.onChange} value={this.state.value}>
+                <select
+                    onChange={this.onChange}
+                    value={this.state.value}
+                    className="form-control"
+                    disabled={this.state.wards.length < 1 ? 'disabled' : ''}
+                >
                     <option>-- Phường/Xã --</option>
                     {
                         this.state.wards.map((ward) => (

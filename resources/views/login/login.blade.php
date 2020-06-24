@@ -29,6 +29,22 @@
                         <p>{{ $error }}</p>
                     </div>
                 @endif
+                
+                @if ($success = session('success_message'))
+                    <div class="alert alert-success">
+                        <ul class="list_notification">
+                            <li>{{ $success }}</li>
+                        </ul>
+                    </div>
+                @endif
+
+                @if ($error = session('error_message'))
+                    <div class="alert alert-danger">
+                        <ul class="list_notification">
+                            <li>{{ $error }}</li>
+                        </ul>
+                    </div>
+                @endif
 
                 <div class="form-group">
                     <label class="label">Địa chỉ email</label>

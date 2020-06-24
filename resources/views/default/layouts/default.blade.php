@@ -8,6 +8,7 @@
     @yield('head')
 
     <link rel="stylesheet" href="{{ asset('css/app.css') . '?m=' . filemtime('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('themify-icons/themify-icons.css') . '?m=' . filemtime('themify-icons/themify-icons.css') }}">
     @stack('styles')
 </head>
 
