@@ -11,4 +11,31 @@
         margin-top: -4px;
         min-height: 300px;
     }
+
+    .tab-content-types-wrapper {
+        width: 200px;
+        border: 1px solid #ccc;
+        padding: 0;
+        background: #fff;
+
+        li {
+            list-style: none;
+            width: 100%;
+            border-bottom: 1px solid #ccc;
+            padding: 5px 10px;
+            cursor: pointer;
+
+            span {
+                margin-right: 0.8rem;
+            }
+
+            &:last-child {
+                border: none;
+            }
+
+            &:hover {
+                background: #def0ff;
+            }
+        }
+    }
 }
