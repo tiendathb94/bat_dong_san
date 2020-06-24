@@ -6,12 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Address extends Model
 {
+    public $timestamps = false;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = ['province_id', 'district_id', 'ward_id', 'address'];
+
+    protected $with = ['district', 'province', 'ward'];
 
     public function addressable()
     {
