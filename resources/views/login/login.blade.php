@@ -55,9 +55,14 @@
                     <label class="label">Địa chỉ email</label>
                     <input type="password" class="form-control" name="password"  placeholder="*******">
                 </div>
-                <div class="btn_submit">
-                    <button type="submit" class="btn btn-primary">Đăng nhập ngay</button>
-                    <a href="/reset-password" class="reset_pw">Quên mật khẩu</a>
+                <button type="submit" class="btn btn-primary">Đăng nhập ngay</button>
+
+                <div style="margin-top: 20px;">
+                    <div style=" display: flex">
+                        <a style="width: 49%; height: 34px; font-size: 16px" href="{{ url('/auth/redirect/facebook') }}" class="btn btn-primary"><i class="fa fa-facebook"></i> Facebook</a>
+                        &nbsp;&nbsp;
+                        <a style="width: 49%; height: 34px; font-size: 16px" href="{{ url('/auth/redirect/google') }}" class="btn btn-danger"><i class="fa fa-google"></i> Google</a>
+                    </div>
                 </div>
                 
             </form>
