@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import CreateTabButton from "./CreateTabButton"
 import TabForm from "./TabForm"
+import draftToHtml from 'draftjs-to-html'
+import { EditorState, convertToRaw } from 'draft-js'
 import classnames from 'classnames'
 
 class TabManager extends Component {
@@ -39,7 +41,22 @@ class TabManager extends Component {
         const tabContentsFormRawValues = []
         this.state.tabContents.forEach((tabContent) => {
             const tabContentFormRawValues = { name: tabContent.name, layout: tabContent.layout }
+
+            if (tabContent.values) {
+                for (const k in tabContent.values) {
+                    const value = tabContent.values[k]
+                    if (value instanceof EditorState) {
+                        tabContentFormRawValues[k] = draftToHtml(convertToRaw(value.getCurrentContent()))
+                    } else {
+                        tabContentFormRawValues[k] = value
+                    }
+                }
+            }
+
+            tabContentsFormRawValues.push(tabContentFormRawValues)
         })
+
+        return tabContentsFormRawValues
     }
 
     render () {

@@ -14,6 +14,8 @@ class CreateForm extends Component {
                 project_overview: EditorState.createEmpty(),
             }
         }
+
+        this.tabManager = React.createRef()
     }
 
     onSyncAddress = (address) => {
@@ -32,6 +34,12 @@ class CreateForm extends Component {
         this.setState({ formValues: { ...this.state.formValues, [event.target.name]: event.target.value } })
     }
 
+    onClickSaveProjectButton = () => {
+        const values = this.state.formValues
+        values.tab_contents = this.tabManager.current.getTabContentsFormRawValues()
+        console.log(values)
+    }
+
     render () {
         return (
             <div>
@@ -47,7 +55,7 @@ class CreateForm extends Component {
                                 <label>Tên dự án</label>
                                 <input
                                     name="long_name"
-                                    value={this.state.formValues.long_name}
+                                    value={this.state.formValues.long_name || ''}
                                     onChange={this.setFormFieldValue}
                                     placeholder="Nhập tên dự án"
                                     className="form-control"
@@ -60,7 +68,7 @@ class CreateForm extends Component {
                                 <label>Tên ngắn của dự án</label>
                                 <input
                                     name="short_name"
-                                    value={this.state.formValues.short_name}
+                                    value={this.state.formValues.short_name || ''}
                                     onChange={this.setFormFieldValue}
                                     placeholder="Nhập tên ngắn của dự án"
                                     className="form-control"
@@ -77,11 +85,26 @@ class CreateForm extends Component {
                         </div>
 
                         <div className="row">
-                            <div className="col form-group">
+                            <div className="form-group col col-sm-12 col-md-6">
+                                <label>Tổng diện tích</label>
+                                <div className="input-group">
+                                    <input
+                                        name="total_area"
+                                        value={this.state.formValues.total_area || ''}
+                                        onChange={this.setFormFieldValue}
+                                        placeholder="Tổng diện tích dự án"
+                                        className="form-control"
+                                    />
+                                    <div className="input-group-append">
+                                        <span className="input-group-text">m<sup>2</sup></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col form-group col-sm-12 col-md-6">
                                 <label>Quy mô dự án</label>
                                 <input
                                     name="project_scale"
-                                    value={this.state.formValues.project_scale}
+                                    value={this.state.formValues.project_scale || ''}
                                     onChange={this.setFormFieldValue}
                                     placeholder="Mô tả quy mô dự án"
                                     className="form-control"
@@ -109,7 +132,18 @@ class CreateForm extends Component {
                     <div className="row">
                         <div className="col">
                             <h3>Nội dung nâng cao</h3>
-                            <TabManager/>
+                            <TabManager ref={this.tabManager}/>
+                        </div>
+                    </div>
+
+                    <div className="row mt-3">
+                        <div className="col">
+                            <button
+                                className="btn btn-primary btn-save-project"
+                                onClick={this.onClickSaveProjectButton}
+                            >
+                                Lưu dự án
+                            </button>
                         </div>
                     </div>
                 </div>
