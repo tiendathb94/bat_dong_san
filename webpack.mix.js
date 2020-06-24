@@ -18,6 +18,7 @@ mix
     .sass('resources/sass/app.scss', 'public/css')
     .sass('resources/sass/pages/project/create.scss', 'public/css/pages/project')
     .sass('resources/sass/pages/users/index.scss', 'public/css/pages/users')
+    .sass('resources/sass/pages/auth/reset-password.scss', 'public/css/pages/auth');
 
 // CSS module library
 mix.reactCSSModules()

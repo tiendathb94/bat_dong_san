@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import AddressForm from "../../../containers/address_form"
 import CategoryField from '../../../containers/category_field'
 import { Editor } from 'react-draft-wysiwyg'
+import TabManager from "./tab_manager"
 
 class CreateForm extends Component {
     constructor (props) {
@@ -90,6 +91,14 @@ class CreateForm extends Component {
                                 <label>Giới thiệu dự án</label>
                                 <Editor/>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="container">
+                    <div className="row">
+                        <div className="col">
+                            <TabManager/>
                         </div>
                     </div>
                 </div>

@@ -29,6 +29,22 @@
                         <p>{{ $error }}</p>
                     </div>
                 @endif
+                
+                @if ($success = session('success_message'))
+                    <div class="alert alert-success">
+                        <ul class="list_notification">
+                            <li>{{ $success }}</li>
+                        </ul>
+                    </div>
+                @endif
+
+                @if ($error = session('error_message'))
+                    <div class="alert alert-danger">
+                        <ul class="list_notification">
+                            <li>{{ $error }}</li>
+                        </ul>
+                    </div>
+                @endif
 
                 <div class="form-group">
                     <label class="label">Địa chỉ email</label>
@@ -40,6 +56,14 @@
                     <input type="password" class="form-control" name="password"  placeholder="*******">
                 </div>
                 <button type="submit" class="btn btn-primary">Đăng nhập ngay</button>
+
+                <div style="margin-top: 20px;">
+                    <div style=" display: flex">
+                        <a style="width: 49%; height: 34px; font-size: 16px" href="{{ url('/auth/redirect/facebook') }}" class="btn btn-primary"><i class="fa fa-facebook"></i> Facebook</a>
+                        &nbsp;&nbsp;
+                        <a style="width: 49%; height: 34px; font-size: 16px" href="{{ url('/auth/redirect/google') }}" class="btn btn-danger"><i class="fa fa-google"></i> Google</a>
+                    </div>
+                </div>
                 
             </form>
             <div class="term">
