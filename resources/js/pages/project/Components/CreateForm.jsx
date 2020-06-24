@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import AddressForm from "../../../containers/address_form"
 import CategoryField from '../../../containers/category_field'
 import { Editor } from 'react-draft-wysiwyg'
+import { EditorState } from 'draft-js'
 import TabManager from "./tab_manager"
 
 class CreateForm extends Component {
@@ -9,7 +10,9 @@ class CreateForm extends Component {
         super(props)
 
         this.state = {
-            formValues: {}
+            formValues: {
+                project_overview: EditorState.createEmpty(),
+            }
         }
     }
 
@@ -19,6 +22,10 @@ class CreateForm extends Component {
 
     onChangeCategory = (event) => {
         this.setState({ formValues: { ...this.state.formValues, category: event.target.value } })
+    }
+
+    onProjectOverviewChange = (editorState) => {
+        this.setState({ formValues: { ...this.state.formValues, project_overview: editorState } })
     }
 
     setFormFieldValue = (event) => {
@@ -49,7 +56,7 @@ class CreateForm extends Component {
                         </div>
 
                         <div className="row">
-                            <div className="form-group col">
+                            <div className="form-group col col-sm-12 col-md-6">
                                 <label>Tên ngắn của dự án</label>
                                 <input
                                     name="short_name"
@@ -60,7 +67,17 @@ class CreateForm extends Component {
                                 />
                             </div>
 
-                            <div className="form-group col">
+                            <div className="col col-sm-12 col-md-6">
+                                <CategoryField
+                                    label="Loại hình phát triển"
+                                    destinationEntity="App\Entities\Project"
+                                    onChange={this.onChangeCategory}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="row">
+                            <div className="col form-group">
                                 <label>Quy mô dự án</label>
                                 <input
                                     name="project_scale"
@@ -68,16 +85,6 @@ class CreateForm extends Component {
                                     onChange={this.setFormFieldValue}
                                     placeholder="Mô tả quy mô dự án"
                                     className="form-control"
-                                />
-                            </div>
-                        </div>
-
-                        <div className="row">
-                            <div className="col">
-                                <CategoryField
-                                    label="Loại hình phát triển"
-                                    destinationEntity="App\Entities\Project"
-                                    onChange={this.onChangeCategory}
                                 />
                             </div>
                         </div>
@@ -89,15 +96,19 @@ class CreateForm extends Component {
                         <div className="row">
                             <div className="col">
                                 <label>Giới thiệu dự án</label>
-                                <Editor/>
+                                <Editor
+                                    editorState={this.state.formValues.project_overview}
+                                    onEditorStateChange={this.onProjectOverviewChange}
+                                />
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div className="container">
+                <div className="container mt-3">
                     <div className="row">
                         <div className="col">
+                            <h3>Nội dung nâng cao</h3>
                             <TabManager/>
                         </div>
                     </div>

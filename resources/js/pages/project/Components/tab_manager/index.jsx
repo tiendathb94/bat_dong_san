@@ -29,6 +29,19 @@ class TabManager extends Component {
         this.setState({ tabContents })
     }
 
+    setTabContentValues (tabIndex, values) {
+        const tabContents = this.state.tabContents
+        tabContents[tabIndex].values = values
+        this.setState({ tabContents })
+    }
+
+    getTabContentsFormRawValues () {
+        const tabContentsFormRawValues = []
+        this.state.tabContents.forEach((tabContent) => {
+            const tabContentFormRawValues = { name: tabContent.name, layout: tabContent.layout }
+        })
+    }
+
     render () {
         return (
             <div className="mt-3">
@@ -56,6 +69,7 @@ class TabManager extends Component {
                     <TabForm
                         tabContent={this.state.tabContents[this.state.activeTabIndex]}
                         onChangeTabName={(name) => this.onChangeTabContentName(this.state.activeTabIndex, name)}
+                        onChangeTabValues={(values) => this.setTabContentValues(this.state.activeTabIndex, values)}
                         key={this.state.activeTabIndex}
                     />
                 }
