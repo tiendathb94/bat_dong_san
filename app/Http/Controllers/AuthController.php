@@ -13,52 +13,56 @@ use Illuminate\Support\Facades\Mail;
 class AuthController extends Controller
 {
     private $user;
-    public function __construct(User $user) {
+
+    public function __construct(User $user)
+    {
         $this->user = $user;
     }
 
-    public function registerForm() {
+    public function registerForm()
+    {
 
-        if( Auth::user() ) {
+        if (Auth::user()) {
             return redirect()->route('home');
         }
 
         return view('login.register');
     }
 
-    public function registerStore( Request $request ) {
+    public function registerStore(Request $request)
+    {
 
         request()->validate([
             'email' => 'required|email|unique:users',
             'password' => 'max:30|min:8|required_with:confirm_password|same:confirm_password',
             'confirm_password' => 'max:30|min:8',
-            'fullname' =>  'required',
+            'fullname' => 'required',
             'gender' => 'required',
             'type' => 'required',
-            'tax'   => 'required'
+            'tax' => 'required'
         ],
-        [
-            'email.required' => 'Email không được để trống',
-            'email.unique' => 'Email đã tồn tại',
-            'email.email'=> 'Email không đúng định dạng',
-            'password.max' => 'Mật khẩu tối đa 30 ký tự',
-            'password.min' => 'Mật khẩu tối thiểu 8 ký tự',
-            'password.required_with' => 'Mật khẩu không được để trống',
-            'password.same' => 'Mật khẩu Không trùng khớp',
-            'confirm_password.max' => 'Mật khẩu tối đa 30 ký tự',
-            'confirm_password.min' => 'Mật khẩu tối thiểu 8 ký tự',
-            'fullname.required'=> 'Tên đầy đủ không được để trống',
-            'tax.required' => 'Mã số thuế / CMND không được để trống'
-        ]);
+            [
+                'email.required' => 'Email không được để trống',
+                'email.unique' => 'Email đã tồn tại',
+                'email.email' => 'Email không đúng định dạng',
+                'password.max' => 'Mật khẩu tối đa 30 ký tự',
+                'password.min' => 'Mật khẩu tối thiểu 8 ký tự',
+                'password.required_with' => 'Mật khẩu không được để trống',
+                'password.same' => 'Mật khẩu Không trùng khớp',
+                'confirm_password.max' => 'Mật khẩu tối đa 30 ký tự',
+                'confirm_password.min' => 'Mật khẩu tối thiểu 8 ký tự',
+                'fullname.required' => 'Tên đầy đủ không được để trống',
+                'tax.required' => 'Mã số thuế / CMND không được để trống'
+            ]);
 
         try {
 
-            $dataSave = $request->only('email', 'fullname','tax');
+            $dataSave = $request->only('email', 'fullname', 'tax');
 
-            $dataSave['type'] = (int) $request->type;
-            $dataSave['gender'] = (int) $request->gender;
+            $dataSave['type'] = (int)$request->type;
+            $dataSave['gender'] = (int)$request->gender;
             $dataSave['password'] = bcrypt($request->password);
-            $dataSave['remember_token'] =  (new Token())->Unique('users', 'remember_token', 60);
+            $dataSave['remember_token'] = (new Token())->Unique('users', 'remember_token', 60);
 
             DB::beginTransaction();
 
@@ -86,24 +90,28 @@ class AuthController extends Controller
         }
     }
 
-    public function loginForm() {
+    public function loginForm()
+    {
 
         return view('login.login');
     }
 
-    public function loginStore( Request $request ) {
+    public function loginStore(Request $request)
+    {
 
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-
+            Auth::guard('api')->attempt($credentials);
             return redirect()->route('home');
         }
+
         $request->flash();
         return back()->with('error', 'Sai tài khoản hoặc mật khẩu!');
     }
 
-    public function logout( Request $request ) {
+    public function logout(Request $request)
+    {
 
         Auth::logout();
 
@@ -111,16 +119,17 @@ class AuthController extends Controller
 
     }
 
-    public function confirm(Request $request) {
+    public function confirm(Request $request)
+    {
 
-        if( request('email') && request('remember_token') ) {
+        if (request('email') && request('remember_token')) {
             $record = DB::table('users')->where('email', request('email'))->where('remember_token', request('remember_token'));
-            if( $record->first() ){
+            if ($record->first()) {
                 $record->update([
                     'email_verified_at' => now(),
                     'remember_token' => (new Token())->Unique('users', 'remember_token', 60)
                 ]);
-            return redirect()->route('login')->with('success', 'Xác thực thành công! mời đăng nhập để tiếp tục!');
+                return redirect()->route('login')->with('success', 'Xác thực thành công! mời đăng nhập để tiếp tục!');
             }
         }
         return redirect()->route('login')->with('error', 'Xác thực không thành công!');

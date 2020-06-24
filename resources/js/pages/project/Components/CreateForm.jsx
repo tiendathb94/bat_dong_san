@@ -4,6 +4,8 @@ import CategoryField from '../../../containers/category_field'
 import { Editor } from 'react-draft-wysiwyg'
 import { EditorState } from 'draft-js'
 import TabManager from "./tab_manager"
+import axios from 'axios'
+import config from "../../../config"
 
 class CreateForm extends Component {
     constructor (props) {
@@ -34,10 +36,12 @@ class CreateForm extends Component {
         this.setState({ formValues: { ...this.state.formValues, [event.target.name]: event.target.value } })
     }
 
-    onClickSaveProjectButton = () => {
+    onClickSaveProjectButton = async () => {
         const values = this.state.formValues
         values.tab_contents = this.tabManager.current.getTabContentsFormRawValues()
-        console.log(values)
+
+        const response = await axios.post(`${config.api.baseUrl}/project/create`, values)
+        console.log(response)
     }
 
     render () {
