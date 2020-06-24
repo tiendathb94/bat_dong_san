@@ -39,8 +39,8 @@
             display: inline-block ;
         }
         .form-check label{
-           margin-left: 4px;
-           margin-right: 20px
+            margin-left: 4px;
+            margin-right: 20px
         }
         .form-check input{
             vertical-align: bottom
@@ -48,7 +48,7 @@
         .form-check-input{
             margin-top: 5px !important
         }
-        
+
         h2{
             font-weight: 800;
         }
@@ -57,7 +57,7 @@
                 width: 100%;
                 margin-top: 16px
             }
-            
+
             .bds-img-bn{
                 display: none;
             }
@@ -72,14 +72,25 @@
             }
 
         }
-        
+
         .term{
             font-size: 14px
         }
         .alert{
             font-size: 16px;
         }
+
+        .btn_submit {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .reset_pw:hover {
+            text-decoration: none;
+        }
+
     </style>
+    @stack('styles')
 </head>
 
 <body>
@@ -90,20 +101,20 @@
             <img src="https://file4.batdongsan.com.vn/images/newhome/logobds04.svg" alt="">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>
         </button>
-      
+
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            
-          </ul>
-          <form class="my-2 my-lg-0">
-              <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                  <li class="nav-item active">
-                    <a class="nav-link" href="#">0842.467.996</a>
-                  </li>
-              </ul>
-          </form>
+            <ul class="navbar-nav mr-auto">
+
+            </ul>
+            <form class="my-2 my-lg-0">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">0842.467.996</a>
+                    </li>
+                </ul>
+            </form>
         </div>
     </nav>
 
