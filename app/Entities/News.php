@@ -13,9 +13,9 @@ class News extends Model
     ];
 
     const STATUSES = [
-        1 => 'Decline',
-        2 => 'Approved',
-        3 => 'Awaiting review'
+        1 => 'Từ chối',
+        2 => 'Đã duyệt',
+        3 => 'Đang chờ duyệt'
     ];
 
     public function user()

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRoleUsersTable extends Migration
+class AddIndexColumnTitleFromNewsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateRoleUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('role_user', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('user_id');
-            $table->bigInteger('role_id');
-            $table->timestamps();
+        Schema::table('news', function (Blueprint $table) {
+            $table->index('title');
         });
     }
 
@@ -28,6 +25,8 @@ class CreateRoleUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('role_users');
+        Schema::table('news', function (Blueprint $table) {
+            $table->dropIndex('news_title_index');
+        });
     }
 }

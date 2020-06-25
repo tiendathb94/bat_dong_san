@@ -7,6 +7,7 @@
 @section('content')
 @php($user = auth()->user())
 @php($block = 'default.pages.users.blocks.')
+{{ request('message') ?: '' }}
     <div class="mt-5 mb-5 container pt-4">
         <div class="row">
             <div class="col-3">
