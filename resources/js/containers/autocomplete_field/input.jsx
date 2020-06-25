@@ -18,10 +18,16 @@ class Input extends Component {
     }
 
     onChange = (event) => {
-        this.setState({ keyword: event.target.value })
-        if (this.props.onInputComplete) {
-            this.props.onInputComplete(event.target.value)
-        }
+        const keyword = event.target.value
+        this.setState({ keyword })
+
+        // Wait until user typing completed
+        clearTimeout(this.onChangeDelay)
+        this.onChangeDelay = setTimeout(() => {
+            if (this.props.onInputComplete) {
+                this.props.onInputComplete(keyword)
+            }
+        }, 500)
     }
 
     onFocus = () => {
@@ -46,7 +52,7 @@ class Input extends Component {
                         value={this.state.showKeyword ? this.state.keyword : this.state.selectedItemName}
                     />
                     <p className="text-muted small">
-                        Nhập từ khóa để tìm kiếm, ngay sau khi nhập từ khóa hệ thống sẽ hiển
+                        Ngay sau khi nhập từ khóa hệ thống sẽ hiển
                         thị ra những mục phù hợp để lựa chọn
                     </p>
                 </div>
