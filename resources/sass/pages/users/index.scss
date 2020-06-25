@@ -20,10 +20,12 @@
     border-top: 0;
 
     .useravatar {
+        flex-direction: column;
+        display: flex;
+        justify-content: center;
         img.avatar {
             width: 108px;
             height: 108px;
-            margin: 20px 60px;
             border-radius: 56px;
         }
 

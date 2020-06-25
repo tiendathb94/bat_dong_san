@@ -22,7 +22,7 @@ class NewsController extends Controller
     {
         $news = News::findOrFail($id);
         if($news->user_id == auth()->id()) {
-            $news->delete();
+            // $news->delete();
             $message = 'Xóa thành công';
         } else {
             $message = 'Bạn không có quyền thực thi';

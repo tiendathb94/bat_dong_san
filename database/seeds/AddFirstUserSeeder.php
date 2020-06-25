@@ -12,7 +12,7 @@ class AddFirstUserSeeder extends Seeder
      */
     public function run()
     {
-        if (!\DB::table('users')->where('id', 1)->get()) {
+        if (!\DB::table('users')->where('id', 1)->count()) {
             \DB::table('users')->insert([
                 [
                     'id' => 1,

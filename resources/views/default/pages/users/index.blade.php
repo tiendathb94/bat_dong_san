@@ -10,10 +10,10 @@
 {{ request('message') ?: '' }}
     <div class="mt-5 mb-5 container pt-4">
         <div class="row">
-            <div class="col-3">
+            <div class="col-lg-3 col-12 mb-3">
                 @include($block . 'sidebar')
             </div>
-            <div class="col-9 p-0">
+            <div class="col-lg-9 col-12 p-lg-0">
                 @include($block . 'title', ['title' => 'QUẢN LÝ TIN RAO BÁN, CHO THUÊ'])
                 @include($block . 'search')
                 @include($block . 'table_news', ['news' => $news])
