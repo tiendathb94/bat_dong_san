@@ -14,6 +14,9 @@ class Project extends Model
     const StatusApproved = 2;
     const StatusDeclined = 3;
 
+    const InvestorTypeInvest = 1;
+    const InvestorTypeDistribute = 2;
+
     /**
      * The attributes that are mass assignable.
      *

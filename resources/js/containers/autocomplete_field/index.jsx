@@ -9,7 +9,7 @@ class AutocompleteField extends Component {
         super(props)
         this.state = {
             selectedItem: {},
-            keyword: ''
+            keyword: '',
         }
     }
 
@@ -27,7 +27,11 @@ class AutocompleteField extends Component {
     render () {
         return (
             <div className={Style.autocompleteFieldWrapper}>
-                <Input onInputComplete={this.onInputComplete}/>
+                <Input
+                    onInputComplete={this.onInputComplete}
+                    selectedItemName={this.state.selectedItem.name || ''}
+                    placeholder={this.props.placeholder}
+                />
                 <Items keyword={this.state.keyword} endpoint={this.props.endpoint} onSelectItem={this.onSelectItem}/>
             </div>
         )
@@ -37,6 +41,7 @@ class AutocompleteField extends Component {
 AutocompleteField.propTypes = {
     endpoint: PropTypes.string,
     onChange: PropTypes.func,
+    placeholder: PropTypes.string,
 }
 
 export default AutocompleteField
