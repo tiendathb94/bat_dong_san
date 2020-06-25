@@ -102,7 +102,7 @@
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
-                                                                <center data-parsed style="min-width:532px;width:100%"><img class="logo float-center" src="https://file4.batdongsan.com.vn/images/newhome/logobds04.svg" align="center" style="-ms-interpolation-mode:bicubic;Margin:0 auto;clear:both;display:block;float:none;margin:0 auto;max-width:100%;outline:0;text-align:center;text-decoration:none;width:200px"></center>
+                                                                <center data-parsed style="min-width:532px;width:100%"><img class="logo float-center" src="/images/logobds04.svg" align="center" style="-ms-interpolation-mode:bicubic;Margin:0 auto;clear:both;display:block;float:none;margin:0 auto;max-width:100%;outline:0;text-align:center;text-decoration:none;width:200px"></center>
                                                                 <table class="spacer" style="border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%">
                                                                     <tbody>
                                                                         <tr style="padding:0;text-align:left;vertical-align:top">

@@ -30,7 +30,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light bds_main_menu">
   <a class="navbar-brand" href="#">
-      <img src="https://file4.batdongsan.com.vn/images/newhome/logobds04.svg" alt="">
+      <img src="/images/logobds04.svg" alt="">
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -111,12 +111,12 @@
           @else
             <li class="nav-item">
               <div class="d-flex info-user align-items-center">
-                <img src="https://file4.batdongsan.com.vn/images/newhome/icon3x/ic_user.png" width="16" height="16">
+                <img src="/images/ic_user.png" width="16" height="16">
                 <a class="nav-link" href="{{ route('pages.users.index') }}">
                     {{ auth()->user()->fullname }}
                 </a>
                 <a class="nav-link" href="{{ route('logout') }}">
-                  <img src="https://file4.batdongsan.com.vn/images/newhome/icon3x/ic_log_out.png" width="16">
+                  <img src="/images/ic_log_out.png" width="16">
                 </a>
               </div>
             </li>

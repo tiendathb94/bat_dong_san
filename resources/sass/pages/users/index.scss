@@ -240,3 +240,22 @@ body {
 .bg-thead {
     background: #f0f0f0;
 }
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.fs-100 {
+    font-size: 100px;
+}
+
+.page-item.active {
+    .page-link {
+        background-color: #055699;
+        border-color: #055699;
+    }
+}
+
+.bg-await {
+    background-color: #e86b2f;
+}

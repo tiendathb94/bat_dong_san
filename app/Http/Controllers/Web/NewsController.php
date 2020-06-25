@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Entities\News;
 
 class NewsController extends Controller
 {
@@ -17,5 +18,12 @@ class NewsController extends Controller
         # code...
     }
 
-
+    public function destroy($id)
+    {
+        $news = News::findOrFail($id);
+        if($news->user_id == auth()->id()) {
+            $news->delete();
+        }
+        return redirect()->back();
+    }
 }

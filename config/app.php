@@ -123,6 +123,9 @@ return [
 
     'cipher' => 'AES-256-CBC',
     'paginate' => env('PAGINATE', 10),
+    'format' => [
+        'date' => env('FORMAT_DATE', 'd/m/yy')
+    ],
 
     /*
     |--------------------------------------------------------------------------
