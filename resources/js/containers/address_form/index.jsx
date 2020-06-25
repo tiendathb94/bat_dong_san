@@ -48,14 +48,14 @@ class AddressForm extends Component {
             <div>
                 <div className="container">
                     <div className="row">
-                        <div className="col">
+                        <div className="col col-sm-12 col-md-6">
                             <Province
                                 value={this.state.provinceId}
                                 onChange={(event) => this.setFormValue('provinceId', event.target.value)}
                             />
                         </div>
 
-                        <div className="col">
+                        <div className="col col-sm-12 col-md-6">
                             <District
                                 value={this.state.districtId}
                                 onChange={(event) => this.setFormValue('districtId', event.target.value)}
@@ -65,7 +65,7 @@ class AddressForm extends Component {
                     </div>
 
                     <div className="row">
-                        <div className="col">
+                        <div className="col col-sm-12 col-md-6">
                             <Ward
                                 value={this.state.wardId}
                                 onChange={(event) => this.setFormValue('wardId', event.target.value)}
@@ -73,7 +73,7 @@ class AddressForm extends Component {
                             />
                         </div>
 
-                        <div className="col">
+                        <div className="col col-sm-12 col-md-6">
                             <Line
                                 value={this.state.line}
                                 onChange={(event) => this.setFormValue('line', event.target.value)}

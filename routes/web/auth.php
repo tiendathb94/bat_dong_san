@@ -6,7 +6,7 @@ Route::get('/callback/{provider}', 'SocialController@callback');
 Route::get('/dang-ky-tai-khoan', 'AuthController@registerForm')->name('registerForm');
 Route::post('/dang-ky-tai-khoan', 'AuthController@registerStore')->name('registerStore');
 
-Route::get('/dang-nhap', 'AuthController@loginForm')->name('loginForm');
+Route::get('/dang-nhap', 'AuthController@loginForm')->name('login');
 Route::post('/dang-nhap', 'AuthController@loginStore')->name('loginStore');
 
 Route::get('/dang-xuat', 'AuthController@logout')->name('logout');
@@ -29,7 +29,7 @@ Route::get('/new-password', 'Web\AuthController@showPasswordResetForm')->default
 ])->name('default.pages.auth.new-password');
 
 Route::post('/new-password', 'Web\AuthController@resetPassword')->defaults('_config', [
-    'redirect' => 'loginForm'
+    'redirect' => 'login'
 ])->name('default.pages.auth.new-password');
 
 // Route::group([ 'prefix'=>'abc', 'middleware' => ['permission', 'email'] ], function () {

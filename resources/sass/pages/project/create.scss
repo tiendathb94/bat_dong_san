@@ -50,11 +50,11 @@
             &.not-active {
                 background: #e7f4ff;
                 border: 1px solid #c8def1;
-            }
 
-            &:hover {
-                background-color: #4aa0e6;
-                border-color: #3f9ae5;
+                &:hover {
+                    background-color: #4aa0e6;
+                    border-color: #3f9ae5;
+                }
             }
         }
     }
@@ -68,5 +68,12 @@
         border: 1px solid #ccc;
         padding: 5px;
         margin-top: 5px;
+    }
+
+    .btn-save-project {
+        width: 140px;
+        float: right;
+        padding-top: 7px;
+        padding-bottom: 7px;
     }
 }

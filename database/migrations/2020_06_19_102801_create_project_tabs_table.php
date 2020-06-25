@@ -16,9 +16,12 @@ class CreateProjectTabsTable extends Migration
         Schema::create('project_tabs', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->unsignedBigInteger('project_id');
             $table->string('name', 255);
             $table->string('template', 255);
             $table->longText('contents');
+
+            $table->foreign('project_id')->on('projects')->references('id')->onDelete('cascade');
         });
     }
 

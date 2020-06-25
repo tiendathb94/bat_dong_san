@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { isEqual } from 'lodash'
 
 class TabForm extends Component {
     constructor (props) {
@@ -8,8 +9,8 @@ class TabForm extends Component {
         this.state = {}
     }
 
-    static getDerivedStateFromProps (props) {
-        return { name: props.tabContent.name }
+    static getDerivedStateFromProps (props, state) {
+        return { name: props.tabContent.name, values: props.tabContent.values || {} }
     }
 
     onChangeTabContentName = (event) => {
@@ -17,6 +18,12 @@ class TabForm extends Component {
 
         if (this.props.onChangeTabName) {
             this.props.onChangeTabName(event.target.value)
+        }
+    }
+
+    onFormChange = (formValues) => {
+        if (this.props.onChangeTabValues) {
+            this.props.onChangeTabValues(formValues)
         }
     }
 
@@ -36,7 +43,7 @@ class TabForm extends Component {
                     />
                 </div>
 
-                <LayoutComponent/>
+                <LayoutComponent onFormChange={this.onFormChange} values={this.state.values}/>
             </div>
         )
     }
@@ -45,6 +52,7 @@ class TabForm extends Component {
 TabForm.propTypes = {
     tabContent: PropTypes.object,
     onChangeTabName: PropTypes.func,
+    onChangeTabValues: PropTypes.func
 }
 
 export default TabForm

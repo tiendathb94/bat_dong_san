@@ -103,7 +103,7 @@
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
           @if(!Auth::user())
             <li class="nav-item active">
-              <a class="nav-link" href="{{ route('loginForm') }}">Đăng nhập <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="{{ route('login') }}">Đăng nhập <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ route('registerForm') }}">Đăng ký</a>
@@ -123,7 +123,7 @@
           @endif
             <li class="nav-item">
                 <a class="nav-link bds-button" href="#">
-                    <span> Tạo tin rao vặt </span>    
+                    <span> Tạo tin rao vặt </span>
                 </a>
             </li>
         </ul>
