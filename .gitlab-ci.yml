@@ -17,7 +17,7 @@ build:
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/docker/Dockerfile --destination $CONTAINER_IMAGE
   only:
-    - develop
+    - staging
 
 deploy:
   stage: deploy
@@ -26,4 +26,4 @@ deploy:
     - upgrade --environment Production --stack batdongsan --service batdongsan-app --new-image $CONTAINER_IMAGE --finish-upgrade --start-before-stopping --create
   when: on_success
   only:
-    - develop
+    - staging
