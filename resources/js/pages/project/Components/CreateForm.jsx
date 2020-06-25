@@ -59,7 +59,7 @@ class CreateForm extends Component {
     }
 
     onChangeInvestor = (investorId) => {
-        console.log(investorId)
+        this.setState({ formValues: { ...this.state.formValues, investor_id: investorId } })
     }
 
     render () {
@@ -112,6 +112,7 @@ class CreateForm extends Component {
                                 <div className="input-group">
                                     <input
                                         name="total_area"
+                                        type="number"
                                         value={this.state.formValues.total_area || ''}
                                         onChange={this.setFormFieldValue}
                                         placeholder="Tổng diện tích dự án"
@@ -139,6 +140,7 @@ class CreateForm extends Component {
                                 <label>Giá</label>
                                 <input
                                     name="price"
+                                    type="number"
                                     value={this.state.formValues.price || ''}
                                     onChange={this.setFormFieldValue}
                                     placeholder="Nhập giá của dự án"
@@ -167,12 +169,26 @@ class CreateForm extends Component {
 
                     <div className="container">
                         <div className="row">
-                            <div className="col">
+                            <div className="col col-sm-12 col-md-6">
                                 <label>Chủ đầu tư</label>
                                 <AutocompleteField
                                     endpoint="investor/autocomplete-field-search"
                                     onChange={this.onChangeInvestor}
+                                    placeholder="Nhập tên của chủ đầu tư để tìm kiếm"
                                 />
+                            </div>
+                            <div className="col col-sm-12 col-md-6 form-group">
+                                <label>Loại hình đầu tư</label>
+                                <select
+                                    name="investor_type"
+                                    value={this.state.formValues.investor_type}
+                                    className="form-control"
+                                    onChange={this.setFormFieldValue}
+                                >
+                                    <option>-- Loại hình đầu tư --</option>
+                                    <option value={1}>Chủ đầu tư</option>
+                                    <option value={2}>Nhà phân phối</option>
+                                </select>
                             </div>
                         </div>
 

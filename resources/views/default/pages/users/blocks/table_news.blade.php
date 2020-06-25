@@ -1,3 +1,7 @@
+@if(session('message')['text'])
+<div class="alert alert-{{ session('message')['status'] }} fs-12">{{ session('message')['text'] }}</div>
+@php(session()->forget('message'))
+@endif
 <table class="table table-bordered fs-12 text-center">
     <thead>
         <tr class="bg-thead">
@@ -38,3 +42,12 @@
     </tbody>
 </table>
 <div class="float-right fs-12">{{ $news->appends(request()->all())->links() }}</div>
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+          setTimeout(() => {
+            $('.alert').addClass('d-none');
+          }, 2000)
+        })
+    </script>
+@endpush
