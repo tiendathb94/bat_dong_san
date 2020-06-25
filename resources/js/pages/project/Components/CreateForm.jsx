@@ -8,6 +8,7 @@ import axios from 'axios'
 import config from "../../../config"
 import draftToHtml from "draftjs-to-html"
 import { cloneDeep } from 'lodash'
+import AutocompleteField from "../../../containers/autocomplete_field"
 
 class CreateForm extends Component {
     constructor (props) {
@@ -55,6 +56,10 @@ class CreateForm extends Component {
 
         const response = await axios.post(`${config.api.baseUrl}/project/create`, values)
         console.log(response)
+    }
+
+    onChangeInvestor = (investorId) => {
+        console.log(investorId)
     }
 
     render () {
@@ -161,6 +166,16 @@ class CreateForm extends Component {
                     <AddressForm onSync={this.onSyncAddress}/>
 
                     <div className="container">
+                        <div className="row">
+                            <div className="col">
+                                <label>Chủ đầu tư</label>
+                                <AutocompleteField
+                                    endpoint="investor/autocomplete-field-search"
+                                    onChange={this.onChangeInvestor}
+                                />
+                            </div>
+                        </div>
+
                         <div className="row">
                             <div className="col">
                                 <label>Giới thiệu dự án</label>
