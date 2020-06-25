@@ -10,7 +10,7 @@ class Items extends Component {
         this.state = {
             data: [],
             show: false,
-            loading: false,
+            loading: true,
         }
 
         this.node = React.createRef()
@@ -55,11 +55,14 @@ class Items extends Component {
             return
         }
 
+        this.setState({ show: true, loading: true })
+
         const response = await axios.get(`${config.api.baseUrl}/${this.props.endpoint}?keyword=${this.state.keyword}`)
-        this.setState({ data: response.data, show: true })
+        this.setState({ data: response.data, loading: false })
     }
 
     onClickItem (item) {
+        this.setState({ show: false })
         if (this.props.onSelectItem) {
             this.props.onSelectItem(item)
         }
@@ -72,17 +75,32 @@ class Items extends Component {
 
         return (
             <div ref={this.node}>
-                {
-                    this.state.data && this.state.data.length > 0 && <ul className={Style.itemsWrapper}>
-                        {
-                            this.state.data.map((item) =>
-                                <li key={item.value} onClick={() => this.onClickItem(item)} title={item.name}>
-                                    <span>{item.name}</span>
-                                </li>
-                            )
-                        }
-                    </ul>
-                }
+                <div className={Style.itemsWrapper}>
+                    {
+                        this.state.loading && <div className={Style.loadingWrapper}>
+                            <span className="spinner-border"></span> Vui lòng đợi...
+                        </div>
+                    }
+
+                    {
+                        !this.state.loading && this.state.data && this.state.data.length > 0 && <ul>
+                            {
+                                this.state.data.map((item) =>
+                                    <li key={item.value} onClick={() => this.onClickItem(item)} title={item.name}>
+                                        <span>{item.name}</span>
+                                    </li>
+                                )
+                            }
+                        </ul>
+                    }
+
+                    {
+                        !this.state.loading && (!this.state.data || this.state.data.length < 1) &&
+                        <div className={Style.loadingWrapper}>
+                            Không có mục nào phù hợp
+                        </div>
+                    }
+                </div>
             </div>
         )
     }
