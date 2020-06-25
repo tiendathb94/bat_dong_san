@@ -1,0 +1,23 @@
+.personal-menu-wrapper {
+    border: 1px solid #ccc;
+
+    .personal-menu-heading {
+        font-size: 1.7rem;
+        background: #ccc;
+        padding: 5px;
+    }
+
+    ul {
+        padding: 8px;
+        margin: 0;
+
+        li {
+            padding-left: 3px;
+            list-style: none;
+            span {
+                font-size: 1.3rem;
+            }
+        }
+    }
+
+}
