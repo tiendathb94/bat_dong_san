@@ -8,6 +8,10 @@ class UserController extends Controller
 {
     public function index()
     {
-        return view($this->_config['view']);
+        $news = auth()->user()->news()->paginate(config('app.paginate'));
+        $data = [
+            'news' => $news
+        ];
+        return view($this->_config['view'], $data);
     }
 }
