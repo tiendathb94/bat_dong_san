@@ -13,7 +13,7 @@ class InvestorsTableSeeder extends Seeder
     {
         \DB::table('investors')->delete();
 
-        \DB::table('districts')->insert([
+        \DB::table('investors')->insert([
             [
                 'id' => 1,
                 'created_at' => '2020-06-25 07:05:45',
