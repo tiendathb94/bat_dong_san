@@ -16,11 +16,21 @@
         color: #fff;
         font-weight: 500;
     }
+
+    .bds_main_menu ul li .info-user a {
+      color: #4F4F4F !important;
+      font-weight: normal;
+      font-size: 14px;
+    }
+
+    .bds_main_menu ul li .info-user a img {
+      margin-left: 6px;
+    }
 </style>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light bds_main_menu">
   <a class="navbar-brand" href="#">
-      <img src="https://file4.batdongsan.com.vn/images/newhome/logobds04.svg" alt="">
+      <img src="/images/logobds04.svg" alt="">
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -100,7 +110,15 @@
             </li>
           @else
             <li class="nav-item">
-              <a class="nav-link" href="{{ route('logout') }}">Đăng xuất</a>
+              <div class="d-flex info-user align-items-center">
+                <img src="/images/ic_user.png" width="16" height="16">
+                <a class="nav-link" href="{{ route('pages.users.index') }}">
+                    {{ auth()->user()->fullname }}
+                </a>
+                <a class="nav-link" href="{{ route('logout') }}">
+                  <img src="/images/ic_log_out.png" width="16">
+                </a>
+              </div>
             </li>
           @endif
             <li class="nav-item">

@@ -98,7 +98,7 @@
 <div class="grid">
     <nav class="navbar navbar-expand-lg navbar-light bg-light top">
         <a class="navbar-brand" href="{{ route('home') }}">
-            <img src="https://file4.batdongsan.com.vn/images/newhome/logobds04.svg" alt="">
+            <img src="/images/logobds04.svg" alt="">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
