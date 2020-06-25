@@ -1,0 +1,45 @@
+.autocompleteFieldWrapper {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.autocompleteFieldInputWrapper {
+    input {
+        padding-left: 32px;
+    }
+
+    span {
+        position: absolute;
+        top: 9px;
+        left: 9px;
+    }
+}
+
+.itemsWrapper {
+    position: absolute;
+    z-index: 10;
+    background: #fff;
+    width: 100%;
+    border: 1px solid #dcdcdc;
+    padding: 0;
+    margin: 0;
+    top: 34px;
+
+    li {
+        cursor: pointer;
+        list-style: none;
+        padding: 5px 5px 5px 15px;
+        border-bottom: 1px solid #ccc;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+
+        &:last-child {
+            border: none;
+        }
+
+        &:hover {
+            background: #ddf0ff;
+        }
+    }
+}
