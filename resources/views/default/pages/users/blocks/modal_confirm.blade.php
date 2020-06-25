@@ -6,7 +6,7 @@
       </div>
       <div class="modal-body text-center">
         <i class="ti-alert text-danger fs-100"></i>
-        <h3 class="my-5">Bạn chắc chắn muốn xóa?</h3>
+        <h3 class="my-5">Bạn có chắc chắn muốn xóa bài tin tức này không?</h3>
       </div>
       <div class="modal-footer border-0 justify-content-center">
         <form action="" method="POST" id="formDelete">

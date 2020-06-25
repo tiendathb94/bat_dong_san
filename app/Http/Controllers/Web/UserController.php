@@ -11,7 +11,7 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
-        $news = auth()->user()->news();
+        $news = News::where('user_id', auth()->id());
         if(isset($request->title)) {
             $news->where('title', 'LIKE', "%$request->title%");
         }
