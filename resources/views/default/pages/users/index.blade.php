@@ -16,6 +16,7 @@
                 @include($block . 'title', ['title' => 'QUẢN LÝ TIN RAO BÁN, CHO THUÊ'])
                 @include($block . 'search')
                 @include($block . 'table_news', ['news' => $news])
+                @include($block . 'modal_confirm')
                 <span class="font-weight-bold mt-5 mb-3 fs-12">Note</span>
                 <div class="fs-12">
                 Trong trường hợp Quý khách muốn đăng và quản lý tin rao tiếng Anh, xin vui lòng click vào đây 
