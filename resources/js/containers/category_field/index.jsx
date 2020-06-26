@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import axios from "axios"
 import config from "../../config"
+import classnames from "classnames"
 
 class CategoryField extends Component {
     constructor (props) {
@@ -11,6 +12,10 @@ class CategoryField extends Component {
             categories: [],
             value: ''
         }
+    }
+
+    static getDerivedStateFromProps (props) {
+        return { message: props.message }
     }
 
     async componentDidMount () {
@@ -37,7 +42,7 @@ class CategoryField extends Component {
                 <select
                     onChange={this.onChange}
                     value={this.state.value}
-                    className="form-control"
+                    className={classnames({ 'form-control': true, 'is-invalid': !!this.state.message })}
                 >
                     <option>-- {this.props.label} --</option>
                     {
@@ -46,6 +51,7 @@ class CategoryField extends Component {
                         ))
                     }
                 </select>
+                {!!this.state.message && <div className="text-danger form-text">{this.state.message}</div>}
             </div>
         )
     }
@@ -55,6 +61,7 @@ CategoryField.propTypes = {
     label: PropTypes.string,
     onChange: PropTypes.func,
     destinationEntity: PropTypes.string,
+    message: PropTypes.string,
 }
 
 export default CategoryField

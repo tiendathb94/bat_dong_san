@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import config from '../../config'
 import PropTypes from 'prop-types'
+import classnames from 'classnames'
 
 class Province extends Component {
     constructor (props) {
@@ -11,6 +12,10 @@ class Province extends Component {
             provinces: [],
             value: this.props.value,
         }
+    }
+
+    static getDerivedStateFromProps (props) {
+        return { message: props.message }
     }
 
     async componentDidMount () {
@@ -34,7 +39,11 @@ class Province extends Component {
         return (
             <div className="form-group">
                 <label>Tỉnh/Thành phố</label>
-                <select onChange={this.onChange} value={this.state.value} className="form-control">
+                <select
+                    onChange={this.onChange}
+                    value={this.state.value}
+                    className={classnames({ 'form-control': true, 'is-invalid': !!this.state.message })}
+                >
                     <option>-- Tỉnh/Thành phố --</option>
                     {
                         this.state.provinces && this.state.provinces.map((province) => (
@@ -47,6 +56,8 @@ class Province extends Component {
                         ))
                     }
                 </select>
+
+                {!!this.state.message && <div className="text-danger form-text">{this.state.message}</div>}
             </div>
         )
     }
@@ -55,6 +66,7 @@ class Province extends Component {
 Province.propTypes = {
     value: PropTypes.string,
     onChange: PropTypes.func,
+    message: PropTypes.string
 }
 
 export default Province
