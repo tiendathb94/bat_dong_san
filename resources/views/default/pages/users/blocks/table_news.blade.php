@@ -37,4 +37,7 @@
         @endforeach
     </tbody>
 </table>
+@if(!$news->count())
+  <p class="fs-12 text-center">Bạn chưa đăng bài tin tức nào.</p>
+@endif
 <div class="float-right fs-12">{{ $news->appends(request()->all())->links() }}</div>

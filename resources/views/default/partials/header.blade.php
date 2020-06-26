@@ -112,7 +112,7 @@
             <li class="nav-item">
               <div class="d-flex info-user align-items-center">
                 <img src="/images/ic_user.png" width="16" height="16">
-                <a class="nav-link" href="{{ route('pages.users.index') }}">
+                <a class="nav-link" href="{{ route('pages.user.news') }}">
                     {{ auth()->user()->fullname }}
                 </a>
                 <a class="nav-link" href="{{ route('logout') }}">

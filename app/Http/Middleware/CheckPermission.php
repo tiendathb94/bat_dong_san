@@ -37,7 +37,7 @@ class CheckPermission
         }
         $message = [
             'status' => 'error',
-            'text' => 'Bạn không có quyền'
+            'text' => 'Bạn không có quyền thực thi, vui lòng kiểm tra lại.'
         ];
         return back()->with('message', $message);
 

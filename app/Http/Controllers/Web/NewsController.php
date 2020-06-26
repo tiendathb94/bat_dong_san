@@ -23,7 +23,7 @@ class NewsController extends Controller
         $news = News::findOrFail($id);
         $message = [
             'status' => 'danger',
-            'text' => 'Bạn không có quyền thực thi'
+            'text' => 'Bạn không có quyền thực thi, vui lòng kiểm tra lại.'
         ];
         if($news->user_id == auth()->id()) {
             $news->delete();
