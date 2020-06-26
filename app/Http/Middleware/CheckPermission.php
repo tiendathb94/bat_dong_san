@@ -14,9 +14,8 @@ class CheckPermission
     private $user;
     private $permission;
 
-    public function __construct(User $user, Permissions $permission)
-    {
-        $this->user = $user;
+    public function __construct(Permissions $permission) {
+        $this->user = auth()->user();
         $this->permission = $permission;
 
     }
@@ -34,6 +33,10 @@ class CheckPermission
             return $next($request);
         }
 
-        return back()->with('error', 'Bạn không có quyền');
+        $message = [
+            'status' => 'danger',
+            'text' => 'Bạn không có quyền truy cập, vui lòng kiểm tra lại.'
+        ];
+        return back()->with('message', $message);
     }
 }

@@ -8,11 +8,11 @@
     @php($user = auth()->user())
     @php($block = 'default.pages.users.blocks.')
 
-    @include($block . 'title', ['title' => 'Quản lý tin rao bán, cho thuê'])
-    @include($block . 'search')
+    @include($block . 'title', ['title' => 'Quản lý tin tức đang đợi duyệt'])
+    @include($block . 'search_news', ['action' => route('pages.user.approve_news')])
     @include('default.partials.flash-message')
-    @include($block . 'table', ['news' => []])
-    @include($block . 'modal_confirm')
+    @include($block . 'table_approve_news', ['news' => $news])
+    @include($block . 'modal_confirm_update_status')
 @endsection
 
 @push('styles')

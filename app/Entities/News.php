@@ -12,10 +12,14 @@ class News extends Model
         'title', 'slug', 'meta_content','content','thumbnail','status'
     ];
 
+    const DECLINE = 1;
+    const APPROVED = 2;
+    const AWAITING_REVIEW = 3;
+
     const STATUSES = [
-        1 => 'Decline',
-        2 => 'Approved',
-        3 => 'Awaiting review'
+        self::DECLINE => 'Từ chối',
+        self::APPROVED => 'Đã duyệt',
+        self::AWAITING_REVIEW => 'Đang chờ duyệt'
     ];
 
     public function user()

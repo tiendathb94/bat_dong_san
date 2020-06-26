@@ -29,7 +29,7 @@
 </style>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light bds_main_menu">
-  <a class="navbar-brand" href="#">
+  <a class="navbar-brand" href="{{ route('home') }}">
       <img src="/images/logobds04.svg" alt="">
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -112,7 +112,7 @@
             <li class="nav-item">
               <div class="d-flex info-user align-items-center">
                 <img src="/images/ic_user.png" width="16" height="16">
-                <a class="nav-link" href="{{ route('pages.users.index') }}">
+                <a class="nav-link" href="{{ route('pages.user.index') }}">
                     {{ auth()->user()->fullname }}
                 </a>
                 <a class="nav-link" href="{{ route('logout') }}">

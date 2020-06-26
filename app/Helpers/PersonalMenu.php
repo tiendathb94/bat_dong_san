@@ -59,12 +59,14 @@ function personalMenuItemsDefinition()
                     'label' => 'Đăng tin tức'
                 ],
                 [
-                    'route_name' => '',
-                    'label' => 'Xem các tin đã đăng'
+                    'route_name' => 'pages.user.news',
+                    'label' => 'Tin tức đã đăng',
+                    'permission' => 'pages.user.news'
                 ],
                 [
-                    'route_name' => '',
-                    'label' => 'Tin tức đang đợi duyệt'
+                    'route_name' => 'pages.user.approve_news',
+                    'label' => 'Tin tức đang đợi duyệt',
+                    'permission' => 'pages.user.approve_news'
                 ]
             ],
         ]

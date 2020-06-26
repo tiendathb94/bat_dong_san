@@ -11,6 +11,9 @@ class Role extends Model
         'name',
     ];
 
+    const SUPER_ADMIN = 'super_admin';
+    const APPROVE_NEWS = 'approve_news';
+
     public function users()
     {
         return $this->belongsToMany(User::class);

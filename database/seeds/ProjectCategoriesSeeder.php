@@ -12,7 +12,7 @@ class ProjectCategoriesSeeder extends Seeder
      */
     public function run()
     {
-        if (!\DB::table('categories')->where('destination_entity', Project::class)->get()) {
+        if (!\DB::table('categories')->where('destination_entity', Project::class)->count()) {
             \DB::table('categories')->insert([
                 ['created_at' => '2020-06-23 16:33:02', 'updated_at' => '2020-06-23 16:33:02', 'name' => 'Căn hộ, Chung cư', 'slug' => 'can-ho-chung-cu', 'destination_entity' => Project::class],
                 ['created_at' => '2020-06-23 16:33:02', 'updated_at' => '2020-06-23 16:33:02', 'name' => 'Cao ốc văn phòng', 'slug' => 'cao-oc-van-phong', 'destination_entity' => Project::class],
