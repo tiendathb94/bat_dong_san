@@ -16,12 +16,12 @@ class AddFirstUserSeeder extends Seeder
             \DB::table('users')->insert([
                 [
                     'id' => 1,
-                    'email' => 'admin@mailinator.com',
+                    'email' => 'admin@gmail.com',
                     'email_verified_at' => '2020-03-23 14:35:38',
                     'created_at' => '2020-03-23 14:35:38',
                     'updated_at' => '2020-03-23 14:35:38',
-                    'fullname' => 'admin',
-                    'password' => Hash::make('admin'),
+                    'fullname' => 'I\'m super admin',
+                    'password' => Hash::make('admin@123456789'),
                     'gender' => 1,
                     'type' => 1,
                     'tax' => 11232131,
