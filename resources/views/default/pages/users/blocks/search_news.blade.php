@@ -7,6 +7,7 @@
         <div class="col-4">
             <span for="category_id" class="colorblue">Chủ đề</span>
             <select id="category_id" name="category_id" class="form-control fs-12">
+            <option value="">Tất cả chủ đề</option>
                 @foreach($categories as $category)
                     <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
                 @endforeach

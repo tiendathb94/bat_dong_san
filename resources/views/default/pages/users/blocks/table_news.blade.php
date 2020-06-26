@@ -38,6 +38,10 @@
     </tbody>
 </table>
 @if(!$news->count())
-  <p class="fs-12 text-center">Bạn chưa đăng bài tin tức nào.</p>
+  @if(request('title') || request('category_id'))
+    <p class="fs-12 text-center">Dữ liệu tìm kiếm không có, vui lòng kiểm tra lại.</p>
+  @else
+    <p class="fs-12 text-center">Bạn chưa đăng bài tin tức nào.</p>
+  @endif
 @endif
 <div class="float-right fs-12">{{ $news->appends(request()->all())->links() }}</div>
