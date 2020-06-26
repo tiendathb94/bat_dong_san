@@ -12,6 +12,7 @@ use DB;
 use Mail;
 use Hash;
 use Auth;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -119,5 +120,27 @@ class AuthController extends Controller
         session()->flash('error_message', 'Liên kết đã hết hạn hoặc không hợp lệ đổi mật khẩu không thành công!');
 
         return redirect(route($this->_config['redirect']));
+    }
+
+    public function changePassword(Request $request)
+    {
+        $user = auth()->user();
+        $message = [];
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|confirmed|min:8|different:password_old',
+            'password_old' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
+        }
+        if(Hash::check($request->password_old, $user->password)) {
+            $user->update([
+                'password' => Hash::make($request->password)
+            ]);
+            return redirect()->route('login');
+        } else {
+            $validator->errors()->add('password_old', 'Password cũ chưa chính xác');
+        }
+        return redirect()->back()->withErrors($validator);
     }
 }
