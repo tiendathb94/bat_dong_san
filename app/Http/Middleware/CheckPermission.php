@@ -28,16 +28,19 @@ class CheckPermission
      */
     public function handle($request, Closure $next)
     {
+        if($this->user->role == 'super_admin') {
+            return $next($request);
+        }
         $role = $this->user->find(Auth::user()->id)->roles()->pluck('roles.id');
-        $per = $this->permission->whereIn('role_id', $role)->pluck('route')->toArray();
+        $perm = $this->permission->whereIn('role_id', $role)->pluck('route')->toArray();
         $route = \Request::route()->getName();
         
-        if( in_array(\Request::route()->getName(), $per) ){
+        if( in_array(\Request::route()->getName(), $perm) ){
             return $next($request);
         }
         $message = [
-            'status' => 'error',
-            'text' => 'Bạn không có quyền thực thi, vui lòng kiểm tra lại.'
+            'status' => 'danger',
+            'text' => 'Bạn không có quyền truy cập, vui lòng kiểm tra lại.'
         ];
         return back()->with('message', $message);
 

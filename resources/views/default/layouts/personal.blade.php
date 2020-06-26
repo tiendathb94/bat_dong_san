@@ -13,8 +13,10 @@
 
                 <div class="box-arround">
                     <div class="useravatar mb-3">
-                        <img class="avatar" src="/images/default-user-avatar-blue.jpg">
-                        <span class="userfullname">{{ $user->fullname }}</span>
+                        <a href="{{ route('pages.user.index') }}" title="" class="text-center">
+                            <img alt="" class="avatar" src="/images/default-user-avatar-blue.jpg">
+                        </a>
+                        <a href="{{ route('pages.user.index') }}" title="" class="userfullname">{{ $user->fullname }}</a>
                         <span class="fs-12 px-3 line-height-24"><span class="font-weight-bold">Email</span>: {{ $user->email }}</span>
                         <span class="fs-12 px-3 line-height-24"><span class="font-weight-bold">Giới tính</span>: {{ $user->gender_name }}</span>
                         <span class="fs-12 px-3 line-height-24"><span class="font-weight-bold">CMND/Mã số thuế</span>: {{ $user->tax }}</span>

@@ -9,7 +9,7 @@ use App\Entities\News;
 
 class UserController extends Controller
 {
-    public function index(Request $request)
+    public function news(Request $request)
     {
         $news = News::where('user_id', auth()->id());
         if(isset($request->title)) {
@@ -25,5 +25,10 @@ class UserController extends Controller
             'statuses' => News::STATUSES
         ];
         return view($this->_config['view'], $data);
+    }
+
+    public function index(Request $request)
+    {
+        return view($this->_config['view']);
     }
 }
