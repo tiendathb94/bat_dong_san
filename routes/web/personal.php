@@ -1,11 +1,12 @@
 <?php
 
 Route::group(['guard' => 'web', 'as' => 'pages.user.', 'middleware' => ['auth']], function () {
-    Route::group(['prefix' => 'user', 'middleware' => ['permission']], function () {
-        Route::get('news', 'Web\UserController@news')->defaults('_config', [
+    Route::group(['prefix' => 'user/tin-tuc', 'middleware' => ['permission']], function () {
+        Route::get('posted', 'Web\UserController@news')->defaults('_config', [
             'view' => 'default.pages.users.news'
         ])->name('news');
-        Route::get('approve-news', 'Web\UserController@approveNews')->defaults('_config', [
+
+        Route::get('pending-review', 'Web\UserController@approveNews')->defaults('_config', [
             'view' => 'default.pages.users.approve_news'
         ])->name('approve_news');
     });
