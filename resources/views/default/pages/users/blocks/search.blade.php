@@ -1,4 +1,4 @@
-<form action="{{ route('pages.user.news') }}" method="GET">
+<form action="{{ route('pages.user.index') }}" method="GET">
     <div class="row my-3">
         <div class="col-3">
             <span for="from_date" class="colorblue">Từ ngày</span>
