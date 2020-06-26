@@ -48,6 +48,11 @@ function personalMenuItemsDefinition()
                     'route_name' => 'pages.project.create',
                     'label' => 'Đăng dự án',
                     'permission' => 'pages.project.create'
+                ],
+                [
+                    'route_name' => 'pages.project.show_posted',
+                    'label' => 'Quản lý dự án đã đăng',
+                    'permission' => 'pages.project.show_posted'
                 ]
             ],
         ],

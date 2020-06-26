@@ -45,6 +45,11 @@ class Project extends Model
         return $this->morphMany('App\Entities\ImageLibrary', 'image_libraryable');
     }
 
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
     public function tabs()
     {
         return $this->hasMany('App\Entities\ProjectTab');
