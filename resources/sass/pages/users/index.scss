@@ -17,52 +17,6 @@
     }
 }
 
-.userpoint-menu-point {
-    a {
-        position: relative;
-    }
-
-    div {
-        display: none;
-        width: 200px;
-        padding: 10px;
-        top: 30px;
-        left: -20px;
-        position: absolute;
-        background-color: #fff;
-        border: 1px solid #ccc;
-        -webkit-border-radius: 2px;
-        -moz-border-radius: 2px;
-        border-radius: 2px;
-        z-index: 100000;
-
-        ::before {
-            content: "";
-            position: absolute;
-            bottom: 100%;
-            left: 18px;
-            border-width: 10px;
-            border-style: solid;
-            border-color: transparent transparent #ccc transparent;
-            z-index: -1;
-        }
-
-        ul {
-            margin: 0 0 0 15px;
-            padding: 0;
-        }
-    }
-}
-
-a:hover {
-    text-decoration: none;
-}
-
-ul {
-    li {
-        list-style: none;
-    }
-}
 
 .moduletitle {
     background: #055699;

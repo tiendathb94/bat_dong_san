@@ -58,3 +58,32 @@
         font-size: 12px;
     }
 }
+.personal-menu-wrapper {
+    border: 1px solid #ccc;
+    background: #fff;
+
+    .personal-menu-heading {
+        font-size: 1.5rem;
+        background: #9fa7a5;
+        padding: 10px;
+        color: #fff;
+        text-shadow: 1px 1px #ccc;
+    }
+
+    ul {
+        padding: 8px;
+        margin: 0;
+        font-size: 1.45rem;
+        line-height: 35px;
+
+        li {
+            padding-left: 3px;
+            list-style: none;
+
+            span {
+                font-size: 1.2rem;
+            }
+        }
+    }
+
+}

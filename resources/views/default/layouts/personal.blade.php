@@ -15,6 +15,9 @@
                     <div class="useravatar">
                         <img class="avatar" src="/images/default-user-avatar-blue.jpg">
                         <span class="userfullname">{{ $user->fullname }}</span>
+                        <span class="fs-12 px-3"><span class="font-weight-bold">Email</span>: {{ $user->email }}</span>
+                        <span class="fs-12 px-3"><span class="font-weight-bold">Giới tính</span>: {{ $user->gender_name }}</span>
+                        <span class="fs-12 px-3"><span class="font-weight-bold">CMND/Mã số thuế</span>: {{ $user->tax }}</span>
                     </div>
                 </div>
 

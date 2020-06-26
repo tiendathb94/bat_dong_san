@@ -10,6 +10,7 @@
 
     @include($block . 'title', ['title' => 'Quản lý tin rao bán, cho thuê'])
     @include($block . 'search')
+    @include('default.partials.flash-message')
     @include($block . 'table_news', ['news' => $news])
     @include($block . 'modal_confirm')
 @endsection

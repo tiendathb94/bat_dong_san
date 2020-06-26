@@ -32,6 +32,7 @@ class NewsController extends Controller
                 'text' => 'Xóa thành công'
             ];
         }
+
         return redirect()->back()->with('message', $message);
     }
 }

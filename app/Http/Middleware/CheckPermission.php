@@ -35,7 +35,11 @@ class CheckPermission
         if( in_array(\Request::route()->getName(), $per) ){
             return $next($request);
         }
-        return back()->with('error', 'Bạn không có quyền');
+        $message = [
+            'status' => 'error',
+            'text' => 'Bạn không có quyền'
+        ];
+        return back()->with('message', $message);
 
     }
 }
