@@ -1,13 +1,13 @@
 <?php
 
-Route::group(['guard' => 'web', 'middleware' => ['auth']], function () {
+Route::group(['guard' => 'web', 'prefix' => 'tin-tuc', 'middleware' => ['auth']], function () {
     Route::group(['middleware' => ['permission']], function () {
-        Route::get('/tin-tuc', 'Web\NewsController@create')->name('news.create');
+        Route::get('', 'Web\NewsController@create')->name('news.create');
 
-        Route::post('/tin-tuc', 'Web\NewsController@store')->name('news.store');
+        Route::post('', 'Web\NewsController@store')->name('news.store');
 
-        Route::patch('approve-news/{id}', 'Web\NewsController@updateStatus')->name('news.update_status');
+        Route::patch('{id}', 'Web\NewsController@updateStatus')->name('news.update_status');
     });
 
-    Route::delete('news/{id}', 'Web\NewsController@destroy')->name('news.destroy');
+    Route::delete('{id}', 'Web\NewsController@destroy')->name('news.destroy');
 });
