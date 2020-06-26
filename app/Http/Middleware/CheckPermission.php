@@ -14,8 +14,8 @@ class CheckPermission
     private $user;
     private $permission;
 
-    public function __construct(User $user, Permissions $permission) {
-        $this->user = $user;
+    public function __construct(Permissions $permission) {
+        $this->user = auth()->user();
         $this->permission = $permission;
 
     }
@@ -28,11 +28,11 @@ class CheckPermission
      */
     public function handle($request, Closure $next)
     {
-        if($this->user->role == 'super_admin') {
+        if($this->user->roles()->where('name', 'super_admin')->count()) {
             return $next($request);
         }
-        $role = $this->user->find(Auth::user()->id)->roles()->pluck('roles.id');
-        $perm = $this->permission->whereIn('role_id', $role)->pluck('route')->toArray();
+        $roles = $this->user->roles()->pluck('roles.id');
+        $perm = $this->permission->whereIn('role_id', $roles)->pluck('route')->toArray();
         $route = \Request::route()->getName();
         
         if( in_array(\Request::route()->getName(), $perm) ){
