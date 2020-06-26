@@ -9,6 +9,7 @@ import config from "../../../config"
 import draftToHtml from "draftjs-to-html"
 import { cloneDeep } from 'lodash'
 import AutocompleteField from "../../../containers/autocomplete_field"
+import ImageLibraryUpload from "../../../containers/image_ library_upload"
 
 class CreateForm extends Component {
     constructor (props) {
@@ -199,6 +200,13 @@ class CreateForm extends Component {
                                     editorState={this.state.formValues.project_overview}
                                     onEditorStateChange={this.onProjectOverviewChange}
                                 />
+                            </div>
+                        </div>
+
+                        <div className="row mt-3">
+                            <div className="col">
+                                <label>Tải lên hình ảnh của dự án</label>
+                                <ImageLibraryUpload/>
                             </div>
                         </div>
                     </div>

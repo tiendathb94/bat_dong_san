@@ -6,9 +6,9 @@
                 <h4 class="personal-menu-heading">{{$menu['heading']}}</h4>
                 <ul>
                     @foreach($items as $item)
-                        <li>
+                        <li class="{{Route::currentRouteName() === $item['route_name'] ?'active':''}}">
                             <span class="ti-link"></span>
-                            <a href="{{$item['link']}}">
+                            <a href="{{$item['route_name'] ? route($item['route_name']) : ''}}">
                                 {{$item['label']}}
                             </a>
                         </li>

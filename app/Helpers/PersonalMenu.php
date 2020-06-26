@@ -7,11 +7,11 @@ function personalMenuItemsDefinition()
             'heading' => 'Quản lý thông tin cá nhân',
             'items' => [
                 [
-                    'link' => '',
+                    'route_name' => '',
                     'label' => 'Thay đổi thông tin cá nhân'
                 ],
                 [
-                    'link' => '',
+                    'route_name' => '',
                     'label' => 'Thay đổi mật khẩu'
                 ]
             ],
@@ -20,23 +20,23 @@ function personalMenuItemsDefinition()
             'heading' => 'Quản lý tin rao',
             'items' => [
                 [
-                    'link' => '',
+                    'route_name' => '',
                     'label' => 'Quản lý tin rao bán/cho thuê'
                 ],
                 [
-                    'link' => '',
+                    'route_name' => '',
                     'label' => 'Đăng tin rao bán/cho thuê'
                 ],
                 [
-                    'link' => '',
+                    'route_name' => '',
                     'label' => 'Quản lý tin cần mua/cần thuê'
                 ],
                 [
-                    'link' => '',
+                    'route_name' => '',
                     'label' => 'Đăng tin cần mua/cần thuê'
                 ],
                 [
-                    'link' => '',
+                    'route_name' => '',
                     'label' => 'Quản lý tin nháp'
                 ]
             ],
@@ -45,7 +45,7 @@ function personalMenuItemsDefinition()
             'heading' => 'Quản lý dự án',
             'items' => [
                 [
-                    'link' => route('pages.project.create'),
+                    'route_name' => 'pages.project.create',
                     'label' => 'Đăng dự án',
                     'permission' => 'pages.project.create'
                 ]
@@ -55,15 +55,15 @@ function personalMenuItemsDefinition()
             'heading' => 'Quản lý tin tức',
             'items' => [
                 [
-                    'link' => '',
+                    'route_name' => '',
                     'label' => 'Đăng tin tức'
                 ],
                 [
-                    'link' => '',
+                    'route_name' => '',
                     'label' => 'Xem các tin đã đăng'
                 ],
                 [
-                    'link' => '',
+                    'route_name' => '',
                     'label' => 'Tin tức đang đợi duyệt'
                 ]
             ],
