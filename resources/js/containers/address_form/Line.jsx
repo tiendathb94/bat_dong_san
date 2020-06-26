@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import classnames from "classnames"
 
 class Line extends Component {
     constructor (props) {
@@ -11,7 +12,7 @@ class Line extends Component {
     }
 
     static getDerivedStateFromProps (props) {
-        return { value: props.value }
+        return { value: props.value, message: props.message }
     }
 
     onChange = (event) => {
@@ -31,8 +32,9 @@ class Line extends Component {
                     value={this.state.value}
                     onChange={this.onChange}
                     placeholder="Nhập đường phố"
-                    className="form-control"
+                    className={classnames({ 'form-control': true, 'is-invalid': !!this.state.message })}
                 />
+                {!!this.state.message && <div className="text-danger form-text">{this.state.message}</div>}
             </div>
         )
     }
@@ -41,6 +43,7 @@ class Line extends Component {
 Line.propTypes = {
     value: PropTypes.string,
     onChange: PropTypes.func,
+    message: PropTypes.string,
 }
 
 export default Line

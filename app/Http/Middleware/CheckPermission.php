@@ -19,30 +19,20 @@ class CheckPermission
         $this->permission = $permission;
 
     }
+
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
-        if($this->user->roles()->where('name', 'super_admin')->count()) {
+        if (checkPermission($request->route()->getName())) {
             return $next($request);
         }
-        $roles = $this->user->roles()->pluck('roles.id');
-        $perm = $this->permission->whereIn('role_id', $roles)->pluck('route')->toArray();
-        $route = \Request::route()->getName();
-        
-        if( in_array(\Request::route()->getName(), $perm) ){
-            return $next($request);
-        }
-        $message = [
-            'status' => 'danger',
-            'text' => 'Bạn không có quyền truy cập, vui lòng kiểm tra lại.'
-        ];
-        return back()->with('message', $message);
 
+        return back()->with('error', 'Bạn không có quyền');
     }
 }

@@ -16,7 +16,7 @@ class District extends Component {
     }
 
     static getDerivedStateFromProps (props) {
-        return { provinceId: props.provinceId, value: props.value }
+        return { provinceId: props.provinceId, value: props.value, message: props.message }
     }
 
     async componentDidUpdate (prevProps, prevState) {
@@ -57,7 +57,7 @@ class District extends Component {
                 <select
                     onChange={this.onChange}
                     value={this.state.value}
-                    className="form-control"
+                    className={classnames({ 'form-control': true, 'is-invalid': !!this.state.message })}
                     disabled={this.state.districts.length < 1 ? 'disabled' : ''}
                 >
                     <option>-- Quận/Huyện --</option>
@@ -72,6 +72,7 @@ class District extends Component {
                         ))
                     }
                 </select>
+                {!!this.state.message && <div className="text-danger form-text">{this.state.message}</div>}
             </div>
         )
     }
@@ -81,6 +82,7 @@ District.propTypes = {
     provinceId: PropTypes.string,
     value: PropTypes.string,
     onChange: PropTypes.func,
+    message: PropTypes.string
 }
 
 export default District
