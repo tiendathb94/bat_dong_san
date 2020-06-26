@@ -5,8 +5,9 @@ Route::group(['guard' => 'web', 'middleware' => ['auth']], function () {
         Route::get('/tin-tuc', 'Web\NewsController@create')->name('news.create');
 
         Route::post('/tin-tuc', 'Web\NewsController@store')->name('news.store');
+
+        Route::patch('approve-news/{id}', 'Web\NewsController@updateStatus')->name('news.update_status');
     });
 
     Route::delete('news/{id}', 'Web\NewsController@destroy')->name('news.destroy');
-    Route::patch('approve-news/{id}', 'Web\NewsController@updateStatus')->name('news.update_status');
 });

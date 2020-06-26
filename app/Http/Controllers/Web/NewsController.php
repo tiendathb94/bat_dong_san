@@ -41,28 +41,19 @@ class NewsController extends Controller
 
     public function updateStatus($id, Request $request)
     {
-        $news = News::findOrFail($id);
         $message = [];
-        if(auth()->user()->roles()->whereIn('name', [Role::SUPER_ADMIN, Role::APPROVE_NEWS])->count()) {
-            $news->update([
-                'status' => $request->status
-            ]);
-            if ($request->status == News::DECLINE) {
-                $message = [
-                    'status' => 'success',
-                    'text' => 'Từ chối hiển thị tin tức thành công'
-                ];
-            } else {
-                $message = [
-                    'status' => 'success',
-                    'text' => 'Phê duyệt tin tức thành công'
-                ];
-            }
-            
+        $news = News::findOrFail($id)->update([
+            'status' => $request->status
+        ]);;
+        if ($request->status == News::DECLINE) {
+            $message = [
+                'status' => 'success',
+                'text' => 'Từ chối hiển thị tin tức thành công'
+            ];
         } else {
             $message = [
-                'status' => 'danger',
-                'text' => 'Bạn không có quyền thực thi, vui lòng kiểm tra lại.'
+                'status' => 'success',
+                'text' => 'Phê duyệt tin tức thành công'
             ];
         }
 

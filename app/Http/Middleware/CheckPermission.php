@@ -33,6 +33,10 @@ class CheckPermission
             return $next($request);
         }
 
-        return back()->with('error', 'Bạn không có quyền');
+        $message = [
+            'status' => 'danger',
+            'text' => 'Bạn không có quyền truy cập, vui lòng kiểm tra lại.'
+        ];
+        return back()->with('message', $message);
     }
 }
