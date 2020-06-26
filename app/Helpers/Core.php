@@ -5,7 +5,10 @@ use Illuminate\Support\Facades\Auth;
 
 function checkPermission($permName)
 {
-    $role = Auth::user()->find(Auth::user()->id)->roles()->pluck('roles.id');
+    if(auth()->user()->roles()->where('name', 'super_admin')->count()) {
+        return true;
+    }
+    $role = Auth::user()->roles()->pluck('roles.id');
     $permissions = Permissions::whereIn('role_id', $role)->pluck('route')->toArray();
 
     if (in_array($permName, $permissions)) {

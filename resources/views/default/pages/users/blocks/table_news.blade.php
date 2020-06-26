@@ -26,7 +26,7 @@
                 <td>{{ $newsChild->title }}</td>
                 <td>{{ $newsChild->user->fullname }}</td>
                 <td>{{ $newsChild->created_at_date }}</td>
-                <td><span class="text-white {{ $bgColor }} px-2 py-1 rounded">{{ $newsChild->status_name }}</span></td>
+                <td><p class="text-white {{ $bgColor }} px-2 py-1 rounded">{{ $newsChild->status_name }}</p></td>
                 <td>
                     <div class="d-flex justify-content-center">
                         <a title="" href="" class="mr-3">Sửa</a>|

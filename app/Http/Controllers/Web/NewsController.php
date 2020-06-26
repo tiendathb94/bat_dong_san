@@ -21,15 +21,17 @@ class NewsController extends Controller
     public function destroy($id)
     {
         $news = News::findOrFail($id);
-        $message = [
-            'status' => 'danger',
-            'text' => 'Bạn không có quyền thực thi, vui lòng kiểm tra lại.'
-        ];
+        $message = [];
         if($news->user_id == auth()->id()) {
             $news->delete();
             $message = [
                 'status' => 'success',
                 'text' => 'Xóa thành công'
+            ];
+        } else {
+            $message = [
+                'status' => 'danger',
+                'text' => 'Bạn không có quyền thực thi, vui lòng kiểm tra lại.'
             ];
         }
 

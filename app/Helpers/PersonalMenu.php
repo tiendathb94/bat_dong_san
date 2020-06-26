@@ -60,7 +60,8 @@ function personalMenuItemsDefinition()
                 ],
                 [
                     'route_name' => 'pages.user.news',
-                    'label' => 'Xem các tin đã đăng'
+                    'label' => 'Tin tức đã đăng',
+                    'permission' => 'pages.user.news'
                 ],
                 [
                     'route_name' => '',

@@ -6,7 +6,7 @@
     <div class="container">
         <div class="row my-5">
             <!-- Sidebar -->
-            <div class="col-lg-3 col-12">
+            <div class="col-lg-3 col-12 order-2 order-lg-1">
                 <div class="box-header">
                     <h3>Trang cá nhân</h3>
                 </div>
@@ -27,7 +27,7 @@
             </div>
 
             <!-- Main content -->
-            <div class="col-lg-9 col-12 p-lg-0">
+            <div class="col-lg-9 col-12 p-lg-0 order-1 order-lg-2">
                 @yield('main_content')
             </div>
         </div>
