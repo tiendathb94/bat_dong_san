@@ -1,5 +1,9 @@
 @extends('default.layouts.personal')
 
+@section('page_title')
+    Quản lý dự án đã đăng
+@endsection
+
 @section('main_content')
     <h3 class="mb-3">Quản lý dự án đã đăng</h3>
     <form class="mb-5">
@@ -35,7 +39,7 @@
             <th class="d-none d-md-table-cell">Tên ngắn</th>
             <th class="d-none d-md-table-cell">Loại hình phát triển</th>
             <th>Trạng thái</th>
-            <th>Ngày tạo</th>
+            <th class="d-none d-md-table-cell">Ngày tạo</th>
             <th>Hành động</th>
         </tr>
         </thead>
@@ -61,7 +65,7 @@
                         @break
                     @endswitch
                 </td>
-                <td>{{\Carbon\Carbon::parse($project->created_at)->format('d/m/Y')}}</td>
+                <td class="d-none d-md-table-cell">{{\Carbon\Carbon::parse($project->created_at)->format('d/m/Y')}}</td>
                 <td>
                     <a href="">
                         <span class="ti-pencil-alt"></span> Sửa
