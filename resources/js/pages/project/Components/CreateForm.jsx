@@ -22,6 +22,7 @@ class CreateForm extends Component {
         }
 
         this.tabManager = React.createRef()
+        this.imageLibraryUpload = React.createRef()
     }
 
     onSyncAddress = (address) => {
@@ -54,6 +55,8 @@ class CreateForm extends Component {
         const values = cloneDeep(this.state.formValues)
         values.project_overview = draftToHtml(convertToRaw(this.state.formValues.project_overview.getCurrentContent()))
         values.tab_contents = this.tabManager.current.getTabContentsFormRawValues()
+
+        await this.imageLibraryUpload.current.doUpload('App\\Entities\\Project', 6, 'gallery')
 
         const response = await axios.post(`${config.api.baseUrl}/project/create`, values)
         console.log(response)
@@ -206,7 +209,7 @@ class CreateForm extends Component {
                         <div className="row mt-3">
                             <div className="col">
                                 <label>Tải lên hình ảnh của dự án</label>
-                                <ImageLibraryUpload/>
+                                <ImageLibraryUpload ref={this.imageLibraryUpload}/>
                             </div>
                         </div>
                     </div>

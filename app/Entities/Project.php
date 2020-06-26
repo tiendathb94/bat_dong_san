@@ -40,6 +40,11 @@ class Project extends Model
         return $this->morphOne('App\Entities\Address', 'addressable');
     }
 
+    public function imageLibraries()
+    {
+        return $this->morphMany('App\Entities\ImageLibrary', 'libraryable');
+    }
+
     public function tabs()
     {
         return $this->hasMany('App\Entities\ProjectTab');
