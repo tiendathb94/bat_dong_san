@@ -16,15 +16,13 @@ class CreateInvestorsTable extends Migration
         Schema::create('investors', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->unsignedBigInteger('address_id');
             $table->string('name', 255);
-            $table->string('phone', 15);
-            $table->string('email', 255);
-            $table->string('website', 255);
+            $table->string('phone', 15)->nullable();
+            $table->string('email', 255)->nullable();
+            $table->string('website', 255)->nullable();
             $table->unsignedBigInteger('user_id');
-            $table->string('logo', 255);
+            $table->string('logo', 255)->nullable();
             $table->string('overview', 255);
-            $table->foreign('address_id')->references('id')->on('addresses');
             $table->foreign('user_id')->references('id')->on('users');
         });
     }

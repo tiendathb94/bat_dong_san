@@ -11,3 +11,9 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+body {
+    .page-main-container {
+        min-height: 36rem;
+    }
+}

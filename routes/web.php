@@ -12,7 +12,15 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+$routes = scandir(base_path('routes/web'));
 
 Route::get('/', function () {
     return view('default.layouts.default');
-});
+})->name('home');
+
+Route::get('/mail', 'AuthController@confirm')->name('confirm');
+foreach($routes as $route) {
+    if (!in_array($route, ['.', '..'])) {
+        require_once(base_path("routes/web/$route"));
+    }
+}

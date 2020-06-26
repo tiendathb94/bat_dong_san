@@ -1,0 +1,261 @@
+.box-header {
+    background: #055699;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    height: 30px;
+    width: 100%;
+    color: white;
+    text-align: center;
+
+    h3 {
+        font-weight: bold;
+        line-height: 30px;
+        font-size: 12px;
+    }
+}
+
+.box-arround {
+    padding-top: 10px;
+    border: 1px solid #ccc;
+    border-top: 0;
+
+    .useravatar {
+        img.avatar {
+            width: 108px;
+            height: 108px;
+            margin: 20px 60px;
+            border-radius: 56px;
+        }
+
+        .userfullname {
+            color: #069;
+            font-size: 16px;
+            text-transform: uppercase;
+            text-align: center;
+            font-family: Calibri;
+            display: block;
+            font-weight: bold;
+        }
+
+        .userbalance {
+            background: #f0f6f2;
+            border: 1px dashed #cbd9ca;
+            margin: 15px 10px;
+            padding: 10px;
+            text-align: right;
+            font-size: 12px;
+            color: #000;
+        }
+
+        a.bluebotton {
+            width: 140px;
+            height: 35px;
+            display: block;
+            margin: 0 auto 15px auto;
+            line-height: 35px;
+        }
+    }
+}
+
+.userpoint-menu {
+    color: #055699;
+
+    .userpoint-menu-level {
+        text-align: center;
+
+        label {
+            font-size: 12px;
+            background-repeat: no-repeat;
+            padding-left: 25px;
+            line-height: 25px;
+            display: inline-block;
+            font-weight: bold;
+        }
+    }
+
+    .userpoint-menu-point {
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+
+        label {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        span {
+            font-size: 14px;
+            font-weight: normal;
+        }
+
+        a:hover {
+            div {
+                display: block;
+            }
+        }
+    
+        li {
+            text-align: left;
+
+            span {
+                color: #666;
+                font-size: 12px;
+                line-height: 150%;
+            }
+        }
+    }
+}
+
+.bluebotton {
+    background-image: url(/images/bg-blue-button.png);
+    border-radius: 6px;
+    margin: 0 5px;
+    border: 0;
+    height: 35px;
+    color: #fff!important;
+    font-size: 12px;
+    font-weight: bold;
+    min-width: 80px;
+    text-align: center;
+}
+
+.userbalance {
+    span {
+        font-weight: bold;
+    }
+}
+
+.userpoint-menu-point {
+    a {
+        position: relative;
+    }
+
+    div {
+        display: none;
+        width: 200px;
+        padding: 10px;
+        top: 30px;
+        left: -20px;
+        position: absolute;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+        z-index: 100000;
+
+        ::before {
+            content: "";
+            position: absolute;
+            bottom: 100%;
+            left: 18px;
+            border-width: 10px;
+            border-style: solid;
+            border-color: transparent transparent #ccc transparent;
+            z-index: -1;
+        }
+
+        ul {
+            margin: 0 0 0 15px;
+            padding: 0;
+        }
+    }
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+ul {
+    li {
+        list-style: none;
+    }
+}
+
+.moduletitle {
+    background: #055699;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    height: 30px;
+    line-height: 30px;
+    width: 100%;
+    color: white;
+    font-weight: bold;
+    padding-left: 10px;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+.colorblue,
+.colorblue:visited {
+    color: #055699;
+    font-size: 12px;
+    padding: 1px 1px 3px;
+}
+
+.btn-download-excel {
+    border: 1px solid #055698;
+    box-sizing: border-box;
+    border-radius: 3px;
+    padding: 0 10px 0 0;
+    cursor: pointer;
+    color: #085698;
+    float: right;
+    line-height: 26px;
+    height: 30px;
+    font-size: 12px;
+}
+
+body {
+    font-family: Tahoma;
+}
+
+.btn-search {
+    border: 0;
+    background: #055699 url(/images/timkiem.gif) no-repeat;
+    width: 105px;
+    height: 30px;
+    color: #fff!important;
+    padding-left: 35px;
+    font-weight: bold;
+    font-size: 12px!important;
+    background-position: left;
+    border-radius: 5px;
+    text-align: left!important;
+}
+
+.btn-download-excel {
+    span {
+        font-size: 16px;
+        margin: 0px 10px;
+        float: left;
+        line-height: 26px;
+    }
+}
+
+.fs-12 {
+    font-size: 12px;
+}
+
+.bg-thead {
+    background: #f0f0f0;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.fs-100 {
+    font-size: 100px;
+}
+
+.page-item.active {
+    .page-link {
+        background-color: #055699;
+        border-color: #055699;
+    }
+}
+
+.bg-await {
+    background-color: #e86b2f;
+}
