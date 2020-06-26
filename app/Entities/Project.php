@@ -42,7 +42,7 @@ class Project extends Model
 
     public function imageLibraries()
     {
-        return $this->morphMany('App\Entities\ImageLibrary', 'libraryable');
+        return $this->morphMany('App\Entities\ImageLibrary', 'image_libraryable');
     }
 
     public function tabs()

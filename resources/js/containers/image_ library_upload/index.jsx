@@ -32,7 +32,7 @@ class ImageLibraryUpload extends Component {
         formData.append('library_type', libraryType)
 
         for (let i = 0; i < this.state.selectedFiles.length; i++) {
-            formData.set(`files[${i}]`, this.state.selectedFiles)
+            formData.set(`files[${i}]`, this.state.selectedFiles[i])
         }
 
         for (const k in metaData) {

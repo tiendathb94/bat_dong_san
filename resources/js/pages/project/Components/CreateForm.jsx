@@ -10,6 +10,7 @@ import draftToHtml from "draftjs-to-html"
 import { cloneDeep } from 'lodash'
 import AutocompleteField from "../../../containers/autocomplete_field"
 import ImageLibraryUpload from "../../../containers/image_ library_upload"
+import classnames from "classnames"
 
 class CreateForm extends Component {
     constructor (props) {
@@ -18,11 +19,15 @@ class CreateForm extends Component {
         this.state = {
             formValues: {
                 project_overview: EditorState.createEmpty(),
-            }
+            },
+            errors: [],
+            errorByFields: {},
+            loading: false
         }
 
         this.tabManager = React.createRef()
         this.imageLibraryUpload = React.createRef()
+        this.addressField = React.createRef()
     }
 
     onSyncAddress = (address) => {
@@ -52,18 +57,90 @@ class CreateForm extends Component {
     }
 
     onClickSaveProjectButton = async () => {
+        if (!this.validate()) {
+            window.scrollTo(0, 0)
+            return
+        }
+
         const values = cloneDeep(this.state.formValues)
         values.project_overview = draftToHtml(convertToRaw(this.state.formValues.project_overview.getCurrentContent()))
         values.tab_contents = this.tabManager.current.getTabContentsFormRawValues()
 
-        await this.imageLibraryUpload.current.doUpload('App\\Entities\\Project', 6, 'gallery')
+        try {
+            this.setState({ loading: true })
 
-        const response = await axios.post(`${config.api.baseUrl}/project/create`, values)
-        console.log(response)
+            // Create project
+            const createProjectResponse = await axios.post(`${config.api.baseUrl}/project/create`, values)
+            const createdProject = createProjectResponse.data
+
+            // Upload library images
+            await this.imageLibraryUpload.current.doUpload(
+                'App\\Entities\\Project',
+                createdProject.id,
+                'gallery',
+            )
+
+            this.setState({ loading: true })
+
+            // Redirect to posted project
+            window.location = '/project/posted'
+        } catch (e) {
+            if (e.response && e.response.data) {
+                window.scrollTo(0, 0)
+                if (e.response.data.errors) {
+                    const stateErrors = []
+                    const errors = Object.values(e.response.data.errors)
+                    for (let i = 0; i < errors.length; i++) {
+                        stateErrors.push(errors[i].join(' '))
+                    }
+                    this.setState({ errors: stateErrors })
+                } else {
+                    this.setState({ errors: e.response.data.message || 'Đã có lỗi sảy ra vui lòng thử lại' })
+                }
+            }
+        }
+    }
+
+    validate () {
+        const errorByFields = {}
+
+        // Validate required fields
+        const requiredFields = ['long_name', 'category_id', 'project_overview']
+        for (let i = 0; i < requiredFields.length; i++) {
+            const fieldName = requiredFields[i]
+            if (fieldName === 'project_overview' && !this.state.formValues[fieldName].getCurrentContent().hasText()) {
+                errorByFields[fieldName] = 'Bạn không được bỏ trống trường này'
+            } else if (!this.state.formValues[fieldName]) {
+                errorByFields[fieldName] = 'Bạn không được bỏ trống trường này'
+            }
+        }
+
+        // Validate investor
+        if (this.state.formValues.investor_id && !this.state.formValues.investor_type) {
+            errorByFields.investor_type = 'Bạn không được bỏ trống trường này'
+        }
+
+        // Validate price unit
+        if (this.state.formValues.price && !this.state.formValues.price_unit) {
+            errorByFields.price_unit = 'Bạn không được bỏ trống trường này'
+        }
+
+        this.setState({ errorByFields })
+        const addressValid = this.addressField.current.validate()
+
+        return Object.keys(errorByFields).length < 1 && addressValid
     }
 
     onChangeInvestor = (investorId) => {
         this.setState({ formValues: { ...this.state.formValues, investor_id: investorId } })
+    }
+
+    renderFieldError (fieldName) {
+        if (!this.state.errorByFields[fieldName]) {
+            return ''
+        }
+
+        return <div className="text-danger form-text">{this.state.errorByFields.long_name}</div>
     }
 
     render () {
@@ -71,6 +148,16 @@ class CreateForm extends Component {
             <div>
                 <div>
                     <div className="container">
+                        {
+                            this.state.errors.length > 0 && <div className="row">
+                                <div className="col alert alert-danger" role="alert">
+                                    <ul className="mb-0">
+                                        {this.state.errors.map((err) => <li key={err}>{err}</li>)}
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+
                         <div className="row">
                             <div className="col">
                                 <h3>Thông tin cơ bản</h3>
@@ -84,8 +171,12 @@ class CreateForm extends Component {
                                     value={this.state.formValues.long_name || ''}
                                     onChange={this.setFormFieldValue}
                                     placeholder="Nhập tên dự án"
-                                    className="form-control"
+                                    className={classnames({
+                                        'form-control': true,
+                                        'is-invalid': !!this.state.errorByFields.long_name
+                                    })}
                                 />
+                                {this.renderFieldError('long_name')}
                             </div>
                         </div>
 
@@ -106,6 +197,7 @@ class CreateForm extends Component {
                                     label="Loại hình phát triển"
                                     destinationEntity="App\Entities\Project"
                                     onChange={this.onChangeCategory}
+                                    message={this.state.errorByFields.category_id}
                                 />
                             </div>
                         </div>
@@ -157,7 +249,10 @@ class CreateForm extends Component {
                                     value={this.state.formValues.price_unit || ''}
                                     name="price_unit"
                                     onChange={this.setFormFieldValue}
-                                    className="form-control"
+                                    className={classnames({
+                                        'form-control': true,
+                                        'is-invalid': !!this.state.errorByFields.price_unit
+                                    })}
                                 >
                                     <option>-- Chọn đơn vị giá --</option>
                                     <option value="1">Triệu</option>
@@ -165,11 +260,12 @@ class CreateForm extends Component {
                                     <option value="3">Trăm nghìn/m2</option>
                                     <option value="4">Triệu/m2</option>
                                 </select>
+                                {this.renderFieldError('price_unit')}
                             </div>
                         </div>
                     </div>
 
-                    <AddressForm onSync={this.onSyncAddress}/>
+                    <AddressForm onSync={this.onSyncAddress} ref={this.addressField} required={true}/>
 
                     <div className="container">
                         <div className="row">
@@ -186,13 +282,14 @@ class CreateForm extends Component {
                                 <select
                                     name="investor_type"
                                     value={this.state.formValues.investor_type}
-                                    className="form-control"
+                                    className={classnames({ 'form-control': true, 'is-invalid': !!this.state.message })}
                                     onChange={this.setFormFieldValue}
                                 >
                                     <option>-- Loại hình đầu tư --</option>
                                     <option value={1}>Chủ đầu tư</option>
                                     <option value={2}>Nhà phân phối</option>
                                 </select>
+                                {this.renderFieldError('investor_type')}
                             </div>
                         </div>
 
@@ -203,6 +300,7 @@ class CreateForm extends Component {
                                     editorState={this.state.formValues.project_overview}
                                     onEditorStateChange={this.onProjectOverviewChange}
                                 />
+                                {this.renderFieldError('project_overview')}
                             </div>
                         </div>
 
@@ -228,8 +326,9 @@ class CreateForm extends Component {
                             <button
                                 className="btn btn-primary btn-save-project"
                                 onClick={this.onClickSaveProjectButton}
+                                disabled={this.state.loading}
                             >
-                                Lưu dự án
+                                {this.state.loading ? 'Đang lưu...' : 'Lưu dự án'}
                             </button>
                         </div>
                     </div>

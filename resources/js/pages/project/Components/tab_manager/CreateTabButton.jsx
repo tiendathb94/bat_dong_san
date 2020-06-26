@@ -15,7 +15,7 @@ class CreateTabButton extends Component {
     getTabContentTypes () {
         return [
             { name: 'Vị trí - Hạ tầng', layout: 'location_infrastructure', component: LocationInfrastructure },
-            { name: 'Tiến độ dự án', layout: 'project_progress' },
+            //{ name: 'Tiến độ dự án', layout: 'project_progress' },
             { name: 'Nội dung tùy chỉnh', layout: 'custom', component: CustomContent },
         ]
     }

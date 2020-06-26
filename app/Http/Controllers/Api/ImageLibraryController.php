@@ -6,6 +6,7 @@ use App\Entities\Project;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ImageLibraryRequest;
 use DB;
+use Illuminate\Support\Facades\File;
 
 class ImageLibraryController extends Controller
 {
@@ -22,13 +23,15 @@ class ImageLibraryController extends Controller
             return response()->json(['Target entity không tồn tại hoặc chưa được hỗ trợ']);
         }
 
+        $savedFiles = [];
         try {
             DB::beginTransaction();
 
             $uploadedFiles = $request->file('files');
             if ($uploadedFiles) {
                 foreach ($uploadedFiles as $file) {
-                    $uploadedFilePath = $file->storePublicly('/uploads/images/library');
+                    $uploadedFilePath = $file->storePublicly('/uploads/images/library/');
+                    $savedFiles[] = $uploadedFilePath;
                     $targetEntity->imageLibraries()->create([
                         'library_type' => $libraryType,
                         'file_path' => $uploadedFilePath,
@@ -39,10 +42,10 @@ class ImageLibraryController extends Controller
             }
 
             DB::commit();
-
             return response()->json($targetEntity->imageLibraries);
         } catch (\Exception $e) {
             DB::rollback();
+            File::delete($savedFiles);
         }
 
         return response()->json(['message' => 'Đã có lỗi xảy ra khi lưu thư viện ảnh'], 500);

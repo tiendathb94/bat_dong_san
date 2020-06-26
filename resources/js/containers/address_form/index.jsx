@@ -14,7 +14,8 @@ class AddressForm extends Component {
             provinceId: '',
             districtId: '',
             wardId: '',
-            line: ''
+            line: '',
+            errors: {}
         }
     }
 
@@ -43,6 +44,24 @@ class AddressForm extends Component {
         }
     }
 
+    // Call from parent
+    validate () {
+        if (this.props.required) {
+            const errors = {}
+            const fields = ['provinceId', 'districtId', 'wardId', 'line']
+            for (let i = 0; i < fields.length; i++) {
+                if (!this.state[fields[i]] || this.state[fields[i]].length < 1) {
+                    errors[fields[i]] = 'Bạn không được bỏ trống trường này'
+                }
+            }
+
+            this.setState({ errors })
+            return Object.keys(errors).length < 1
+        }
+
+        return true
+    }
+
     render () {
         return (
             <div>
@@ -52,6 +71,7 @@ class AddressForm extends Component {
                             <Province
                                 value={this.state.provinceId}
                                 onChange={(event) => this.setFormValue('provinceId', event.target.value)}
+                                message={this.state.errors['provinceId']}
                             />
                         </div>
 
@@ -60,6 +80,7 @@ class AddressForm extends Component {
                                 value={this.state.districtId}
                                 onChange={(event) => this.setFormValue('districtId', event.target.value)}
                                 provinceId={this.state.provinceId}
+                                message={this.state.errors['districtId']}
                             />
                         </div>
                     </div>
@@ -70,6 +91,7 @@ class AddressForm extends Component {
                                 value={this.state.wardId}
                                 onChange={(event) => this.setFormValue('wardId', event.target.value)}
                                 districtId={this.state.districtId}
+                                message={this.state.errors['wardId']}
                             />
                         </div>
 
@@ -77,6 +99,7 @@ class AddressForm extends Component {
                             <Line
                                 value={this.state.line}
                                 onChange={(event) => this.setFormValue('line', event.target.value)}
+                                message={this.state.errors['line']}
                             />
                         </div>
                     </div>
@@ -87,7 +110,8 @@ class AddressForm extends Component {
 }
 
 AddressForm.propTypes = {
-    onSync: PropTypes.func
+    onSync: PropTypes.func,
+    required: PropTypes.bool
 }
 
 export default AddressForm
