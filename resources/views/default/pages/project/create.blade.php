@@ -5,7 +5,7 @@
 @endsection
 
 @section('main_content')
-    <div id="project-create-form-container" class="mt-5 mb-5"></div>
+    <div id="project-create-form-container" class="mb-5"></div>
 @endsection
 
 @push('styles')

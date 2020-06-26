@@ -39,7 +39,7 @@ class CreateTabButton extends Component {
                     <span className={classnames({
                         'ti-minus': this.state.showTabTypes,
                         'ti-plus': !this.state.showTabTypes
-                    })}></span> Thêm nội dung
+                    })}></span> Thêm nội dung nâng cao
                 </button>
                 {
                     this.state.showTabTypes && <ul className="tab-content-types-wrapper">
