@@ -6,14 +6,16 @@
         <div class="row">
             <div class="form-group col">
                 <label>Từ khóa</label>
-                <input class="form-control" name="keyword" placeholder="Nhập từ khóa tìm kiếm"/>
+                <input class="form-control" name="keyword" placeholder="Nhập từ khóa tìm kiếm" value="{{$keyword}}"/>
             </div>
             <div class="form-group col">
                 <label>Loại hình phát triển</label>
                 <select name="category_id" class="form-control">
                     <option value="">-- Loại hình phát triển --</option>
                     @foreach($categories as $category)
-                        <option value="{{$category->id}}">{{$category->name}}</option>
+                        <option value="{{$category->id}}" {{$categoryId == $category->id ? 'selected':''}}>
+                            {{$category->name}}
+                        </option>
                     @endforeach
                 </select>
             </div>
@@ -73,4 +75,6 @@
         @endforeach
         </tbody>
     </table>
+
+    {{$projects->render()}}
 @endsection

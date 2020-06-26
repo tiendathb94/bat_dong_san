@@ -303,13 +303,6 @@ class CreateForm extends Component {
                                 {this.renderFieldError('project_overview')}
                             </div>
                         </div>
-
-                        <div className="row mt-3">
-                            <div className="col">
-                                <label>Tải lên hình ảnh của dự án</label>
-                                <ImageLibraryUpload ref={this.imageLibraryUpload}/>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
@@ -317,6 +310,18 @@ class CreateForm extends Component {
                     <div className="row">
                         <div className="col">
                             <h3>Nội dung nâng cao</h3>
+                        </div>
+                    </div>
+
+                    <div className="row mt-3">
+                        <div className="col">
+                            <label>Tải lên hình ảnh của dự án</label>
+                            <ImageLibraryUpload ref={this.imageLibraryUpload}/>
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col">
                             <TabManager ref={this.tabManager}/>
                         </div>
                     </div>
