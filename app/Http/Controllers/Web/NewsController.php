@@ -47,7 +47,7 @@ class NewsController extends Controller
             $news->update([
                 'status' => $request->status
             ]);
-            if ($request->status == News::TU_CHOI) {
+            if ($request->status == News::DECLINE) {
                 $message = [
                     'status' => 'success',
                     'text' => 'Từ chối hiển thị tin tức thành công'

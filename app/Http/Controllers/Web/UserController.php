@@ -34,7 +34,7 @@ class UserController extends Controller
 
     public function approveNews(Request $request)
     {
-        $news = News::where('status', News::DANG_CHO_DUYET);
+        $news = News::where('status', News::AWAITING_REVIEW);
         if(isset($request->title)) {
             $news->where('title', 'LIKE', "%$request->title%");
         }
