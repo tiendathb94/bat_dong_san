@@ -31,4 +31,21 @@ class UserController extends Controller
     {
         return view($this->_config['view']);
     }
+
+    public function approveNews(Request $request)
+    {
+        $news = News::where('status', News::DANG_CHO_DUYET);
+        if(isset($request->title)) {
+            $news->where('title', 'LIKE', "%$request->title%");
+        }
+        if($request->category_id) {
+            $news->where('category_id', $request->category_id);
+        }
+        $categories = Category::select('id', 'name')->get();
+        $data = [
+            'news' => $news->paginate(config('app.paginate')),
+            'categories' => $categories,
+        ];
+        return view($this->_config['view'], $data);
+    }
 }

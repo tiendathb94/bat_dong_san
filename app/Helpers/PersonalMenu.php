@@ -64,8 +64,9 @@ function personalMenuItemsDefinition()
                     'permission' => 'pages.user.news'
                 ],
                 [
-                    'route_name' => '',
-                    'label' => 'Tin tức đang đợi duyệt'
+                    'route_name' => 'pages.user.approve_news',
+                    'label' => 'Tin tức đang đợi duyệt',
+                    'permission' => 'pages.user.approve_news'
                 ]
             ],
         ]

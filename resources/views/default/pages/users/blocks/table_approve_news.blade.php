@@ -5,32 +5,20 @@
             <th>Tiêu đề</th>
             <th>Tác giả</th>
             <th>Ngày đăng</th>
-            <th>Trạng thái</th>
             <th>Hành động</th>
         </tr>
     </thead>
     <tbody>
         @foreach($news as $newsChild)
-          @switch($newsChild->status)
-            @case(1)
-              @php($bgColor = 'bg-dark')
-              @break
-            @case(2)
-              @php($bgColor = 'bg-success')
-              @break
-            @default
-              @php($bgColor = 'bg-await')
-          @endswitch
             <tr>
                 <td>{{ $newsChild->id }}</td>
                 <td>{{ $newsChild->title }}</td>
                 <td>{{ $newsChild->user->fullname }}</td>
                 <td>{{ $newsChild->created_at_date }}</td>
-                <td><p class="text-white {{ $bgColor }} px-2 py-1 rounded">{{ $newsChild->status_name }}</p></td>
                 <td>
                     <div class="d-flex justify-content-center">
-                        <a title="" href="" class="mr-3">Sửa</a>|
-                        <span id="btnDelete" data-action="{{ route('news.destroy', $newsChild->id) }}" title="" class="ml-3 text-danger cursor-pointer">Xóa</span>
+                      <span data-status="2" data-action="{{ route('news.update_status', $newsChild->id) }}" title="" class="mr-3 text-primary cursor-pointer js-update-status">Phê duyệt</span>|
+                      <span data-status="1" data-action="{{ route('news.update_status', $newsChild->id) }}" title="" class="ml-3 text-danger cursor-pointer js-update-status">Từ chối</span>
                     </div>
                 </td>
             </tr>
@@ -41,16 +29,24 @@
   @if(request('title') || request('category_id'))
     <p class="fs-12 text-center">Dữ liệu tìm kiếm không có, vui lòng kiểm tra lại.</p>
   @else
-    <p class="fs-12 text-center">Bạn chưa đăng bài tin tức nào.</p>
+    <p class="fs-12 text-center">Hiện chưa có bài tin tức nào.</p>
   @endif
 @endif
 <div class="float-right fs-12">{{ $news->appends(request()->all())->links() }}</div>
+
 @push('scripts')
     <script>
         $(document).ready(function() {
-            $(document).on('click', '#btnDelete', function () {
-                $('#formDelete').attr('action', $(this).data('action'));
-                $('#modalDelete').modal('show');
+            $(document).on('click', '.js-update-status', function () {
+              let action = $(this).data('action');
+              let status = $(this).data('status');
+              $('#status').val(status);
+              $('#formUpdateStatus').attr('action', action);
+              if (status == 2) {
+                $('#formUpdateStatus').submit();
+              } else {
+                $('#modalUpdateStatus').modal('show');
+              }
             })
         })
     </script>

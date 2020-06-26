@@ -1,4 +1,4 @@
-<form action="{{ route('pages.user.news') }}" method="GET">
+<form action="{{ $action }}" method="GET">
     <div class="row my-3">
         <div class="col-4">
             <span for="title" class="colorblue">Tìm kiếm</span>

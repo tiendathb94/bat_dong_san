@@ -12,10 +12,14 @@ class News extends Model
         'title', 'slug', 'meta_content','content','thumbnail','status'
     ];
 
+    const TU_CHOI = 1;
+    const DA_DUYET = 2;
+    const DANG_CHO_DUYET = 3;
+
     const STATUSES = [
-        1 => 'Từ chối',
-        2 => 'Đã duyệt',
-        3 => 'Đang chờ duyệt'
+        self::TU_CHOI => 'Từ chối',
+        self::DA_DUYET => 'Đã duyệt',
+        self::DANG_CHO_DUYET => 'Đang chờ duyệt'
     ];
 
     public function user()
