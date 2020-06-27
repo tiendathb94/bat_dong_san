@@ -11,7 +11,7 @@ function personalMenuItemsDefinition()
                     'label' => 'Thay đổi thông tin cá nhân'
                 ],
                 [
-                    'route_name' => '',
+                    'route_name' => 'pages.user.change_password',
                     'label' => 'Thay đổi mật khẩu'
                 ]
             ],

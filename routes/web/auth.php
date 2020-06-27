@@ -32,6 +32,11 @@ Route::post('/new-password', 'Web\AuthController@resetPassword')->defaults('_con
     'redirect' => 'login'
 ])->name('default.pages.auth.new-password');
 
+
+Route::patch('change-password', 'Web\AuthController@changePassword')->defaults('_config', [
+    'redirect' => 'login'
+])->name('default.pages.auth.change_password');
+
 // Route::group([ 'prefix'=>'abc', 'middleware' => ['permission', 'email'] ], function () {
 //     Route::get('/test', 'AuthController@confirm')->name('test');
 

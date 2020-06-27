@@ -130,9 +130,15 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'password' => [
+            'min' => 'Mật khẩu phải dài ít nhất :min kí tự',
+            'confirmed' => 'Mật khẩu gõ lại chưa chính xác',
+            'required' => 'Mật khẩu không được để trống',
+            'different' => 'Mật khẩu mới không được trùng mật khẩu cũ'
         ],
+        'password_old' => [
+            'required' => 'Mật khẩu cũ không được để trống'
+        ]
     ],
 
     /*

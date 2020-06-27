@@ -12,6 +12,7 @@ use DB;
 use Mail;
 use Hash;
 use Auth;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -21,8 +22,8 @@ class AuthController extends Controller
         return view($this->_config['view']);
     }
 
-    public function sendPasswordResetToken(Request $request) 
-    {   
+    public function sendPasswordResetToken(Request $request)
+    {
         $this->validate($request, [
             'email' => 'required|email'
         ],
@@ -36,7 +37,7 @@ class AuthController extends Controller
         if ($user) {
 
             $resetPasswordToken = Str::random(32);
-            
+
             Cache::forget($user->getRequestResetPasswordCacheKey());
 
             Cache::put($user->getRequestResetPasswordCacheKey(), $resetPasswordToken, 60 * 30);
@@ -66,12 +67,12 @@ class AuthController extends Controller
         if($user !== null) {
 
             $cacheToken = Cache::get($user->getRequestResetPasswordCacheKey());
-    
+
             if($request->resetPasswordToken !==  $cacheToken) {
                 session()->flash('error_message', 'Liên kết đã hết hạn hoặc không hợp lệ');
                 return redirect(route($this->_config['redirect']));
             }
-    
+
             if ($user) {
                 if (Cache::get($user->getRequestResetPasswordCacheKey())) {
                     return view($this->_config['view']);
@@ -114,10 +115,34 @@ class AuthController extends Controller
 
             return redirect(route($this->_config['redirect']));
         }
-        
+
         // Token is invalid
         session()->flash('error_message', 'Liên kết đã hết hạn hoặc không hợp lệ đổi mật khẩu không thành công!');
 
         return redirect(route($this->_config['redirect']));
+    }
+
+    public function changePassword(Request $request)
+    {
+        $user = auth()->user();
+        $validator = Validator::make($request->all(), [
+            'password' => 'required',
+            'password_old' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
+        }
+        if(Hash::check($request->password_old, $user->password)) {
+            Validator::make($request->all(), [
+                'password' => 'confirmed|min:8|different:password_old',
+            ])->validate();
+            $user->update([
+                'password' => Hash::make($request->password)
+            ]);
+            return redirect()->route('login');
+        } else {
+            $validator->errors()->add('password_old', 'Mật khẩu cũ chưa chính xác');
+        }
+        return redirect()->back()->withErrors($validator);
     }
 }

@@ -48,4 +48,9 @@ class UserController extends Controller
         ];
         return view($this->_config['view'], $data);
     }
+
+    public function changePassword()
+    {
+        return view($this->_config['view']);
+    }
 }

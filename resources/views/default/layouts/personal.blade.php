@@ -1,5 +1,9 @@
 @extends('default.layouts.default')
 
+@section('page_title')
+    @yield('page-title')
+@endsection
+
 @section('content')
     @php($user = auth()->user())
 
