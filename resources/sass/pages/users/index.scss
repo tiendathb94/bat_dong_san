@@ -1,0 +1,107 @@
+.bluebotton {
+    background-image: url(/images/bg-blue-button.png);
+    border-radius: 6px;
+    margin: 0 5px;
+    border: 0;
+    height: 35px;
+    color: #fff!important;
+    font-size: 12px;
+    font-weight: bold;
+    min-width: 80px;
+    text-align: center;
+}
+
+.userbalance {
+    span {
+        font-weight: bold;
+    }
+}
+
+
+.moduletitle {
+    background: #055699;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    height: 30px;
+    line-height: 30px;
+    width: 100%;
+    color: white;
+    font-weight: bold;
+    padding-left: 10px;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+.colorblue,
+.colorblue:visited {
+    color: #055699;
+    font-size: 12px;
+    padding: 1px 1px 3px;
+}
+
+.btn-download-excel {
+    border: 1px solid #055698;
+    box-sizing: border-box;
+    border-radius: 3px;
+    padding: 0 10px 0 0;
+    cursor: pointer;
+    color: #085698;
+    float: right;
+    line-height: 26px;
+    height: 30px;
+    font-size: 12px;
+}
+
+body {
+    font-family: Tahoma;
+}
+
+.btn-search {
+    border: 0;
+    background: #055699 url(/images/timkiem.gif) no-repeat;
+    width: 105px;
+    height: 30px;
+    color: #fff!important;
+    padding-left: 35px;
+    font-weight: bold;
+    font-size: 12px!important;
+    background-position: left;
+    border-radius: 5px;
+    text-align: left!important;
+}
+
+.btn-download-excel {
+    span {
+        font-size: 16px;
+        margin: 0px 10px;
+        float: left;
+        line-height: 26px;
+    }
+}
+
+.fs-12 {
+    font-size: 12px;
+}
+
+.bg-thead {
+    background: #f0f0f0;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.fs-100 {
+    font-size: 100px;
+}
+
+.page-item.active {
+    .page-link {
+        background-color: #055699;
+        border-color: #055699;
+    }
+}
+
+.bg-await {
+    background-color: #e86b2f;
+}

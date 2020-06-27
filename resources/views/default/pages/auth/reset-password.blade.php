@@ -11,7 +11,7 @@ Tạo lại mật khẩu
                 <form class="form" action="{{ route('default.pages.auth.reset-password') }}" method="POST">
                     <div class="auth__content">
                         <a href="/" class="auth__logo">
-                            <img src="https://file4.batdongsan.com.vn/images/newhome/logobds04.svg" alt="logo">
+                            <img src="/images/logobds04.svg" alt="logo">
                         </a>
 
                         <h3 class="auth__heading">

@@ -14,6 +14,9 @@ class Project extends Model
     const StatusApproved = 2;
     const StatusDeclined = 3;
 
+    const InvestorTypeInvest = 1;
+    const InvestorTypeDistribute = 2;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -35,6 +38,16 @@ class Project extends Model
     public function address()
     {
         return $this->morphOne('App\Entities\Address', 'addressable');
+    }
+
+    public function imageLibraries()
+    {
+        return $this->morphMany('App\Entities\ImageLibrary', 'image_libraryable');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 
     public function tabs()

@@ -58,7 +58,6 @@ class AuthController extends Controller
         try {
 
             $dataSave = $request->only('email', 'fullname', 'tax');
-
             $dataSave['type'] = (int)$request->type;
             $dataSave['gender'] = (int)$request->gender;
             $dataSave['password'] = bcrypt($request->password);

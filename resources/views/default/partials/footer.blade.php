@@ -5,7 +5,7 @@
             <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
                 <div class="footer__logo">   
                     <a href="/">
-                        <img src="https://file4.batdongsan.com.vn/images/newhome/logo-footer-no1-1.svg" alt="logo">
+                        <img src="/images/logo-footer-no1-1.svg" alt="logo">
                     </a>
                 </div>
                 <div class="footer__company">
@@ -14,34 +14,34 @@
                 </div>
                 <div class="footer__add">
                     <span>
-                        <img src="https://file4.batdongsan.com.vn/images/newhome/icon3x/placeholder-line.png" alt="png">
+                        <img src="/images/placeholder-line.png" alt="png">
                     </span>
                     Tầng 31, Keangnam Hanoi Landmark, Phạm Hùng, Nam Từ Liêm, Hà Nội
                 </div>
                 <div class="footer__add">
                     <span>
-                        <img src="https://file4.batdongsan.com.vn/images/newhome/icon3x/phone-call.png" alt="png">
+                        <img src="/images/phone-call.png" alt="png">
                     </span>
                     (024) 3562 5939 - (024) 3562 5940
                 </div>
                 <div class="footer__social">
                     <div class="footer__social-logo">
-                        <img src="https://file4.batdongsan.com.vn/images/newhome/icon3x/da-dang-ki-bct.png" alt="">
+                        <img src="/images/da-dang-ki-bct.png" alt="">
                     </div>
                     <!-- <ul class=footer__social-list>
                         <li class="footer__social-item">
                             <a href="">
-                                <img src="https://file4.batdongsan.com.vn/images/newhome/icon3x/fb.png" class="bct">
+                                <img src="/images/fb.png" class="bct">
                             </a>
                         </li>
                         <li class="footer__social-item">
                             <a href="">
-                                <img src="https://file4.batdongsan.com.vn/images/newhome/icon3x/youtube.png" class="bct">
+                                <img src="/images/youtube.png" class="bct">
                             </a>
                         </li>
                         <li class="footer__social-item">
                             <a href="">
-                                <img src="https://file4.batdongsan.com.vn/images/newhome/icon3x/zalo2.png" class="bct">
+                                <img src="/images/zalo2.png" class="bct">
                             </a>
                         </li>
                     </ul> -->
@@ -57,21 +57,11 @@
 
                         <div class="footer__contentLeft">
                             <ul class="footer__content-listLeft">
-                                <li class="footer__content-itemLeft">
-                                    <a href="">Báo giá & hỗ trợ</a>
-                                </li>
-                                <li class="footer__content-itemLeft">
-                                    <a href="">Báo giá & hỗ trợ</a>
-                                </li>
-                                <li class="footer__content-itemLeft">
-                                    <a href="">Báo giá & hỗ trợ</a>
-                                </li>
-                                <li class="footer__content-itemLeft">
-                                    <a href="">Báo giá & hỗ trợ</a>
-                                </li>
-                                <li class="footer__content-itemLeft">
-                                    <a href="">Báo giá & hỗ trợ</a>
-                                </li>
+                                @for($i = 0; $i < 5; $i++)
+                                    <li class="footer__content-itemLeft">
+                                        <a href="">Báo giá & hỗ trợ</a>
+                                    </li>
+                                @endfor
                             </ul>
                         </div>
                     </div>
@@ -82,21 +72,11 @@
 
                         <div class="footer__contentLeft">
                             <ul class="footer__content-listLeft">
-                                <li class="footer__content-itemLeft">
-                                    <a href="">Báo giá & hỗ trợ</a>
-                                </li>
-                                <li class="footer__content-itemLeft">
-                                    <a href="">Báo giá & hỗ trợ</a>
-                                </li>
-                                <li class="footer__content-itemLeft">
-                                    <a href="">Báo giá & hỗ trợ</a>
-                                </li>
-                                <li class="footer__content-itemLeft">
-                                    <a href="">Báo giá & hỗ trợ</a>
-                                </li>
-                                <li class="footer__content-itemLeft">
-                                    <a href="">Báo giá & hỗ trợ</a>
-                                </li>
+                                @for($i = 0; $i < 5; $i++)
+                                    <li class="footer__content-itemLeft">
+                                        <a href="">Báo giá & hỗ trợ</a>
+                                    </li>
+                                @endfor
                             </ul>
                         </div>
                     </div>
@@ -107,24 +87,14 @@
 
                         <div class="footer__contentRight">
                             <ul class="footer__content-listRight">
-                                <li class="footer__content-itemRight">
-                                    <span>
-                                        <img src="https://file4.batdongsan.com.vn/images/newhome/icon3x/hotline.png" width="16">
-                                    </span>
-                                    Tổng đài CSKH: 1900 1881
-                                </li>
-                                <li class="footer__content-itemRight">
-                                    <span>
-                                        <img src="https://file4.batdongsan.com.vn/images/newhome/icon3x/hotline.png" width="16">
-                                    </span>
-                                    Tổng đài CSKH: 1900 1881
-                                </li>
-                                <li class="footer__content-itemRight">
-                                    <span>
-                                        <img src="https://file4.batdongsan.com.vn/images/newhome/icon3x/hotline.png" width="16">
-                                    </span>
-                                    Tổng đài CSKH: 1900 1881
-                                </li>
+                                @for($i = 0; $i < 3; $i++)
+                                    <li class="footer__content-itemRight">
+                                        <span>
+                                            <img src="/images/hotline.png" width="16">
+                                        </span>
+                                        Tổng đài CSKH: 1900 1881
+                                    </li>
+                                @endfor
                             </ul>
                         </div>
                     </div>
@@ -146,36 +116,18 @@
                     <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
-                                    <div class="footer_branch">
-                                        <div class="footer_branch-name">Chi nhánh TP. Hồ Chí Minh</div>
-                                        <div class="branch-add">
-                                            Tầng 8, Tòa nhà Xổ số Kiến thiết (Lottery Tower), Số 77 Trần Nhân Tôn, Phường 9, Quận 5, TP. Hồ Chí Minh<br>
-                                            Điện thoại: 
-                                            <a href="tel:0904 893 279">0904 893 279</a>
+                                @for($i = 0; $i < 3; $i++)
+                                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                                        <div class="footer_branch">
+                                            <div class="footer_branch-name">Chi nhánh TP. Hồ Chí Minh</div>
+                                            <div class="branch-add">
+                                                Tầng 8, Tòa nhà Xổ số Kiến thiết (Lottery Tower), Số 77 Trần Nhân Tôn, Phường 9, Quận 5, TP. Hồ Chí Minh<br>
+                                                Điện thoại: 
+                                                <a href="tel:0904 893 279">0904 893 279</a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
-                                    <div class="footer_branch">
-                                        <div class="footer_branch-name">Chi nhánh TP. Hồ Chí Minh</div>
-                                        <div class="branch-add">
-                                            Tầng 8, Tòa nhà Xổ số Kiến thiết (Lottery Tower), Số 77 Trần Nhân Tôn, Phường 9, Quận 5, TP. Hồ Chí Minh<br>
-                                            Điện thoại: 
-                                            <a href="tel:0904 893 279">0904 893 279</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
-                                <div class="footer_branch">
-                                        <div class="footer_branch-name">Chi nhánh TP. Hồ Chí Minh</div>
-                                        <div class="branch-add">
-                                            Tầng 8, Tòa nhà Xổ số Kiến thiết (Lottery Tower), Số 77 Trần Nhân Tôn, Phường 9, Quận 5, TP. Hồ Chí Minh<br>
-                                            Điện thoại: 
-                                            <a href="tel:0904 893 279">0904 893 279</a>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endfor
                             </div>
                         </div>
                     </div>

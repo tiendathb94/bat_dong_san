@@ -14,28 +14,29 @@ class CheckPermission
     private $user;
     private $permission;
 
-    public function __construct(User $user, Permissions $permission) {
-        $this->user = $user;
+    public function __construct(Permissions $permission) {
+        $this->user = auth()->user();
         $this->permission = $permission;
 
     }
+
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
-        $role = $this->user->find(Auth::user()->id)->roles()->pluck('roles.id');
-        $per = $this->permission->whereIn('role_id', $role)->pluck('route')->toArray();
-        $route = \Request::route()->getName();
-        
-        if( in_array(\Request::route()->getName(), $per) ){
+        if (checkPermission($request->route()->getName())) {
             return $next($request);
         }
-        return back()->with('error', 'Bạn không có quyền');
 
+        $message = [
+            'status' => 'danger',
+            'text' => 'Bạn không có quyền truy cập, vui lòng kiểm tra lại.'
+        ];
+        return back()->with('message', $message);
     }
 }
