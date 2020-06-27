@@ -15,5 +15,5 @@
 @endpush
 
 @push('scripts')
-    <script src="/js/pages/project/create.js"></script>
+    <script src="{{ asset('js/pages/project/create.js') . '?m=' . filemtime('js/pages/project/create.js') }}"></script>
 @endpush
