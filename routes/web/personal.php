@@ -14,4 +14,8 @@ Route::group(['guard' => 'web', 'as' => 'pages.user.', 'middleware' => ['auth']]
     Route::get('trang-ca-nhan', 'Web\UserController@index')->defaults('_config', [
         'view' => 'default.pages.users.index'
     ])->name('index');
+
+    Route::get('change-password', 'Web\UserController@changePassword')->defaults('_config', [
+        'view' => 'default.pages.users.change_password'
+    ])->name('change_password');
 });

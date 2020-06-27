@@ -1,7 +1,7 @@
 @extends('default.layouts.personal')
 
 @section('page-title')
-    Trang cá nhân
+    Quản lý tin tức
 @endsection
 
 @section('main_content')
