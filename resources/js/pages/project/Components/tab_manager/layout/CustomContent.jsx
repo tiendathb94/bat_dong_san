@@ -15,10 +15,13 @@ class CustomContent extends Component {
     }
 
     static getDerivedStateFromProps (props, state) {
+        const values = props.values || {}
+
         return {
             formValues: {
                 ...state.formValues,
-                content: props.values && props.values.content ? EditorState.createWithContent(stateFromHTML(props.values.content)) : EditorState.createEmpty()
+                content: values.content instanceof EditorState ? values.content :
+                    EditorState.createWithContent(stateFromHTML(values.content || '')),
             }
         }
     }

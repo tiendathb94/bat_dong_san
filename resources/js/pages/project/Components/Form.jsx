@@ -31,6 +31,7 @@ class Form extends Component {
         this.tabManager = React.createRef()
         this.imageLibraryUpload = React.createRef()
         this.addressField = React.createRef()
+        this.isEditMode = props.project && props.project.id > 0
     }
 
     initFormValuesForEditExistProject (existProject) {
@@ -103,20 +104,31 @@ class Form extends Component {
         const values = cloneDeep(this.state.formValues)
         values.project_overview = draftToHtml(convertToRaw(this.state.formValues.project_overview.getCurrentContent()))
         values.tab_contents = this.tabManager.current.getTabContentsFormRawValues()
-debugger
+
         try {
             this.setState({ loading: true })
 
             // Create project
-            const createProjectResponse = await axios.post(`${config.api.baseUrl}/project/create`, values)
-            const createdProject = createProjectResponse.data
+            if (this.isEditMode) {
+                await axios.put(`${config.api.baseUrl}/project/${this.props.project.id}`, values)
 
-            // Upload library images
-            await this.imageLibraryUpload.current.doUpload(
-                'App\\Entities\\Project',
-                createdProject.id,
-                'gallery',
-            )
+                // Upload library images
+                await this.imageLibraryUpload.current.doUpload(
+                    'App\\Entities\\Project',
+                    this.props.project.id,
+                    'gallery',
+                )
+            } else {
+                const createProjectResponse = await axios.post(`${config.api.baseUrl}/project/create`, values)
+                const createdProject = createProjectResponse.data
+
+                // Upload library images
+                await this.imageLibraryUpload.current.doUpload(
+                    'App\\Entities\\Project',
+                    createdProject.id,
+                    'gallery',
+                )
+            }
 
             this.setState({ loading: true })
 
@@ -365,18 +377,20 @@ debugger
                 </div>
 
                 <div className="container mt-3">
-                    <div className="row">
-                        <div className="col">
-                            <h3>Nội dung nâng cao</h3>
-                        </div>
-                    </div>
-
                     <div className="row mt-3">
                         <div className="col">
-                            <label>Tải lên hình ảnh của dự án</label>
+                            <h3>Tải lên hình ảnh của dự án</h3>
                             <ImageLibraryUpload ref={this.imageLibraryUpload} uploadedImages={
                                 this.props.project && this.props.project.galleryImages ? this.props.project.galleryImages : []
                             }/>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="container mt-3">
+                    <div className="row">
+                        <div className="col">
+                            <h3>Nội dung nâng cao</h3>
                         </div>
                     </div>
 
