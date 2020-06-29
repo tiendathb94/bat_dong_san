@@ -5,6 +5,10 @@ Route::group(['guard' => 'web', 'middleware' => ['auth', 'permission']], functio
         'view' => 'default.pages.project.create'
     ])->name('pages.project.create');
 
+    Route::get('/project/update/{projectId}', 'Web\ProjectController@update')->defaults('_config', [
+        'view' => 'default.pages.project.update'
+    ])->name('pages.project.update');
+
     Route::get('/project/posted', 'Web\ProjectController@managePostedProject')->defaults('_config', [
         'view' => 'default.pages.project.show_posted'
     ])->name('pages.project.show_posted');

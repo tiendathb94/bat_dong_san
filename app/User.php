@@ -53,6 +53,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $with = ['address'];
+    
+    protected $appends = ['url_avatar'];
+
+    const PATH_AVATAR = '/avatar';
+
     public function getRequestResetPasswordCacheKey()
     {
         return "request_reset_password_for_user_$this->id";
@@ -70,5 +76,10 @@ class User extends Authenticatable
     public function address()
     {
         return $this->morphOne('App\Entities\Address', 'addressable');
+    }
+
+    public function getUrlAvatarAttribute()
+    {
+        return '/storage' . self::PATH_AVATAR . '/' . $this->avatar;
     }
 }

@@ -60,8 +60,9 @@ function personalMenuItemsDefinition()
             'heading' => 'Quản lý tin tức',
             'items' => [
                 [
-                    'route_name' => '',
-                    'label' => 'Đăng tin tức'
+                    'route_name' => 'news.create',
+                    'label' => 'Đăng tin tức',
+                    'permission' => 'news.create'
                 ],
                 [
                     'route_name' => 'pages.user.news',

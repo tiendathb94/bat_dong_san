@@ -6,6 +6,8 @@
 - RUN composer install
 - RUN php artisan migrate
 - RUN npm install
+- php artisan ckfinder:download
+- mkdir -m 777 public/userfiles
 
 ## Frontend guide
 

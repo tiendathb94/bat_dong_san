@@ -20,34 +20,40 @@ class AuthController extends Controller
     {
         $user = auth()->user();
         $data = $request->all();
-        if($request->avatar) {
-            $avatarName = $user->id . '.' . pathinfo($request->avatar->getClientOriginalName(), PATHINFO_EXTENSION);
-            $request->avatar->storePubliclyAs('/avatar', $avatarName);
-            $data['avatar'] = $avatarName;
-        } else {
-            $data['avatar'] = $user->avatar;
+        $response = [];
+        DB::beginTransaction();
+        try {
+            if($request->avatar) {
+                $avatarName = $user->id . '.' . pathinfo($request->avatar->getClientOriginalName(), PATHINFO_EXTENSION);
+                $request->avatar->storePubliclyAs('public/' . User::PATH_AVATAR, $avatarName);
+                $data['avatar'] = $avatarName;
+            } else {
+                $data['avatar'] = $user->avatar;
+            }
+            $user->update($data);
+            $user->address()->updateOrCreate([
+                'addressable_id' => $user->id,
+            ],
+            [
+                'province_id' => $request->province_id,
+                'district_id' => $request->district_id,
+                'ward_id' => $request->ward_id,
+                'address' => $request->address,
+            ]);
+            DB::commit();
+            $response = [
+                'status' => 'success',
+                'text' => 'Cập nhật thông tin thành công',
+                'user' => $user
+            ];
+        } catch (\Exception $e) {
+            DB::rollback();
+            $response = [
+                'status' => 'danger',
+                'text' => $e->getMessage(),
+            ];
         }
-        $user->update($data);
-        $user->address()->updateOrCreate([
-            'addressable_id' => $user->id,
-        ],
-        [
-            'province_id' => $request->province_id,
-            'district_id' => $request->district_id,
-            'ward_id' => $request->ward_id,
-            'address' => $request->address,
-        ]);
-        dd($user);
-    }
-
-    public function information()
-    {
-        $user = auth()->user();
-        $address = $user->address()->first();
-        $data = [
-            'user' => $user,
-            'address' => $address
-        ];
-        return response()->json($data);
+        
+        return response()->json($response);
     }
 }

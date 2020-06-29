@@ -14,6 +14,25 @@ class ProjectController extends Controller
         return view($this->_config['view']);
     }
 
+    public function update($projectId)
+    {
+        $user = auth()->user();
+
+        $project = Project::query()
+            ->with('investor')
+            ->where('id', '=', $projectId)
+            ->where('user_id', '=', $user->id)
+            ->first();
+
+        if (!$project) {
+            return abort(404);
+        }
+
+        $project->galleryImages = $project->imageLibraries()->where('library_type', 'gallery')->get();
+
+        return view($this->_config['view'], ['project' => $project]);
+    }
+
     public function managePostedProject(Request $request)
     {
         $user = auth()->user();

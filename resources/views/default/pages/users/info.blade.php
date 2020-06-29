@@ -18,6 +18,9 @@
 @endpush
 
 @push('scripts')
+    <script>
+        window.user = @json($user)
+    </script>
     <script src="{{ asset('js/pages/users/info.js') . '?m=' . filemtime('js/pages/users/info.js') }}"></script>
 @endpush
 

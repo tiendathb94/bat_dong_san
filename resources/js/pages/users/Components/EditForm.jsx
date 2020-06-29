@@ -4,22 +4,45 @@ import axios from 'axios'
 import { convertToRaw, EditorState } from 'draft-js'
 import classnames from "classnames"
 import config from "../../../config"
+import { timers } from 'jquery'
 
 class EditForm extends Component {
     constructor (props) {
         super(props)
 
         this.state = {
-            formValues: {},
+            formValues: {
+                ...this.initFormValuesForEditExistUser(props.user),
+            },
             errors: [],
             errorByFields: {},
             loading: false,
             message: {},
             avatar: {},
-            addressField: {}
         }
 
-        this.addressField = React.createRef();
+        this.addressField = React.createRef()
+    }
+
+    initFormValuesForEditExistUser (user) {
+        if (!user) {
+            return {}
+        }
+
+        return {
+            avatar: user.avatar,
+            fullname: user.fullname,
+            date_of_birth: user.date_of_birth,
+            gender: user.gender,
+            phone: user.phone,
+            tax: user.tax,
+            facebook: user.facebook,
+            zalo: user.zalo,
+            skype: user.skype,
+            viber: user.viber,
+            address: user.address || {},
+            url_avatar: user.url_avatar
+        }
     }
 
     onSyncAddress = (address) => {
@@ -48,6 +71,11 @@ class EditForm extends Component {
         return <div className="text-danger form-text">{this.state.errorByFields.long_name}</div>
     }
 
+    getAddressValue (fieldName) {
+        return this.state.formValues.address && this.state.formValues.address[fieldName] ?
+            this.state.formValues.address[fieldName] : null
+    }
+
     validate () {
         const errorByFields = {}
 
@@ -66,42 +94,13 @@ class EditForm extends Component {
         return Object.keys(errorByFields).length < 1 && addressValid
     }
 
-    async componentDidMount () {
-        await this.fetchUser()
-    }
-
-    async fetchUser () {
-        const response = await axios.get(`${config.api.baseUrl}/user/information`);
-        const user = response.data.user;
-        const address = response.data.address;
-        this.setState({ 
-            formValues: {
-                avatar: user.avatar,
-                fullname: user.fullname,
-                date_of_birth: user.date_of_birth,
-                gender: user.gender,
-                phone: user.phone,
-                tax: user.tax,
-                facebook: user.facebook,
-                zalo: user.zalo,
-                skype: user.skype,
-                viber: user.viber,
-            },
-            addressField: {
-                provinceId: address.province_id ?? '',
-                districtId: address.district_id ?? '',
-                wardId: address.ward_id ?? '',
-                line: address.address ?? '',
-            }
-        })
-    }
 
     onClickSaveButton = async () => {
         if (!this.validate()) {
             window.scrollTo(0, 0)
             return
         }
-        const { formValues, addressField} = this.state;
+        const { formValues} = this.state;
         var formData = new FormData();
         Array.from(this.state.avatar).forEach(image => {
             formData.append('avatar', image);
@@ -115,13 +114,14 @@ class EditForm extends Component {
         formData.append('zalo', formValues.zalo);
         formData.append('viber', formValues.viber);
         formData.append('skype', formValues.skype);
-        formData.append('address', addressField.line);
-        formData.append('district_id', addressField.districtId);
-        formData.append('province_id', addressField.provinceId);
-        formData.append('ward_id', addressField.wardId);
+        formData.append('address', formValues.address.address);
+        formData.append('district_id', formValues.address.district_id);
+        formData.append('province_id', formValues.address.province_id);
+        formData.append('ward_id', formValues.address.ward_id);
         formData.append('_method', 'PATCH');
 
         try {
+            document.getElementById('js-set-avatar').src = ''
             this.setState({ loading: true })
 
             // Create project
@@ -131,10 +131,14 @@ class EditForm extends Component {
             const response = updateInfo.data
             this.setState({
                 loading: false,
-                message: {
-                    success: response.message
-                }
+                message: response
+            })
+            document.getElementById('js-set-avatar').src = response.user.url_avatar + '?d=' + Date.now()
+            setTimeout(() => {
+                this.setState({
+                    message: {}
                 })
+            }, 2000)
         } catch (e) {
             if (e.response && e.response.data) {
                 window.scrollTo(0, 0)
@@ -173,14 +177,14 @@ class EditForm extends Component {
                     }
                     
                     {
-                        this.state.message.success > 0 && <div className="row">
-                            <div className="col-12 alert alert-success" role="alert">
-                                {this.state.message.success}
+                        this.state.message.status && <div className="row mt-3">
+                            <div className={`col-12 alert alert-${this.state.message.status}`} role="alert">
+                                {this.state.message.text}
                             </div>
                         </div>
                     }
 
-                    <div className="row">
+                    <div className="row mt-3">
                         <div className="col-12 col-lg-8">
                             <div className="form-group">
                                 <label>Họ và tên <span className="text-danger">(*)</span></label>
@@ -236,9 +240,9 @@ class EditForm extends Component {
                         </div>
                         <div className="col-12 col-lg-4 p-5">
                             <label htmlFor="avatar">
-                                <div className="border border-dark position-relative cursor-pointer overflow-hidden rounded-circle margin-auto">
-                                    <img src="/images/default-user-avatar-blue.jpg" alt=""/>
-                                    <div className="position-absolute w-100 top-70 bg-dark d-flex justify-content-center align-items-center opacity-5 bottom-0">
+                                <div className="position-relative cursor-pointer overflow-hidden rounded-circle margin-auto">
+                                    <img className="img-avatar" src={this.state.formValues.url_avatar ?? '/images/default-user-avatar-blue.jpg'} alt=""/>
+                                    <div className="position-absolute w-100 top-70 bg-dark d-flex justify-content-center align-items-center opacity-8 bottom-0">
                                         <i className="ti-camera text-white"></i>
                                     </div>
                                 </div>
@@ -329,7 +333,15 @@ class EditForm extends Component {
                         </div>
                     </div>
                 </div>
-                <AddressForm onSync={this.onSyncAddress} ref={this.addressField} addressField={this.state.addressField} required={true}/>
+                <AddressForm
+                        onSync={this.onSyncAddress}
+                        ref={this.addressField}
+                        required={true}
+                        districtId={this.getAddressValue('district_id')}
+                        provinceId={this.getAddressValue('province_id')}
+                        wardId={this.getAddressValue('ward_id')}
+                        line={this.getAddressValue('address')}
+                    />
                 <div className="row mt-3">
                     <div className="col-12">
                         <div className="d-flex w-100 justify-content-center">

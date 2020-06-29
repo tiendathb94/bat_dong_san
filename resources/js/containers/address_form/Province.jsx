@@ -14,8 +14,8 @@ class Province extends Component {
         }
     }
 
-    static getDerivedStateFromProps (newProps) {
-        return { message: newProps.message, value: newProps.value }
+    static getDerivedStateFromProps (props) {
+        return { message: props.message }
     }
 
     async componentDidMount () {
@@ -64,7 +64,7 @@ class Province extends Component {
 }
 
 Province.propTypes = {
-    value: PropTypes.string,
+    value: PropTypes.number,
     onChange: PropTypes.func,
     message: PropTypes.string
 }

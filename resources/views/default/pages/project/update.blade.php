@@ -1,7 +1,7 @@
 @extends('default.layouts.personal')
 
 @section('page_title')
-    Đăng dự án
+    Cập nhật dự án
 @endsection
 
 @section('main_content')
@@ -15,5 +15,9 @@
 @endpush
 
 @push('scripts')
+    <script>
+        window.project = @json($project)
+    </script>
+
     <script src="{{ asset('js/pages/project/form.js') . '?m=' . filemtime('js/pages/project/form.js') }}"></script>
 @endpush

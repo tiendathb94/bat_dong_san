@@ -2,13 +2,25 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Entities\Project;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\SaveProjectRequest;
-use DB;
+use App\Entities\Project;
+
 
 class ProjectController extends Controller
 {
+    public function searchByName(Request $request)
+    {
+
+        $categories = DB::table('projects')
+            ->where('status', Project::StatusApproved)
+            ->where('long_name', 'LIKE', '%' . request('query') . '%')->take(20)->get();
+
+        return response()->json($categories);
+    }
+
     public function createProject(SaveProjectRequest $request)
     {
         $validated = $request->validated();
@@ -50,5 +62,25 @@ class ProjectController extends Controller
         }
 
         return response()->json(['message' => 'Đã có lỗi khi lưu dự án'], 500);
+    }
+
+    public function deleteProject($projectId)
+    {
+        $user = auth()->user();
+        $project = Project::query()
+            ->where('id', '=', $projectId)
+            ->where('user_id', '=', $user->id)
+            ->first();
+
+        if (!$project) {
+            return response()->json(['message' => 'Dự án bạn yêu cầu không tồn tại'], 400);
+        }
+
+        try {
+            $project->delete();
+            return response()->noContent();
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Xóa dự án không thành công bạn vui lòng thử lại'], 500);
+        }
     }
 }

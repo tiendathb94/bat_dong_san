@@ -14,10 +14,11 @@ require('laravel-mix-react-css-modules')
 
 mix
     // .react('resources/js/app.js', 'public/js')
-    // .react('resources/js/pages/project/create.js', 'public/js/pages/project')
+    // .react('resources/js/pages/project/form.js', 'public/js/pages/project')
+    // .react('resources/js/pages/project/manage.js', 'public/js/pages/project')
     .react('resources/js/pages/users/info.js', 'public/js/pages/users')
     // .sass('resources/sass/app.scss', 'public/css')
-    // .sass('resources/sass/pages/project/create.scss', 'public/css/pages/project')
+    // .sass('resources/sass/pages/project/form.scss', 'public/css/pages/project')
     .sass('resources/sass/pages/users/index.scss', 'public/css/pages/users')
     // .sass('resources/sass/pages/auth/reset-password.scss', 'public/css/pages/auth')
     // .sass('resources/sass/layouts/personal.scss', 'public/css/layouts')
