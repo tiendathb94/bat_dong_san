@@ -21,8 +21,10 @@ class LocationInfrastructure extends Component {
         return {
             formValues: {
                 ...state.formValues,
-                location: EditorState.createWithContent(stateFromHTML(values.location || '')),
-                infrastructure: EditorState.createWithContent(stateFromHTML(values.infrastructure || '')),
+                location: values.location instanceof EditorState ? values.location :
+                    EditorState.createWithContent(stateFromHTML(values.location || '')),
+                infrastructure: values.infrastructure instanceof EditorState ? values.infrastructure :
+                    EditorState.createWithContent(stateFromHTML(values.infrastructure || '')),
             }
         }
     }
