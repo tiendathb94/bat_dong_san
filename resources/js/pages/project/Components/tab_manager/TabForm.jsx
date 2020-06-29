@@ -8,7 +8,7 @@ class TabForm extends Component {
         this.state = {}
     }
 
-    static getDerivedStateFromProps (props, state) {
+    static getDerivedStateFromProps (props) {
         return { name: props.tabContent.name, values: props.tabContent.values || {} }
     }
 
@@ -42,7 +42,7 @@ class TabForm extends Component {
                     />
                 </div>
 
-                <LayoutComponent onFormChange={this.onFormChange} values={this.state.values}/>
+                {LayoutComponent && <LayoutComponent onFormChange={this.onFormChange} values={this.state.values}/>}
             </div>
         )
     }

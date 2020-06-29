@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
-import LocationInfrastructure from "./layout/LocationInfrastructure"
-import CustomContent from "./layout/CustomContent"
+import Helper from './Helper'
 
 class CreateTabButton extends Component {
     constructor (props) {
@@ -13,11 +12,7 @@ class CreateTabButton extends Component {
     }
 
     getTabContentTypes () {
-        return [
-            { name: 'Vị trí - Hạ tầng', layout: 'location_infrastructure', component: LocationInfrastructure },
-            //{ name: 'Tiến độ dự án', layout: 'project_progress' },
-            { name: 'Nội dung tùy chỉnh', layout: 'custom', component: CustomContent },
-        ]
+        return Helper.getTabTypes()
     }
 
     onClickAddMoreTab = () => {
@@ -58,7 +53,7 @@ class CreateTabButton extends Component {
 }
 
 CreateTabButton.propTypes = {
-    onAddContent: PropTypes.func
+    onAddContent: PropTypes.func,
 }
 
 export default CreateTabButton

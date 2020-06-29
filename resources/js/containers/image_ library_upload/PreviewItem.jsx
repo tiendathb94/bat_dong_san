@@ -58,7 +58,7 @@ class PreviewItem extends Component {
         return (
             <div className={classnames('container', Style.uploadPreviewWrapper)}>
                 {
-                    uploadedFiles && <div className="row">
+                    uploadedFiles && uploadedFiles.length > 0 && <div className="row">
                         <div className="col">
                             <div className="row">
                                 <h6 className="col mt-3">Hình ảnh đã được tải lên</h6>
