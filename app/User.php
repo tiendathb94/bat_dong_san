@@ -17,7 +17,22 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','fullname','gender','type','tax','remember_token','reset_password_token'
+        'name', 
+        'email', 
+        'password',
+        'fullname',
+        'gender',
+        'type',
+        'tax',
+        'remember_token',
+        'reset_password_token', 
+        'phone', 
+        'date_of_birth',
+        'avatar',
+        'facebook',
+        'skype',
+        'zalo',
+        'viber'
     ];
 
     /**
@@ -50,5 +65,10 @@ class User extends Authenticatable
     public function getGenderNameAttribute()
     {
         return $this->gender ? 'Nam' : 'Nữ';
+    }
+
+    public function address()
+    {
+        return $this->morphOne('App\Entities\Address', 'addressable');
     }
 }

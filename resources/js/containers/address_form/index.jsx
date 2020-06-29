@@ -19,6 +19,17 @@ class AddressForm extends Component {
         }
     }
 
+    componentWillReceiveProps = (nextProps) => {
+        if(nextProps.addressField.provinceId) {
+            this.setState({
+                provinceId: nextProps.addressField.provinceId.toString(),
+                districtId: nextProps.addressField.districtId.toString(),
+                wardId: nextProps.addressField.wardId.toString(),
+                line: nextProps.addressField.line
+            })
+        }
+    }
+
     componentDidUpdate (prevProps, prevState, snapshot) {
         // Sync address value to parent
         if (this.props.onSync && !isEqual(this.state, prevState)) {

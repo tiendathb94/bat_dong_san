@@ -14,8 +14,8 @@ class Province extends Component {
         }
     }
 
-    static getDerivedStateFromProps (props) {
-        return { message: props.message }
+    static getDerivedStateFromProps (newProps) {
+        return { message: newProps.message, value: newProps.value }
     }
 
     async componentDidMount () {

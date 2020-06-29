@@ -7,7 +7,7 @@ function personalMenuItemsDefinition()
             'heading' => 'Quản lý thông tin cá nhân',
             'items' => [
                 [
-                    'route_name' => '',
+                    'route_name' => 'pages.user.info',
                     'label' => 'Thay đổi thông tin cá nhân'
                 ],
                 [
