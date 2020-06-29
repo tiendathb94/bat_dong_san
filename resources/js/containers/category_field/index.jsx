@@ -9,13 +9,12 @@ class CategoryField extends Component {
         super(props)
 
         this.state = {
-            categories: [],
-            value: ''
+            categories: []
         }
     }
 
     static getDerivedStateFromProps (props) {
-        return { message: props.message }
+        return { message: props.message, value: props.value || '' }
     }
 
     async componentDidMount () {
@@ -59,6 +58,7 @@ class CategoryField extends Component {
 
 CategoryField.propTypes = {
     label: PropTypes.string,
+    value: PropTypes.number,
     onChange: PropTypes.func,
     destinationEntity: PropTypes.string,
     message: PropTypes.string,

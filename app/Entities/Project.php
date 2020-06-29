@@ -50,6 +50,11 @@ class Project extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function investor()
+    {
+        return $this->belongsTo(Investor::class);
+    }
+
     public function tabs()
     {
         return $this->hasMany('App\Entities\ProjectTab');

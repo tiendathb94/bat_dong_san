@@ -3,6 +3,7 @@ import AddressForm from "../../../containers/address_form"
 import CategoryField from '../../../containers/category_field'
 import { Editor } from 'react-draft-wysiwyg'
 import { convertToRaw, EditorState } from 'draft-js'
+import { stateFromHTML } from 'draft-js-import-html'
 import TabManager from "./tab_manager"
 import axios from 'axios'
 import config from "../../../config"
@@ -11,14 +12,16 @@ import { cloneDeep } from 'lodash'
 import AutocompleteField from "../../../containers/autocomplete_field"
 import ImageLibraryUpload from "../../../containers/image_ library_upload"
 import classnames from "classnames"
+import PropTypes from 'prop-types'
 
-class CreateForm extends Component {
+class Form extends Component {
     constructor (props) {
         super(props)
 
         this.state = {
             formValues: {
                 project_overview: EditorState.createEmpty(),
+                ...this.initFormValuesForEditExistProject(props.project),
             },
             errors: [],
             errorByFields: {},
@@ -28,6 +31,25 @@ class CreateForm extends Component {
         this.tabManager = React.createRef()
         this.imageLibraryUpload = React.createRef()
         this.addressField = React.createRef()
+    }
+
+    initFormValuesForEditExistProject (existProject) {
+        if (!existProject) {
+            return {}
+        }
+
+        return {
+            long_name: existProject.long_name,
+            short_name: existProject.short_name,
+            category_id: existProject.category_id,
+            total_area: existProject.total_area,
+            project_scale: existProject.project_scale,
+            price: existProject.price,
+            price_unit: existProject.price_unit,
+            address: existProject.address || {},
+            investor_type: existProject.investor_type || '',
+            project_overview: EditorState.createWithContent(stateFromHTML(existProject.project_overview))
+        }
     }
 
     onSyncAddress = (address) => {
@@ -99,6 +121,11 @@ class CreateForm extends Component {
                 }
             }
         }
+    }
+
+    getAddressValue (fieldName) {
+        return this.state.formValues.address && this.state.formValues.address[fieldName] ?
+            this.state.formValues.address[fieldName] : null
     }
 
     validate () {
@@ -198,6 +225,7 @@ class CreateForm extends Component {
                                     destinationEntity="App\Entities\Project"
                                     onChange={this.onChangeCategory}
                                     message={this.state.errorByFields.category_id}
+                                    value={parseInt(this.state.formValues.category_id)}
                                 />
                             </div>
                         </div>
@@ -265,7 +293,15 @@ class CreateForm extends Component {
                         </div>
                     </div>
 
-                    <AddressForm onSync={this.onSyncAddress} ref={this.addressField} required={true}/>
+                    <AddressForm
+                        onSync={this.onSyncAddress}
+                        ref={this.addressField}
+                        required={true}
+                        districtId={this.getAddressValue('district_id')}
+                        provinceId={this.getAddressValue('province_id')}
+                        wardId={this.getAddressValue('ward_id')}
+                        line={this.getAddressValue('address')}
+                    />
 
                     <div className="container">
                         <div className="row">
@@ -275,6 +311,12 @@ class CreateForm extends Component {
                                     endpoint="investor/autocomplete-field-search"
                                     onChange={this.onChangeInvestor}
                                     placeholder="Nhập tên của chủ đầu tư để tìm kiếm"
+                                    selectedItem={
+                                        this.props.project && this.props.project.investor ? {
+                                            value: this.props.project.investor.id,
+                                            name: this.props.project.investor.name
+                                        } : {}
+                                    }
                                 />
                             </div>
                             <div className="col col-sm-12 col-md-6 form-group">
@@ -316,7 +358,9 @@ class CreateForm extends Component {
                     <div className="row mt-3">
                         <div className="col">
                             <label>Tải lên hình ảnh của dự án</label>
-                            <ImageLibraryUpload ref={this.imageLibraryUpload}/>
+                            <ImageLibraryUpload ref={this.imageLibraryUpload} uploadedImages={
+                                this.props.project && this.props.project.galleryImages ? this.props.project.galleryImages : []
+                            }/>
                         </div>
                     </div>
 
@@ -343,4 +387,8 @@ class CreateForm extends Component {
     }
 }
 
-export default CreateForm
+Form.propTypes = {
+    project: PropTypes.object
+}
+
+export default Form

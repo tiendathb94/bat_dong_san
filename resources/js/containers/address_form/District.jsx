@@ -19,6 +19,12 @@ class District extends Component {
         return { provinceId: props.provinceId, value: props.value, message: props.message }
     }
 
+    async componentDidMount () {
+        if (this.state.provinceId) {
+            await this.fetchDistricts()
+        }
+    }
+
     async componentDidUpdate (prevProps, prevState) {
         if (this.state.provinceId !== prevState.provinceId) {
             await this.fetchDistricts()
@@ -79,8 +85,8 @@ class District extends Component {
 }
 
 District.propTypes = {
-    provinceId: PropTypes.string,
-    value: PropTypes.string,
+    provinceId: PropTypes.number,
+    value: PropTypes.number,
     onChange: PropTypes.func,
     message: PropTypes.string
 }

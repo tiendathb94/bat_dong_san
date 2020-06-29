@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Entities\ImageLibrary;
 use App\Entities\Project;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ImageLibraryRequest;
 use DB;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
 class ImageLibraryController extends Controller
@@ -30,11 +32,11 @@ class ImageLibraryController extends Controller
             $uploadedFiles = $request->file('files');
             if ($uploadedFiles) {
                 foreach ($uploadedFiles as $file) {
-                    $uploadedFilePath = $file->storePublicly('/uploads/images/library/');
+                    $uploadedFilePath = $file->storePublicly('/public/uploads/images/library');
                     $savedFiles[] = $uploadedFilePath;
                     $targetEntity->imageLibraries()->create([
                         'library_type' => $libraryType,
-                        'file_path' => $uploadedFilePath,
+                        'file_path' => str_replace('public', '', $uploadedFilePath),
                         'user_id' => $user->id,
                         'meta_data' => $metaData,
                     ]);
@@ -49,6 +51,24 @@ class ImageLibraryController extends Controller
         }
 
         return response()->json(['message' => 'Đã có lỗi xảy ra khi lưu thư viện ảnh'], 500);
+    }
+
+    public function deleteFiles(Request $request)
+    {
+        $libIds = $request->get('image_library_ids');
+        if (!$libIds || count($libIds) < 1) {
+            return response()->json(['message' => 'Không có dữ liệu cần xóa'], 400);
+        }
+
+        $user = auth()->user();
+
+        $imageLibraries = ImageLibrary::query()
+            ->where('user_id', '=', $user->id)
+            ->where('id', 'IN', $libIds)->get();
+
+        foreach ($imageLibraries as $imageLibrary) {
+            
+        }
     }
 
     private function getTargetEntity($type, $id)

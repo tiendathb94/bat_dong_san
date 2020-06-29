@@ -19,6 +19,12 @@ class Ward extends Component {
         return { districtId: props.districtId, value: props.value, message: props.message }
     }
 
+    async componentDidMount () {
+        if (this.state.districtId) {
+            await this.fetchWards()
+        }
+    }
+
     async componentDidUpdate (prevProps, prevState) {
         if (this.state.districtId !== prevState.districtId) {
             await this.fetchWards()
@@ -79,8 +85,8 @@ class Ward extends Component {
 }
 
 Ward.propTypes = {
-    districtId: PropTypes.string,
-    value: PropTypes.string,
+    districtId: PropTypes.number,
+    value: PropTypes.number,
     onChange: PropTypes.func,
     message: PropTypes.string
 }

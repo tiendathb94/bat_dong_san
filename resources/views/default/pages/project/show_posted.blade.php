@@ -67,7 +67,7 @@
                 </td>
                 <td class="d-none d-md-table-cell">{{\Carbon\Carbon::parse($project->created_at)->format('d/m/Y')}}</td>
                 <td>
-                    <a href="" class="d-block">
+                    <a href="{{route('pages.project.update',['projectId'=>$project->id])}}" class="d-block">
                         <span class="ti-pencil-alt"></span> Sửa
                     </a>
 
