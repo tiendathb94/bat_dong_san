@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Editor } from 'react-draft-wysiwyg'
 import { EditorState } from "draft-js"
+import { stateFromHTML } from "draft-js-import-html"
 
 class CustomContent extends Component {
     constructor (props) {
@@ -14,7 +15,12 @@ class CustomContent extends Component {
     }
 
     static getDerivedStateFromProps (props, state) {
-        return { formValues: { ...state.formValues, ...props.values } }
+        return {
+            formValues: {
+                ...state.formValues,
+                content: props.values && props.values.content ? EditorState.createWithContent(stateFromHTML(props.values.content)) : EditorState.createEmpty()
+            }
+        }
     }
 
     onContentChange = (editorState) => {

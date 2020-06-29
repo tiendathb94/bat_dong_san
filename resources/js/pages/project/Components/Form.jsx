@@ -48,8 +48,24 @@ class Form extends Component {
             price_unit: existProject.price_unit,
             address: existProject.address || {},
             investor_type: existProject.investor_type || '',
-            project_overview: EditorState.createWithContent(stateFromHTML(existProject.project_overview))
+            project_overview: EditorState.createWithContent(stateFromHTML(existProject.project_overview)),
+            tab_contents: this.parseExistTabContent(existProject.tabs)
         }
+    }
+
+    parseExistTabContent (existTabContents) {
+        const tabContents = []
+
+        for (let i = 0; i < existTabContents.length; i++) {
+            tabContents.push({
+                name: existTabContents[i].name,
+                id: existTabContents[i].id,
+                layout: existTabContents[i].template,
+                ...existTabContents[i].contents
+            })
+        }
+
+        return tabContents
     }
 
     onSyncAddress = (address) => {
@@ -87,7 +103,7 @@ class Form extends Component {
         const values = cloneDeep(this.state.formValues)
         values.project_overview = draftToHtml(convertToRaw(this.state.formValues.project_overview.getCurrentContent()))
         values.tab_contents = this.tabManager.current.getTabContentsFormRawValues()
-
+debugger
         try {
             this.setState({ loading: true })
 
@@ -366,7 +382,7 @@ class Form extends Component {
 
                     <div className="row">
                         <div className="col">
-                            <TabManager ref={this.tabManager}/>
+                            <TabManager ref={this.tabManager} tabContents={this.state.formValues.tab_contents}/>
                         </div>
                     </div>
 

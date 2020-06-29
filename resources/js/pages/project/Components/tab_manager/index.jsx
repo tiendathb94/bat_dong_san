@@ -4,15 +4,39 @@ import TabForm from "./TabForm"
 import draftToHtml from 'draftjs-to-html'
 import { EditorState, convertToRaw } from 'draft-js'
 import classnames from 'classnames'
+import PropTypes from 'prop-types'
+import Helper from "./Helper"
 
 class TabManager extends Component {
     constructor (props) {
         super(props)
 
         this.state = {
-            tabContents: [],
+            tabContents: this.prepareExistTabContents() || [],
             activeTabIndex: 0
         }
+    }
+
+    prepareExistTabContents () {
+        if (!this.props.tabContents) {
+            return []
+        }
+
+        const tabContents = []
+        for (let i = 0; i < this.props.tabContents.length; i++) {
+            const t = this.props.tabContents[i]
+            const type = Helper.getTabTypeByLayout(t.layout)
+
+            if (type) {
+                tabContents.push({
+                    ...this.props.tabContents[i],
+                    component: type.component,
+                    values: t,
+                })
+            }
+        }
+
+        return tabContents
     }
 
     onAddTabContent = (tabContentType) => {
@@ -40,15 +64,21 @@ class TabManager extends Component {
     getTabContentsFormRawValues () {
         const tabContentsFormRawValues = []
         this.state.tabContents.forEach((tabContent) => {
-            const tabContentFormRawValues = { name: tabContent.name, layout: tabContent.layout }
+            const tabContentFormRawValues = {
+                name: tabContent.name,
+                layout: tabContent.layout,
+                id: tabContent.id || 0
+            }
 
             if (tabContent.values) {
+                const type = Helper.getTabTypeByLayout(tabContent.layout)
+
                 tabContentFormRawValues.contents = {}
                 for (const k in tabContent.values) {
                     const value = tabContent.values[k]
                     if (value instanceof EditorState) {
                         tabContentFormRawValues.contents[k] = draftToHtml(convertToRaw(value.getCurrentContent()))
-                    } else {
+                    } else if (type.contentFields.indexOf(k) >= 0) {
                         tabContentFormRawValues.contents[k] = value
                     }
                 }
@@ -94,6 +124,10 @@ class TabManager extends Component {
             </div>
         )
     }
+}
+
+TabManager.propTypes = {
+    tabContents: PropTypes.array
 }
 
 export default TabManager

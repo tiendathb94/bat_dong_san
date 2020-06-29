@@ -53,7 +53,7 @@ class ImageLibraryController extends Controller
         return response()->json(['message' => 'Đã có lỗi xảy ra khi lưu thư viện ảnh'], 500);
     }
 
-    public function deleteFiles(Request $request)
+    public function deleteLibraries(Request $request)
     {
         $libIds = $request->get('image_library_ids');
         if (!$libIds || count($libIds) < 1) {
@@ -64,11 +64,14 @@ class ImageLibraryController extends Controller
 
         $imageLibraries = ImageLibrary::query()
             ->where('user_id', '=', $user->id)
-            ->where('id', 'IN', $libIds)->get();
+            ->whereIn('id', $libIds)
+            ->get();
 
         foreach ($imageLibraries as $imageLibrary) {
-            
+            $imageLibrary->delete();
         }
+
+        return response()->noContent();
     }
 
     private function getTargetEntity($type, $id)
