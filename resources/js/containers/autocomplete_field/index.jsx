@@ -8,8 +8,8 @@ class AutocompleteField extends Component {
     constructor (props) {
         super(props)
         this.state = {
-            selectedItem: {},
             keyword: '',
+            selectedItem: props.selectedItem || {}
         }
     }
 
@@ -41,6 +41,7 @@ class AutocompleteField extends Component {
 AutocompleteField.propTypes = {
     endpoint: PropTypes.string,
     onChange: PropTypes.func,
+    selectedItem: PropTypes.object,
     placeholder: PropTypes.string,
 }
 

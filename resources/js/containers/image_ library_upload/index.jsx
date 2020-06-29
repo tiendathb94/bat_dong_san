@@ -10,7 +10,9 @@ class ImageLibraryUpload extends Component {
         super(props)
 
         this.state = {
-            selectedFiles: []
+            selectedFiles: [],
+            uploadedImages: props.uploadedImages || [],
+            libraryImagesQueuedToDelete: []
         }
     }
 
@@ -52,11 +54,27 @@ class ImageLibraryUpload extends Component {
         return response.data
     }
 
-    onRemoveFile = (fileIndex) => {
-        const selectedFiles = this.state.selectedFiles
-        selectedFiles.splice(fileIndex, 1)
+    onRemoveFile = (fileId, isUploaded) => {
+        if (isUploaded) {
+            // Remove file uploaded
+            const uploadedImages = []
+            for (let i = 0; i < this.state.uploadedImages.length; i++) {
+                if (this.state.uploadedImages[i].id !== fileId) {
+                    uploadedImages.push(this.state.uploadedImages[i])
+                }
 
-        this.setState({ selectedFiles })
+                this.setState({
+                    uploadedImages,
+                    libraryImagesQueuedToDelete: [...this.state.libraryImagesQueuedToDelete, fileId]
+                })
+            }
+        } else {
+            // Remove new file just selected not uploaded yet
+            const selectedFiles = this.state.selectedFiles
+            selectedFiles.splice(fileId, 1)
+
+            this.setState({ selectedFiles })
+        }
     }
 
     onAddedFiles = (selectedFiles) => {
@@ -67,14 +85,18 @@ class ImageLibraryUpload extends Component {
         return (
             <div>
                 <UploadBox onAddedFiles={this.onAddedFiles}/>
-                <PreviewItem selectedFiles={this.state.selectedFiles} onRemoveFile={this.onRemoveFile}/>
+                <PreviewItem
+                    selectedFiles={this.state.selectedFiles}
+                    onRemoveFile={this.onRemoveFile}
+                    uploadedImages={this.state.uploadedImages}/>
             </div>
         )
     }
 }
 
 ImageLibraryUpload.propTypes = {
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    uploadedImages: PropTypes.array
 }
 
 export default ImageLibraryUpload

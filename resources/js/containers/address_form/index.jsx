@@ -11,10 +11,10 @@ class AddressForm extends Component {
         super(props)
 
         this.state = {
-            provinceId: '',
-            districtId: '',
-            wardId: '',
-            line: '',
+            provinceId: props.provinceId || 0,
+            districtId: props.districtId || 0,
+            wardId: props.wardId || 0,
+            line: props.line || '',
             errors: {}
         }
     }
@@ -32,14 +32,18 @@ class AddressForm extends Component {
     }
 
     setFormValue = (fieldName, value) => {
-        this.setState({ [fieldName]: value })
+        if (fieldName === 'line') {
+            this.setState({ [fieldName]: value })
+        } else {
+            this.setState({ [fieldName]: parseInt(value) })
+        }
 
         // Reset field
         const fieldDependencies = ['provinceId', 'districtId', 'wardId', 'line']
         const fIndex = fieldDependencies.indexOf(fieldName)
         if (fIndex >= 0) {
             for (let i = fIndex + 1; i < fieldDependencies.length; i++) {
-                this.setState({ [fieldDependencies[i]]: '' })
+                this.setState({ [fieldDependencies[i]]: fieldDependencies[i] === 'line' ? '' : 0 })
             }
         }
     }
@@ -111,7 +115,11 @@ class AddressForm extends Component {
 
 AddressForm.propTypes = {
     onSync: PropTypes.func,
-    required: PropTypes.bool
+    required: PropTypes.bool,
+    provinceId: PropTypes.number,
+    districtId: PropTypes.number,
+    wardId: PropTypes.number,
+    line: PropTypes.string,
 }
 
 export default AddressForm

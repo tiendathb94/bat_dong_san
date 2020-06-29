@@ -11,11 +11,12 @@ use App\Entities\Project;
 
 class ProjectController extends Controller
 {
-    public function searchByName( Request $request ) {
+    public function searchByName(Request $request)
+    {
 
         $categories = DB::table('projects')
-        ->where('status', Project::StatusApproved)
-        ->where('long_name', 'LIKE', '%' . request('query') . '%')->take(20)->get();
+            ->where('status', Project::StatusApproved)
+            ->where('long_name', 'LIKE', '%' . request('query') . '%')->take(20)->get();
 
         return response()->json($categories);
     }
@@ -66,13 +67,17 @@ class ProjectController extends Controller
     public function deleteProject($projectId)
     {
         $user = auth()->user();
-        $project = Project::query()->where('id', '=', $projectId)->where('user_id', '=', $user->id)->get();
+        $project = Project::query()
+            ->where('id', '=', $projectId)
+            ->where('user_id', '=', $user->id)
+            ->first();
+
         if (!$project) {
             return response()->json(['message' => 'Dự án bạn yêu cầu không tồn tại'], 400);
         }
 
         try {
-            $project->first()->delete();
+            $project->delete();
             return response()->noContent();
         } catch (\Exception $e) {
             return response()->json(['message' => 'Xóa dự án không thành công bạn vui lòng thử lại'], 500);

@@ -11,12 +11,18 @@ class PreviewItem extends Component {
     }
 
     static getDerivedStateFromProps (props) {
-        return { selectedFiles: props.selectedFiles }
+        return { selectedFiles: props.selectedFiles, uploadedImages: props.uploadedImages }
     }
 
-    onClickRemoteFile (fileIndex) {
+    onClickRemoveQueueUploadFile (fileIndex) {
         if (this.props.onRemoveFile) {
             this.props.onRemoveFile(fileIndex)
+        }
+    }
+
+    onClickRemoveUploadedFile (fileId) {
+        if (this.props.onRemoveFile) {
+            this.props.onRemoveFile(fileId, true)
         }
     }
 
@@ -33,31 +39,79 @@ class PreviewItem extends Component {
             return (kb / 1024.0).toFixed(2) + ' MB'
         }
         return kb + ' KB'
-    };
+    }
+
+    displayDate (dateTimeString) {
+        const date = new Date(dateTimeString)
+        return date.toLocaleDateString('vi-VN', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        })
+    }
 
     render () {
-        const files = this.state.selectedFiles
+        const queuedFiles = this.state.selectedFiles
+        const uploadedFiles = this.state.uploadedImages
 
         return (
             <div className={classnames('container', Style.uploadPreviewWrapper)}>
-                {files && files.length > 0 && (
-                    <div className={classnames(Style.uploadPreviewRowHead, 'row')}>
-                        <div className='col col-sm-4 col-md-5'>Ảnh preview</div>
-                        <div className='col col-sm-4 col-md-5'>Kích thước</div>
-                        <div className='col col-sm-4 col-md-2'>Hành động</div>
+                {
+                    uploadedFiles && <div className="row">
+                        <div className="col">
+                            <div className="row">
+                                <h6 className="col mt-3">Hình ảnh đã được tải lên</h6>
+                            </div>
+                            <div className={classnames(Style.uploadPreviewRowHead, 'row')}>
+                                <div className='col col-sm-4 col-md-5'>Ảnh xem trước</div>
+                                <div className='col col-sm-4 col-md-5'>Ngày tải lên</div>
+                                <div className='col col-sm-4 col-md-2'>Hành động</div>
+                            </div>
+                        </div>
                     </div>
+                }
+
+                {
+                    uploadedFiles && uploadedFiles.map((file, i) => (
+                        <div key={i} className={classnames(Style.uploadPreviewRow, 'row')}>
+                            <div className={classnames(Style.previewImageWrapper, "col col-sm-4 col-md-5")}>
+                                <img src={`/storage/${file.file_path}`}/>
+                            </div>
+                            <div className="col col-sm-4 col-md-5">{this.displayDate(file.created_at)}</div>
+                            <div className={classnames('col col-sm-4 col-md-2', Style.deleteBtn)}>
+                                <div onClick={() => this.onClickRemoveUploadedFile(file.id)}>
+                                    <span className="ti-trash"></span> Xóa
+                                </div>
+                            </div>
+                        </div>
+                    ))
+                }
+
+                {/*Queued upload preview*/}
+                {queuedFiles && queuedFiles.length > 0 && (
+                    <>
+                        <div className="row">
+                            <h6 className="col mt-3">Hình ảnh đợi tải lên</h6>
+                        </div>
+                        <div className={classnames(Style.uploadPreviewRowHead, 'row')}>
+                            <div className='col col-sm-4 col-md-5'>Ảnh xem trước</div>
+                            <div className='col col-sm-4 col-md-5'>Kích thước</div>
+                            <div className='col col-sm-4 col-md-2'>Hành động</div>
+                        </div>
+                    </>
                 )}
 
                 {
-                    files && files.map((file, i) => (
+                    queuedFiles && queuedFiles.map((file, i) => (
                         <div key={i + file.name} className={classnames(Style.uploadPreviewRow, 'row')}>
                             <div className={classnames(Style.previewImageWrapper, "col col-sm-4 col-md-5")}>
                                 <img src='' onError={(e) => this.onImageLoad(e, file)}/>
                             </div>
                             <div className="col col-sm-4 col-md-5">{this.displayFileSize(file.size)}</div>
                             <div className={classnames('col col-sm-4 col-md-2', Style.deleteBtn)}>
-                                <div onClick={() => this.onClickRemoteFile(i)}>
-                                    <span className="ti-trash"></span> Xóa
+                                <div onClick={() => this.onClickRemoveQueueUploadFile(i)}>
+                                    <span className="ti-trash"></span> Bỏ chọn
                                 </div>
                             </div>
                         </div>
@@ -71,6 +125,7 @@ class PreviewItem extends Component {
 PreviewItem.propTypes = {
     selectedFiles: PropTypes.array,
     onRemoveFile: PropTypes.func,
+    uploadedImages: PropTypes.array
 }
 
 export default PreviewItem

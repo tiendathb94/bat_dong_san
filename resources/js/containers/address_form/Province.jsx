@@ -64,7 +64,7 @@ class Province extends Component {
 }
 
 Province.propTypes = {
-    value: PropTypes.string,
+    value: PropTypes.number,
     onChange: PropTypes.func,
     message: PropTypes.string
 }
