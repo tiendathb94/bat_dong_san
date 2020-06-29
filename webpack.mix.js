@@ -15,6 +15,7 @@ require('laravel-mix-react-css-modules')
 mix
     .react('resources/js/app.js', 'public/js')
     .react('resources/js/pages/project/create.js', 'public/js/pages/project')
+    .react('resources/js/pages/project/manage.js', 'public/js/pages/project')
     .sass('resources/sass/app.scss', 'public/css')
     .sass('resources/sass/pages/project/create.scss', 'public/css/pages/project')
     .sass('resources/sass/pages/users/index.scss', 'public/css/pages/users')

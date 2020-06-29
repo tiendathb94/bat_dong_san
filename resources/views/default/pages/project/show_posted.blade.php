@@ -8,11 +8,11 @@
     <h3 class="mb-3">Quản lý dự án đã đăng</h3>
     <form class="mb-5">
         <div class="row">
-            <div class="form-group col">
+            <div class="form-group col-sm-12 col-md-6">
                 <label>Từ khóa</label>
                 <input class="form-control" name="keyword" placeholder="Nhập từ khóa tìm kiếm" value="{{$keyword}}"/>
             </div>
-            <div class="form-group col">
+            <div class="form-group col-sm-12 col-md-6">
                 <label>Loại hình phát triển</label>
                 <select name="category_id" class="form-control">
                     <option value="">-- Loại hình phát triển --</option>
@@ -53,25 +53,25 @@
                 <td>
                     @switch($project->status)
                         @case(\App\Entities\Project::StatusPending)
-                        <span class="bg-warning p-2 text-secondary">Đợi duyệt</span>
+                        <div class="bg-warning p-2 text-secondary">Đợi duyệt</div>
                         @break
 
                         @case(\App\Entities\Project::StatusApproved)
-                        <span class="bg-success p-2 text-white">Đã duyệt</span>
+                        <div class="bg-success p-2 text-white">Đã duyệt</div>
                         @break
 
                         @case(\App\Entities\Project::StatusDeclined)
-                        <span class="bg-danger p-2 text-white">Bị từ chối</span>
+                        <div class="bg-danger p-2 text-white">Bị từ chối</div>
                         @break
                     @endswitch
                 </td>
                 <td class="d-none d-md-table-cell">{{\Carbon\Carbon::parse($project->created_at)->format('d/m/Y')}}</td>
                 <td>
-                    <a href="">
+                    <a href="" class="d-block">
                         <span class="ti-pencil-alt"></span> Sửa
                     </a>
 
-                    <a href="">
+                    <a href="" class="d-block delete-project-button" data-project-id="{{$project->id}}">
                         <span class="ti-trash"></span> Xóa
                     </a>
                 </td>
@@ -81,4 +81,10 @@
     </table>
 
     {{$projects->render()}}
+
+    <div id="background-react-component-container"></div>
 @endsection
+
+@push('scripts')
+    <script src="{{ asset('js/pages/project/manage.js') . '?m=' . filemtime('js/pages/project/manage.js') }}"></script>
+@endpush

@@ -51,4 +51,20 @@ class ProjectController extends Controller
 
         return response()->json(['message' => 'Đã có lỗi khi lưu dự án'], 500);
     }
+
+    public function deleteProject($projectId)
+    {
+        $user = auth()->user();
+        $project = Project::query()->where('id', '=', $projectId)->where('user_id', '=', $user->id)->get();
+        if (!$project) {
+            return response()->json(['message' => 'Dự án bạn yêu cầu không tồn tại'], 400);
+        }
+
+        try {
+            $project->first()->delete();
+            return response()->noContent();
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Xóa dự án không thành công bạn vui lòng thử lại'], 500);
+        }
+    }
 }
