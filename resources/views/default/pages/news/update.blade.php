@@ -26,43 +26,42 @@
             @endif
 
         </div>
-        <form action="{{ route('news.store') }}" method="POST" class="row" enctype="multipart/form-data">
+        <form action="{{ route('news.postUpdate',['slug' => $news->slug ]) }}" method="POST" class="row" enctype="multipart/form-data">
             @csrf
-            <div class="col-sm-12">
+            <div class="">
                 <div class="form-group">
                     <label for="title">Tiêu đề</label>
-                    <input type="text" name="title" value="{{ old('title') }}" class="form-control" id="title" placeholder="Tiêu đề">
+                    <input type="text" name="title" value="{{ $news->title }}" class="form-control" id="title" placeholder="Tiêu đề">
                 </div>
 
                 <div class="form-group">
                     <label for="meta_content" style="display: block">Mô tả ngắn</label>
-                    <textarea name="meta_content" id="meta_content" style="width: 100%;" class="" rows="5">{{ old('meta_content') }}</textarea>
+                    <textarea name="meta_content" id="meta_content" style="width: 100%;" rows="5">{{ $news->meta_content }}</textarea>
                     <em> - Tối đa 255 ký tự!</em>
 
                 </div>
 
                 <div class="form-group">
-                    <label for="content" >Nội dung bài viêt</label>
-                    <textarea class="form-control" name="content" id="content" cols="30" rows="10">{{ old('content') }}</textarea>
+                    <label for="content" style="">Nội dung bài viêt</label>
+                    <textarea class="form-control" name="content" id="content" cols="30" rows="10">{{ $news->content }}</textarea>
                 </div>
 
                 <div class="row">
                     <div class="form-group col-sm-6">
                         <label for="thumbnail" style="">Ảnh đại diện</label>
-                        <input type="file" name="thumbnail" class="form-control" id="imgInp"  accept="image/png, image/jpeg, image/jpg, image/gif">
-    
-                        <img style="width: 200px; margin-top: 10px"  alt="" id="blah">
+                        <input type="file" name="thumbnail" class="" id="imgInp"  accept="image/png, image/jpeg, image/jpg, image/gif">
+                        <img style="width: 200px; margin-top: 10px" src="{{ asset('') }}{{ $news->thumbnail }}" alt="" id="blah">
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group col-sm-6">
-                        <label for="exampleFormControlSelect1">Danh mục</label>
+                        <label for="exampleFormControlSelect1" style="">Danh mục</label>
                         <select class="form-control" name="category_id" id="exampleFormControlSelect1">
                             <option>--Chọn--</option>
                             @if( isset($categories) )
                             @foreach( $categories as $category )
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            <option value="{{ $category->id }}" {{ $category->id == $news->category_id ? 'selected' : '' }} >{{ $category->name }}</option>
                             @endforeach
                             @endif
                         </select>
@@ -73,7 +72,7 @@
                     <div class="form-group p_loader col-sm-6">
                         <label for="project_id">Dự án</label>
                         <input type="hidden" name="project_id" value="">
-                        <input id="project" type="text" class="form-control" placeholder="Tên dự án">
+                        <input id="project" value="{{ $news->projectName }}" type="text" class="form-control" placeholder="Tên dự án">
                         <div class="loader"></div>
                         <em class="nothing">Không tìm thấy dự án</em>
                     </div>
