@@ -376,8 +376,8 @@ class Form extends Component {
                     </div>
                 </div>
 
-                <div className="container mt-3">
-                    <div className="row mt-3">
+                <div className="container mt-4">
+                    <div className="row">
                         <div className="col">
                             <h3>Tải lên hình ảnh của dự án</h3>
                             <ImageLibraryUpload ref={this.imageLibraryUpload} uploadedImages={
