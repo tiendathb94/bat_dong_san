@@ -2,13 +2,24 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Entities\Project;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\SaveProjectRequest;
-use DB;
+use App\Entities\Project;
+
 
 class ProjectController extends Controller
 {
+    public function searchByName( Request $request ) {
+
+        $categories = DB::table('projects')
+        ->where('status', Project::StatusApproved)
+        ->where('long_name', 'LIKE', '%' . request('query') . '%')->take(20)->get();
+
+        return response()->json($categories);
+    }
+
     public function createProject(SaveProjectRequest $request)
     {
         $validated = $request->validated();
