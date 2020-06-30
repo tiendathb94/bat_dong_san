@@ -69,43 +69,41 @@ class AddressForm extends Component {
     render () {
         return (
             <div>
-                <div className="container">
-                    <div className="row">
-                        <div className="col col-sm-12 col-md-6">
-                            <Province
-                                value={this.state.provinceId}
-                                onChange={(event) => this.setFormValue('provinceId', event.target.value)}
-                                message={this.state.errors['provinceId']}
-                            />
-                        </div>
-
-                        <div className="col col-sm-12 col-md-6">
-                            <District
-                                value={this.state.districtId}
-                                onChange={(event) => this.setFormValue('districtId', event.target.value)}
-                                provinceId={this.state.provinceId}
-                                message={this.state.errors['districtId']}
-                            />
-                        </div>
+                <div className="row">
+                    <div className="col col-sm-12 col-md-6">
+                        <Province
+                            value={this.state.provinceId}
+                            onChange={(event) => this.setFormValue('provinceId', event.target.value)}
+                            message={this.state.errors['provinceId']}
+                        />
                     </div>
 
-                    <div className="row">
-                        <div className="col col-sm-12 col-md-6">
-                            <Ward
-                                value={this.state.wardId}
-                                onChange={(event) => this.setFormValue('wardId', event.target.value)}
-                                districtId={this.state.districtId}
-                                message={this.state.errors['wardId']}
-                            />
-                        </div>
+                    <div className="col col-sm-12 col-md-6">
+                        <District
+                            value={this.state.districtId}
+                            onChange={(event) => this.setFormValue('districtId', event.target.value)}
+                            provinceId={this.state.provinceId}
+                            message={this.state.errors['districtId']}
+                        />
+                    </div>
+                </div>
 
-                        <div className="col col-sm-12 col-md-6">
-                            <Line
-                                value={this.state.line}
-                                onChange={(event) => this.setFormValue('line', event.target.value)}
-                                message={this.state.errors['line']}
-                            />
-                        </div>
+                <div className="row">
+                    <div className="col col-sm-12 col-md-6">
+                        <Ward
+                            value={this.state.wardId}
+                            onChange={(event) => this.setFormValue('wardId', event.target.value)}
+                            districtId={this.state.districtId}
+                            message={this.state.errors['wardId']}
+                        />
+                    </div>
+
+                    <div className="col col-sm-12 col-md-6">
+                        <Line
+                            value={this.state.line}
+                            onChange={(event) => this.setFormValue('line', event.target.value)}
+                            message={this.state.errors['line']}
+                        />
                     </div>
                 </div>
             </div>

@@ -53,6 +53,11 @@ function personalMenuItemsDefinition()
                     'route_name' => 'pages.project.show_posted',
                     'label' => 'Quản lý dự án đã đăng',
                     'permission' => 'pages.project.show_posted'
+                ],
+                [
+                    'route_name' => 'pages.investor.create',
+                    'label' => 'Đăng thông tin chủ đầu tư',
+                    'permission' => 'pages.investor.create'
                 ]
             ],
         ],
