@@ -145,7 +145,7 @@ class Form extends Component {
                     }
                     this.setState({ errors: stateErrors })
                 } else {
-                    this.setState({ errors: e.response.data.message || 'Đã có lỗi sảy ra vui lòng thử lại' })
+                    this.setState({ errors: [e.response.data.message || 'Đã có lỗi sảy ra vui lòng thử lại'] })
                 }
             }
         }

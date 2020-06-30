@@ -13,7 +13,7 @@ class SaveInvestorRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,25 @@ class SaveInvestorRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required',
+            'phone' => 'required|min:10|max:12',
+            'email' => 'required|email:rfc,dns',
+            'website' => 'required|url',
+            'overview' => 'required',
+            'logo' => 'mimes:jpeg,jpg,gif,png',
+            'address' => 'required|array'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'required' => 'Bạn không được để trống trường :attribute',
+            'phone.min' => 'Số điện thoại hợp lệ sẽ có ít nhất 10 chữ số',
+            'phone.max' => 'Số điện thoại hợp lệ sẽ có tối đa 12 chữ số',
+            'email.email' => 'Địa chỉ email không hợp lệ',
+            'website.url' => 'Địa chỉ website không hợp lệ',
+            'logo.mimes' => 'Ảnh logo chỉ chấp nhận ảnh định dạng jpeg,gif,png',
         ];
     }
 }

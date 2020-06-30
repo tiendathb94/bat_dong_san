@@ -14,6 +14,7 @@
 
     .custom-file-label {
         cursor: pointer;
+        overflow: hidden;
 
         &:after {
             content: "Chọn";

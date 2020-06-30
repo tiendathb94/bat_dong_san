@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
 import AddressForm from "../../../containers/address_form"
 import { Editor } from "react-draft-wysiwyg"
-import { EditorState } from "draft-js"
+import { convertToRaw, EditorState } from "draft-js"
 import classnames from "classnames"
+import { cloneDeep } from "lodash"
+import draftToHtml from "draftjs-to-html"
+import axios from "axios"
+import config from "../../../config"
 
 class Form extends Component {
     constructor (props) {
@@ -12,7 +16,9 @@ class Form extends Component {
             formValues: {
                 overview: EditorState.createEmpty()
             },
-            errorByFields: {}
+            errorByFields: {},
+            errors: [],
+            loading: false
         }
 
         this.addressField = React.createRef()
@@ -20,7 +26,6 @@ class Form extends Component {
 
     setFormFieldValue = (event) => {
         if (event.target.name === 'logo') {
-            debugger
             this.setState({ formValues: { ...this.state.formValues, [event.target.name]: event.target.files.item(0) } })
         } else {
             this.setState({ formValues: { ...this.state.formValues, [event.target.name]: event.target.value } })
@@ -63,10 +68,51 @@ class Form extends Component {
         return Object.keys(errorByFields).length < 1 && addressValid
     }
 
-    onClickSubmit = (event) => {
+    onClickSubmit = async () => {
         if (!this.validate()) {
             return
         }
+
+        this.setState({ loading: true })
+
+        try {
+            const formData = new FormData()
+            for (const k in this.state.formValues) {
+                if (k === 'overview') {
+                    formData.append('overview', draftToHtml(convertToRaw(this.state.formValues.overview.getCurrentContent())))
+                } else if (k === 'address') {
+                    for (const ak in this.state.formValues.address) {
+                        formData.set(`address[${ak}]`, this.state.formValues.address[ak])
+                    }
+                } else {
+                    formData.append(k, this.state.formValues[k])
+                }
+            }
+
+            await axios.post(`${config.api.baseUrl}/investor/create`, formData, {
+                headers: {
+                    'content-type': 'multipart/form-data'
+                }
+            })
+
+            window.location = '/investor/posted'
+        } catch (e) {
+            window.scrollTo(0, 0)
+            if (e.response && e.response.data) {
+                if (e.response.data.errors) {
+                    const errorByFields = {}
+                    for (const k in e.response.data.errors) {
+                        errorByFields[k] = e.response.data.errors[k][0]
+                    }
+
+                    this.setState({ errorByFields })
+                } else {
+                    this.setState({ errors: [e.response.data.message || 'Đã có lỗi sảy ra vui lòng thử lại'] })
+                }
+            }
+        }
+
+        this.setState({ loading: false })
     }
 
     renderFieldError (fieldName) {
@@ -80,6 +126,19 @@ class Form extends Component {
     render () {
         return (
             <div>
+                {
+                    this.state.errors.length > 0 &&
+                    <div className="container">
+                        <div className="row">
+                            <div className="col alert alert-danger" role="alert">
+                                <ul className="mb-0">
+                                    {this.state.errors.map((err) => <li key={err}>{err}</li>)}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }
+
                 <div className="row">
                     <div className="col form-group">
                         <label>Tên công ty/doanh nghiệp</label>
@@ -90,7 +149,7 @@ class Form extends Component {
                             })}
                             name="name"
                             placeholder="Nhập tên công ty/doanh nghiệp"
-                            value={this.state.formValues.name}
+                            value={this.state.formValues.name || ''}
                             onChange={this.setFormFieldValue}
                         />
                         {this.renderFieldError('name')}
@@ -106,7 +165,7 @@ class Form extends Component {
                                 'is-invalid': !!this.state.errorByFields.website
                             })}
                             name="website"
-                            value={this.state.formValues.website}
+                            value={this.state.formValues.website || ''}
                             placeholder="Nhập địa chỉ website"
                             onChange={this.setFormFieldValue}
                         />
@@ -140,7 +199,7 @@ class Form extends Component {
                                 'form-control': true,
                                 'is-invalid': !!this.state.errorByFields.phone
                             })}
-                            value={this.state.formValues.phone}
+                            value={this.state.formValues.phone || ''}
                             name="phone"
                             type="phone"
                             placeholder="Nhập số điện thoại"
@@ -155,7 +214,7 @@ class Form extends Component {
                                 'form-control': true,
                                 'is-invalid': !!this.state.errorByFields.email
                             })}
-                            value={this.state.formValues.email}
+                            value={this.state.formValues.email || ''}
                             name="email"
                             type="email"
                             placeholder="Nhập địa chỉ email"
@@ -183,7 +242,13 @@ class Form extends Component {
 
                 <div className="row mt-3">
                     <div className="col text-right">
-                        <button className="btn btn-primary pl-5 pr-5" onClick={this.onClickSubmit}>Lưu lại</button>
+                        <button
+                            className="btn btn-primary pl-5 pr-5"
+                            onClick={this.onClickSubmit}
+                            disabled={this.state.loading}
+                        >
+                            {this.state.loading ? 'Đang lưu vui lòng đợi...' : 'Lưu lại'}
+                        </button>
                     </div>
                 </div>
             </div>
