@@ -17,7 +17,22 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','fullname','gender','type','tax','remember_token','reset_password_token'
+        'name', 
+        'email', 
+        'password',
+        'fullname',
+        'gender',
+        'type',
+        'tax',
+        'remember_token',
+        'reset_password_token', 
+        'phone', 
+        'date_of_birth',
+        'avatar',
+        'facebook',
+        'skype',
+        'zalo',
+        'viber'
     ];
 
     /**
@@ -38,6 +53,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $with = ['address'];
+    
+    protected $appends = ['url_avatar', 'date_of_birth_format'];
+
+    const PATH_AVATAR = '/avatar';
+
     public function getRequestResetPasswordCacheKey()
     {
         return "request_reset_password_for_user_$this->id";
@@ -50,5 +71,20 @@ class User extends Authenticatable
     public function getGenderNameAttribute()
     {
         return $this->gender ? 'Nam' : 'Nữ';
+    }
+
+    public function address()
+    {
+        return $this->morphOne('App\Entities\Address', 'addressable');
+    }
+
+    public function getUrlAvatarAttribute()
+    {
+        return '/storage' . self::PATH_AVATAR . '/' . $this->avatar;
+    }
+
+    public function getDateOfBirthFormatAttribute()
+    {
+        return \Carbon\Carbon::parse($this->date_of_birth)->format(config('app.format.date'));
     }
 }

@@ -109,3 +109,32 @@ body {
 .bg-default {
     background-color: #055699;
 }
+
+.opacity-8 {
+    opacity: 0.8;
+}
+
+.bottom-0 {
+    bottom: 0;
+}
+
+.top-70 {
+    top: 70%;
+}
+
+.img-avatar {
+    width: 150px;
+    height: 150px;
+}
+
+.upload-avatar {
+    div {
+        opacity: 0;
+    }
+    
+    &:hover {
+        div {
+            opacity: 0.8;
+        }
+    }
+}

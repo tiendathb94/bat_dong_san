@@ -138,6 +138,41 @@ return [
         ],
         'password_old' => [
             'required' => 'Mật khẩu cũ không được để trống'
+        ],
+        'fullname' => [
+            'required' => 'Vui lòng nhập họ và tên'
+        ],
+        'date_of_birth' => [
+            'required' => 'Vui lòng chọn ngày sinh',
+            'date' => 'Ngày sinh chưa đúng định dạng'
+        ],
+        'gender' => [
+            'required' => 'Vui lòng chọn giới tính',
+        ],
+        'phone' => [
+            'required' => 'Vui lòng nhập số điện thoại',
+            'numeric' => 'Trường số điện thoại chưa đúng định dạng số'
+        ],
+        'tax' => [
+            'required' => 'Vui lòng nhập Mã số thuế/CMND',
+            'numeric' => 'Trường Mã số thuế/CMND chưa đúng định dạng số'
+        ],
+        'province_id' => [
+            'required' => 'Vui lòng chọn Tỉnh/Thành Phố',
+        ],
+        'district_id' => [
+            'required' => 'Vui lòng chọn Quận/Huyện',
+        ],
+        'ward_id' => [
+            'required' => 'Vui lòng chọn Phường/Xã',
+        ],
+        'address' => [
+            'required' => 'Vui lòng nhập địa chỉ'
+        ],
+        'avatar' => [
+            'image' => 'Ảnh đại diện chưa đúng định dạng',
+            'mimes' => 'Ảnh đại diện chưa đúng định dạng',
+            'max' => 'Ảnh đại diện có dung lượng lớn, vui lòng tải ảnh khác nhỏ hơn 2MB'
         ]
     ],
 
