@@ -13,11 +13,9 @@ class ProjectController extends Controller
 {
     public function searchByName(Request $request)
     {
-
         $categories = DB::table('projects')
             ->where('status', Project::StatusApproved)
-            ->where('long_name', 'LIKE', '%' . request('query') . '%')->take(20)->get();
-
+            ->where('long_name', 'LIKE', "%$request->search%")->take(20)->get();
         return response()->json($categories);
     }
 

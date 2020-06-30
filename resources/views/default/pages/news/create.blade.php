@@ -1,6 +1,4 @@
 @extends('default.layouts.personal')
-@include('ckfinder::setup')
-
 @section('main_content')
     <div class="container main">
         <div>
@@ -43,7 +41,7 @@
 
                 <div class="form-group">
                     <label for="content" >Nội dung bài viêt</label>
-                    <textarea class="form-control" name="content" id="content" cols="30" rows="10">{{ old('content') }}</textarea>
+                    <div id="editor-content"></div>
                 </div>
 
                 <div class="row">
@@ -92,58 +90,42 @@
 
 @push('styles')
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link
+        rel="stylesheet"
+        href="{{ asset('css/pages/project/form.css') . '?m=' . filemtime('css/pages/project/form.css') }}">
     @include('default.pages.news.style')
 @endpush
 @push('scripts')
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="https://cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
-
+    <script src="{{ asset('js/pages/news/editor.js') . '?m=' . filemtime('js/pages/news/editor.js') }}"></script>
     <script>
-
         function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
-                
                 reader.onload = function(e) {
                 $('#blah').attr('src', e.target.result);
                 }
-                
-                reader.readAsDataURL(input.files[0]); // convert to base64 string
+                reader.readAsDataURL(input.files[0]);
             }
         }
 
         $("#imgInp").change(function() {
             readURL(this);
         });
-
-        CKEDITOR.replace( 'content', {
-            height: '400px',
-            filebrowserBrowseUrl: '{{ route('ckfinder_browser') }}',
-    
-        } );
-
-
     </script>
-
 <script>
     var dataCate = [];
     var dataPro = [];
     $( function() {
-    
         var availableTags = [];
         var debounce = null;
-
-
-
         $('#project').on('keyup', function(e){
                 clearTimeout(debounce );
                 $('.loader').css('display', 'block');
                 debounce = setTimeout(function(){
                     $.ajax({
-                        url:'{{ asset('') }}' + 'api/project/search', 
+                        url:'{{ asset('') }}' + 'api/project/search',
                         method:"GET", 
-                        data:{query:e.target.value},
+                        data:{search:e.target.value},
                         success:function(data){ 
                             dataPro = data;
                             availableTags = [];
@@ -161,7 +143,6 @@
                         $( "#project" ).autocomplete({
                             source: availableTags
                         });
-
                     })
                 }, 300);
             }); 
@@ -169,7 +150,6 @@
 
 function onSubmit(){
     event.preventDefault();
-
     for( let i = 0; i < dataPro.length; i++ ) {
         if( dataPro[i].long_name == $('#project').val() ) {
             $( "input[name='project_id']" ).val(dataPro[i].id)
@@ -185,5 +165,4 @@ function onSubmit(){
 }
 
 </script>
-    @include('ckfinder::setup')
 @endpush
