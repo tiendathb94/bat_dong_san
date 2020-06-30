@@ -23,8 +23,8 @@ class AuthController extends Controller
         $user = auth()->user();
         $data = $request->all();
         $response = [];
-        DB::beginTransaction();
         try {
+            DB::beginTransaction();
             if($request->avatar) {
                 $avatarName = $user->id . '.' . pathinfo($request->avatar->getClientOriginalName(), PATHINFO_EXTENSION);
                 $request->avatar->storePubliclyAs('public/' . User::PATH_AVATAR, $avatarName);
