@@ -5,4 +5,5 @@ Route::group(['guard' => 'api', 'middleware' => ['auth:api']], function () {
         ->name('api.project.autocompleteFieldSearchInvestors');
 
     Route::post('/investor/create', 'Api\InvestorController@create')->name('api.investor.create');
+    Route::post('/investor/update/{investorId}', 'Api\InvestorController@update')->name('api.investor.update');
 });
