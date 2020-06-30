@@ -24,7 +24,8 @@ class AddFirstUserSeeder extends Seeder
                     'password' => Hash::make('admin@123456789'),
                     'gender' => 1,
                     'type' => 1,
-                    'tax' => 11232131,
+                    'tax' => 123456789,
+                    'phone' => '0123456789',
                 ],
             ]);
         }

@@ -53,4 +53,9 @@ class UserController extends Controller
     {
         return view($this->_config['view']);
     }
+
+    public function information()
+    {
+        return view($this->_config['view']);
+    }
 }

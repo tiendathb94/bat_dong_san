@@ -18,7 +18,7 @@
                 <div class="box-arround">
                     <div class="useravatar mb-3">
                         <a href="{{ route('pages.user.index') }}" title="" class="text-center">
-                            <img alt="" class="avatar" src="/images/default-user-avatar-blue.jpg">
+                            <img alt="" id="js-set-avatar" class="avatar" src="{{ $user->avatar ? $user->url_avatar : '/images/default-user-avatar-blue.jpg' }}">
                         </a>
                         <a href="{{ route('pages.user.index') }}" title="" class="userfullname">{{ $user->fullname }}</a>
                         <span class="fs-12 px-3 line-height-24"><span class="font-weight-bold">Email</span>: {{ $user->email }}</span>
