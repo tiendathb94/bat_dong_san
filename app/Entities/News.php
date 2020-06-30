@@ -13,6 +13,7 @@ class News extends Model
     const PENDING = 1;
     const ACTIVE = 2;
     const CANCEL = 3;
+    const PATH_IMAGE = '/uploads/news/';
 
     use Sluggable;
 

@@ -26,27 +26,17 @@ class NewsController extends Controller
     public function store(Request $request)
     {
         $request->flash();
-
         $this->newsValidate( null );
-
         try{
-
             $data = $request->only('title', 'meta_content', 'content', 'project_id', 'category_id');
-            
-            $data['thumnail'] = $this->storeFileReturnPath($request->thumnail);
-            
+            $data['thumbnail'] = $this->storeFileReturnPath($request->thumbnail);
             $data['user_id'] = Auth::user()->id;
             $data['status'] = News::PENDING;
-
             $this->news->create($data);
-
             return  redirect()->route('pages.user.news')->with('success', 'Đăng thành bài thành công!');
-
         } catch ( \Exception $e ) {
             return back()->with('error', 'Thao tác thất bại!');
         }
-
-
     }
 
     public function destroy($id)
@@ -65,7 +55,6 @@ class NewsController extends Controller
                 'text' => 'Bạn không có quyền thực thi, vui lòng kiểm tra lại.'
             ];
         }
-
         return redirect()->back()->with('message', $message);
     }
 
@@ -133,17 +122,13 @@ class NewsController extends Controller
 
     }
 
-    public function storeFileReturnPath($file){
-
-        $path = $file->storeAs(
-            'public/news/' . now()->format('d.m.Y') , (string) Carbon::now()->timestamp . renderSlug($file->getClientOriginalName()) . '.' . $file->extension()
+    public function storeFileReturnPath($file)
+    {
+        $fileName = uniqid() . '.' . $file->extension();
+        $path = $file->storePubliclyAs(
+            'public' . News::PATH_IMAGE, $fileName
         );
-
-        if( $path ) {
-            return  str_replace( 'public', 'storage', $path);
-        }
-
-        return false;
+        return $fileName;
     }
 
 

@@ -4,7 +4,6 @@
     }
 
     .main{
-        padding-top: 25px;
         font-size: 16px;
     }
     .form-control{
@@ -15,8 +14,6 @@
         font-size: 14px;
         color: red;
         display: none;
-        position: absolute;
-        bottom: 11%;
     }
  
     .loader {
