@@ -18,7 +18,7 @@ class EditForm extends Component {
             errorByFields: {},
             loading: false,
             message: {},
-            avatar: {},
+            avatar: '',
         }
 
         this.addressField = React.createRef()
@@ -41,7 +41,7 @@ class EditForm extends Component {
             skype: user.skype,
             viber: user.viber,
             address: user.address || {},
-            url_avatar: user.url_avatar
+            url_avatar: user.avatar ? user.url_avatar : '/images/default-user-avatar-blue.jpg'
         }
     }
 
@@ -60,7 +60,14 @@ class EditForm extends Component {
     }
 
     setFormFieldValue = (event) => {
-        this.setState({ formValues: { ...this.state.formValues, [event.target.name]: event.target.value } })
+        if(event.target.name == 'tax' || event.target.name == 'phone') {
+            const regex = /^[0-9\b]+$/;
+            if (event.target.value === '' || regex.test(event.target.value)) {
+               this.setState({ formValues: { ...this.state.formValues, [event.target.name]: event.target.value } })
+            }
+        } else {
+            this.setState({ formValues: { ...this.state.formValues, [event.target.name]: event.target.value } })
+        }
     }
 
     renderFieldError (fieldName) {
@@ -68,7 +75,7 @@ class EditForm extends Component {
             return ''
         }
 
-        return <div className="text-danger form-text">{this.state.errorByFields.long_name}</div>
+        return <div className="text-danger form-text">{this.state.errorByFields[fieldName]}</div>
     }
 
     getAddressValue (fieldName) {
@@ -102,9 +109,11 @@ class EditForm extends Component {
         }
         const { formValues} = this.state;
         var formData = new FormData();
-        Array.from(this.state.avatar).forEach(image => {
-            formData.append('avatar', image);
-        });
+        if(formValues.avatar) {
+            Array.from(formValues.avatar).forEach(image => {
+                formData.append('avatar', image);
+            });
+        }
         formData.append('fullname', formValues.fullname);
         formData.append('date_of_birth', formValues.date_of_birth);
         formData.append('gender', formValues.gender);
@@ -121,7 +130,6 @@ class EditForm extends Component {
         formData.append('_method', 'PATCH');
 
         try {
-            document.getElementById('js-set-avatar').src = ''
             this.setState({ loading: true })
 
             // Create project
@@ -148,17 +156,26 @@ class EditForm extends Component {
                     for (let i = 0; i < errors.length; i++) {
                         stateErrors.push(errors[i].join(' '))
                     }
-                    this.setState({ errors: stateErrors })
+                    this.setState({ errors: stateErrors, loading: false, })
                 } else {
-                    this.setState({ errors: e.response.data.message || 'Đã có lỗi sảy ra vui lòng thử lại' })
+                    this.setState({ errors: e.response.data.message || 'Đã có lỗi sảy ra vui lòng thử lại', loading: false, })
                 }
+                setTimeout(() => {
+                    this.setState({
+                        errors: {}
+                    })
+                }, 2000)
             }
         }
     }
 
     onImageChange = event => {
         this.setState({
-          avatar: event.target.files,
+          formValues: {
+            ...this.state.formValues,
+            avatar: event.target.files
+          },
+          avatar: URL.createObjectURL(event.target.files[0])
         });
       };
 
@@ -241,7 +258,7 @@ class EditForm extends Component {
                         <div className="col-12 col-lg-4 p-5">
                             <label htmlFor="avatar">
                                 <div className="position-relative cursor-pointer overflow-hidden rounded-circle margin-auto">
-                                    <img className="img-avatar" src={this.state.formValues.url_avatar ?? '/images/default-user-avatar-blue.jpg'} alt=""/>
+                                    <img className="img-avatar" src={this.state.avatar || this.state.formValues.url_avatar} alt=""/>
                                     <div className="position-absolute w-100 top-70 bg-dark d-flex justify-content-center align-items-center opacity-8 bottom-0">
                                         <i className="ti-camera text-white"></i>
                                     </div>

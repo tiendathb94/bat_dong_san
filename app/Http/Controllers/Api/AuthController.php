@@ -13,10 +13,11 @@ use Mail;
 use Hash;
 use Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\UpdateInfoRequest;
 
 class AuthController extends Controller
 {
-    public function updateInfo(Request $request)
+    public function updateInfo(UpdateInfoRequest $request)
     {
         $user = auth()->user();
         $data = $request->all();
