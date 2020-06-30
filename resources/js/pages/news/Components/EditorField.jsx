@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Editor } from 'react-draft-wysiwyg'
 import { convertToRaw, EditorState } from 'draft-js'
 import draftToHtml from "draftjs-to-html"
+import { stateFromHTML } from 'draft-js-import-html'
 
 class EditorField extends Component {
     constructor (props) {
@@ -9,7 +10,20 @@ class EditorField extends Component {
 
         this.state = {
             content: EditorState.createEmpty(),
+            ...this.initFormValuesForEditExistRequest(props.request),
             value: ''
+        }
+        console.log(this.state);
+    }
+
+    initFormValuesForEditExistRequest (request) {
+        if (!request) {
+            return {}
+        }
+
+        return {
+            content: request.content ? EditorState.createWithContent(stateFromHTML(request.content)) : '',
+            value: request.content ?? ''
         }
     }
 
