@@ -22,8 +22,24 @@ class ImageLibraryUpload extends Component {
         }
     }
 
+    async deleteUploadedLibraries () {
+        if (!this.state.libraryImagesQueuedToDelete || this.state.libraryImagesQueuedToDelete.length < 1) {
+            return
+        }
+
+        try {
+            await axios.post(`${config.api.baseUrl}/image-library/deletes`, {
+                image_library_ids: this.state.libraryImagesQueuedToDelete
+            })
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
     // Call from parent component
     async doUpload (libraryableType, libraryableId, libraryType, metaData = {}) {
+        await this.deleteUploadedLibraries()
+
         if (!this.state.selectedFiles || !this.state.selectedFiles.length) {
             return
         }

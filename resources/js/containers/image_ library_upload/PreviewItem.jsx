@@ -58,7 +58,7 @@ class PreviewItem extends Component {
         return (
             <div className={classnames('container', Style.uploadPreviewWrapper)}>
                 {
-                    uploadedFiles && <div className="row">
+                    uploadedFiles && uploadedFiles.length > 0 && <div className="row">
                         <div className="col">
                             <div className="row">
                                 <h6 className="col mt-3">Hình ảnh đã được tải lên</h6>
@@ -76,7 +76,9 @@ class PreviewItem extends Component {
                     uploadedFiles && uploadedFiles.map((file, i) => (
                         <div key={i} className={classnames(Style.uploadPreviewRow, 'row')}>
                             <div className={classnames(Style.previewImageWrapper, "col col-sm-4 col-md-5")}>
-                                <img src={`/storage/${file.file_path}`}/>
+                                <a href={`/storage/${file.file_path}`} target="_blank">
+                                    <img src={`/storage/${file.file_path}`}/>
+                                </a>
                             </div>
                             <div className="col col-sm-4 col-md-5">{this.displayDate(file.created_at)}</div>
                             <div className={classnames('col col-sm-4 col-md-2', Style.deleteBtn)}>

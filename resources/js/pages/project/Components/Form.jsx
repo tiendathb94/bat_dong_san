@@ -31,6 +31,7 @@ class Form extends Component {
         this.tabManager = React.createRef()
         this.imageLibraryUpload = React.createRef()
         this.addressField = React.createRef()
+        this.isEditMode = props.project && props.project.id > 0
     }
 
     initFormValuesForEditExistProject (existProject) {
@@ -48,8 +49,24 @@ class Form extends Component {
             price_unit: existProject.price_unit,
             address: existProject.address || {},
             investor_type: existProject.investor_type || '',
-            project_overview: EditorState.createWithContent(stateFromHTML(existProject.project_overview))
+            project_overview: EditorState.createWithContent(stateFromHTML(existProject.project_overview)),
+            tab_contents: this.parseExistTabContent(existProject.tabs)
         }
+    }
+
+    parseExistTabContent (existTabContents) {
+        const tabContents = []
+
+        for (let i = 0; i < existTabContents.length; i++) {
+            tabContents.push({
+                name: existTabContents[i].name,
+                id: existTabContents[i].id,
+                layout: existTabContents[i].template,
+                ...existTabContents[i].contents
+            })
+        }
+
+        return tabContents
     }
 
     onSyncAddress = (address) => {
@@ -92,15 +109,26 @@ class Form extends Component {
             this.setState({ loading: true })
 
             // Create project
-            const createProjectResponse = await axios.post(`${config.api.baseUrl}/project/create`, values)
-            const createdProject = createProjectResponse.data
+            if (this.isEditMode) {
+                await axios.put(`${config.api.baseUrl}/project/${this.props.project.id}`, values)
 
-            // Upload library images
-            await this.imageLibraryUpload.current.doUpload(
-                'App\\Entities\\Project',
-                createdProject.id,
-                'gallery',
-            )
+                // Upload library images
+                await this.imageLibraryUpload.current.doUpload(
+                    'App\\Entities\\Project',
+                    this.props.project.id,
+                    'gallery',
+                )
+            } else {
+                const createProjectResponse = await axios.post(`${config.api.baseUrl}/project/create`, values)
+                const createdProject = createProjectResponse.data
+
+                // Upload library images
+                await this.imageLibraryUpload.current.doUpload(
+                    'App\\Entities\\Project',
+                    createdProject.id,
+                    'gallery',
+                )
+            }
 
             this.setState({ loading: true })
 
@@ -173,213 +201,205 @@ class Form extends Component {
     render () {
         return (
             <div>
-                <div>
-                    <div className="container">
-                        {
-                            this.state.errors.length > 0 && <div className="row">
-                                <div className="col alert alert-danger" role="alert">
-                                    <ul className="mb-0">
-                                        {this.state.errors.map((err) => <li key={err}>{err}</li>)}
-                                    </ul>
-                                </div>
-                            </div>
-                        }
-
-                        <div className="row">
-                            <div className="col">
-                                <h3>Thông tin cơ bản</h3>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="form-group col">
-                                <label>Tên dự án</label>
-                                <input
-                                    name="long_name"
-                                    value={this.state.formValues.long_name || ''}
-                                    onChange={this.setFormFieldValue}
-                                    placeholder="Nhập tên dự án"
-                                    className={classnames({
-                                        'form-control': true,
-                                        'is-invalid': !!this.state.errorByFields.long_name
-                                    })}
-                                />
-                                {this.renderFieldError('long_name')}
-                            </div>
-                        </div>
-
-                        <div className="row">
-                            <div className="form-group col col-sm-12 col-md-6">
-                                <label>Tên ngắn của dự án</label>
-                                <input
-                                    name="short_name"
-                                    value={this.state.formValues.short_name || ''}
-                                    onChange={this.setFormFieldValue}
-                                    placeholder="Nhập tên ngắn của dự án"
-                                    className="form-control"
-                                />
-                            </div>
-
-                            <div className="col col-sm-12 col-md-6">
-                                <CategoryField
-                                    label="Loại hình phát triển"
-                                    destinationEntity="App\Entities\Project"
-                                    onChange={this.onChangeCategory}
-                                    message={this.state.errorByFields.category_id}
-                                    value={parseInt(this.state.formValues.category_id)}
-                                />
-                            </div>
-                        </div>
-
-                        <div className="row">
-                            <div className="form-group col col-sm-12 col-md-6">
-                                <label>Tổng diện tích</label>
-                                <div className="input-group">
-                                    <input
-                                        name="total_area"
-                                        type="number"
-                                        value={this.state.formValues.total_area || ''}
-                                        onChange={this.setFormFieldValue}
-                                        placeholder="Tổng diện tích dự án"
-                                        className="form-control"
-                                    />
-                                    <div className="input-group-append">
-                                        <span className="input-group-text">m<sup>2</sup></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col form-group col-sm-12 col-md-6">
-                                <label>Quy mô dự án</label>
-                                <input
-                                    name="project_scale"
-                                    value={this.state.formValues.project_scale || ''}
-                                    onChange={this.setFormFieldValue}
-                                    placeholder="Mô tả quy mô dự án"
-                                    className="form-control"
-                                />
-                            </div>
-                        </div>
-
-                        <div className="row">
-                            <div className="form-group col col-sm-12 col-md-6">
-                                <label>Giá</label>
-                                <input
-                                    name="price"
-                                    type="number"
-                                    value={this.state.formValues.price || ''}
-                                    onChange={this.setFormFieldValue}
-                                    placeholder="Nhập giá của dự án"
-                                    className="form-control"
-                                />
-                            </div>
-                            <div className="col form-group col-sm-12 col-md-6">
-                                <label>Đơn vị giá</label>
-                                <select
-                                    value={this.state.formValues.price_unit || ''}
-                                    name="price_unit"
-                                    onChange={this.setFormFieldValue}
-                                    className={classnames({
-                                        'form-control': true,
-                                        'is-invalid': !!this.state.errorByFields.price_unit
-                                    })}
-                                >
-                                    <option>-- Chọn đơn vị giá --</option>
-                                    <option value="1">Triệu</option>
-                                    <option value="2">Tỷ</option>
-                                    <option value="3">Trăm nghìn/m2</option>
-                                    <option value="4">Triệu/m2</option>
-                                </select>
-                                {this.renderFieldError('price_unit')}
-                            </div>
+                {
+                    this.state.errors.length > 0 && <div className="row">
+                        <div className="col alert alert-danger" role="alert">
+                            <ul className="mb-0">
+                                {this.state.errors.map((err) => <li key={err}>{err}</li>)}
+                            </ul>
                         </div>
                     </div>
+                }
 
-                    <AddressForm
-                        onSync={this.onSyncAddress}
-                        ref={this.addressField}
-                        required={true}
-                        districtId={this.getAddressValue('district_id')}
-                        provinceId={this.getAddressValue('province_id')}
-                        wardId={this.getAddressValue('ward_id')}
-                        line={this.getAddressValue('address')}
-                    />
-
-                    <div className="container">
-                        <div className="row">
-                            <div className="col col-sm-12 col-md-6">
-                                <label>Chủ đầu tư</label>
-                                <AutocompleteField
-                                    endpoint="investor/autocomplete-field-search"
-                                    onChange={this.onChangeInvestor}
-                                    placeholder="Nhập tên của chủ đầu tư để tìm kiếm"
-                                    selectedItem={
-                                        this.props.project && this.props.project.investor ? {
-                                            value: this.props.project.investor.id,
-                                            name: this.props.project.investor.name
-                                        } : {}
-                                    }
-                                />
-                            </div>
-                            <div className="col col-sm-12 col-md-6 form-group">
-                                <label>Loại hình đầu tư</label>
-                                <select
-                                    name="investor_type"
-                                    value={this.state.formValues.investor_type}
-                                    className={classnames({ 'form-control': true, 'is-invalid': !!this.state.message })}
-                                    onChange={this.setFormFieldValue}
-                                >
-                                    <option>-- Loại hình đầu tư --</option>
-                                    <option value={1}>Chủ đầu tư</option>
-                                    <option value={2}>Nhà phân phối</option>
-                                </select>
-                                {this.renderFieldError('investor_type')}
-                            </div>
-                        </div>
-
-                        <div className="row">
-                            <div className="col">
-                                <label>Giới thiệu dự án</label>
-                                <Editor
-                                    editorState={this.state.formValues.project_overview}
-                                    onEditorStateChange={this.onProjectOverviewChange}
-                                />
-                                {this.renderFieldError('project_overview')}
-                            </div>
-                        </div>
+                <div className="row">
+                    <div className="col">
+                        <h3>Thông tin cơ bản</h3>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="form-group col">
+                        <label>Tên dự án</label>
+                        <input
+                            name="long_name"
+                            value={this.state.formValues.long_name || ''}
+                            onChange={this.setFormFieldValue}
+                            placeholder="Nhập tên dự án"
+                            className={classnames({
+                                'form-control': true,
+                                'is-invalid': !!this.state.errorByFields.long_name
+                            })}
+                        />
+                        {this.renderFieldError('long_name')}
                     </div>
                 </div>
 
-                <div className="container mt-3">
-                    <div className="row">
-                        <div className="col">
-                            <h3>Nội dung nâng cao</h3>
-                        </div>
+                <div className="row">
+                    <div className="form-group col col-sm-12 col-md-6">
+                        <label>Tên ngắn của dự án</label>
+                        <input
+                            name="short_name"
+                            value={this.state.formValues.short_name || ''}
+                            onChange={this.setFormFieldValue}
+                            placeholder="Nhập tên ngắn của dự án"
+                            className="form-control"
+                        />
                     </div>
 
-                    <div className="row mt-3">
-                        <div className="col">
-                            <label>Tải lên hình ảnh của dự án</label>
-                            <ImageLibraryUpload ref={this.imageLibraryUpload} uploadedImages={
-                                this.props.project && this.props.project.galleryImages ? this.props.project.galleryImages : []
-                            }/>
+                    <div className="col col-sm-12 col-md-6">
+                        <CategoryField
+                            label="Loại hình phát triển"
+                            destinationEntity="App\Entities\Project"
+                            onChange={this.onChangeCategory}
+                            message={this.state.errorByFields.category_id}
+                            value={parseInt(this.state.formValues.category_id)}
+                        />
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="form-group col col-sm-12 col-md-6">
+                        <label>Tổng diện tích</label>
+                        <div className="input-group">
+                            <input
+                                name="total_area"
+                                type="number"
+                                value={this.state.formValues.total_area || ''}
+                                onChange={this.setFormFieldValue}
+                                placeholder="Tổng diện tích dự án"
+                                className="form-control"
+                            />
+                            <div className="input-group-append">
+                                <span className="input-group-text">m<sup>2</sup></span>
+                            </div>
                         </div>
                     </div>
-
-                    <div className="row">
-                        <div className="col">
-                            <TabManager ref={this.tabManager}/>
-                        </div>
+                    <div className="col form-group col-sm-12 col-md-6">
+                        <label>Quy mô dự án</label>
+                        <input
+                            name="project_scale"
+                            value={this.state.formValues.project_scale || ''}
+                            onChange={this.setFormFieldValue}
+                            placeholder="Mô tả quy mô dự án"
+                            className="form-control"
+                        />
                     </div>
+                </div>
 
-                    <div className="row mt-3">
-                        <div className="col">
-                            <button
-                                className="btn btn-primary btn-save-project"
-                                onClick={this.onClickSaveProjectButton}
-                                disabled={this.state.loading}
-                            >
-                                {this.state.loading ? 'Đang lưu...' : 'Lưu dự án'}
-                            </button>
-                        </div>
+                <div className="row">
+                    <div className="form-group col col-sm-12 col-md-6">
+                        <label>Giá</label>
+                        <input
+                            name="price"
+                            type="number"
+                            value={this.state.formValues.price || ''}
+                            onChange={this.setFormFieldValue}
+                            placeholder="Nhập giá của dự án"
+                            className="form-control"
+                        />
+                    </div>
+                    <div className="col form-group col-sm-12 col-md-6">
+                        <label>Đơn vị giá</label>
+                        <select
+                            value={this.state.formValues.price_unit || ''}
+                            name="price_unit"
+                            onChange={this.setFormFieldValue}
+                            className={classnames({
+                                'form-control': true,
+                                'is-invalid': !!this.state.errorByFields.price_unit
+                            })}
+                        >
+                            <option>-- Chọn đơn vị giá --</option>
+                            <option value="1">Triệu</option>
+                            <option value="2">Tỷ</option>
+                            <option value="3">Trăm nghìn/m2</option>
+                            <option value="4">Triệu/m2</option>
+                        </select>
+                        {this.renderFieldError('price_unit')}
+                    </div>
+                </div>
+
+                <AddressForm
+                    onSync={this.onSyncAddress}
+                    ref={this.addressField}
+                    required={true}
+                    districtId={this.getAddressValue('district_id')}
+                    provinceId={this.getAddressValue('province_id')}
+                    wardId={this.getAddressValue('ward_id')}
+                    line={this.getAddressValue('address')}
+                />
+
+                <div className="row">
+                    <div className="col col-sm-12 col-md-6">
+                        <label>Chủ đầu tư</label>
+                        <AutocompleteField
+                            endpoint="investor/autocomplete-field-search"
+                            onChange={this.onChangeInvestor}
+                            placeholder="Nhập tên của chủ đầu tư để tìm kiếm"
+                            selectedItem={
+                                this.props.project && this.props.project.investor ? {
+                                    value: this.props.project.investor.id,
+                                    name: this.props.project.investor.name
+                                } : {}
+                            }
+                        />
+                    </div>
+                    <div className="col col-sm-12 col-md-6 form-group">
+                        <label>Loại hình đầu tư</label>
+                        <select
+                            name="investor_type"
+                            value={this.state.formValues.investor_type}
+                            className={classnames({ 'form-control': true, 'is-invalid': !!this.state.message })}
+                            onChange={this.setFormFieldValue}
+                        >
+                            <option>-- Loại hình đầu tư --</option>
+                            <option value={1}>Chủ đầu tư</option>
+                            <option value={2}>Nhà phân phối</option>
+                        </select>
+                        {this.renderFieldError('investor_type')}
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col">
+                        <label>Giới thiệu dự án</label>
+                        <Editor
+                            editorState={this.state.formValues.project_overview}
+                            onEditorStateChange={this.onProjectOverviewChange}
+                        />
+                        {this.renderFieldError('project_overview')}
+                    </div>
+                </div>
+
+                <div className="row mt-2">
+                    <div className="col">
+                        <h3>Tải lên hình ảnh của dự án</h3>
+                        <ImageLibraryUpload ref={this.imageLibraryUpload} uploadedImages={
+                            this.props.project && this.props.project.galleryImages ? this.props.project.galleryImages : []
+                        }/>
+                    </div>
+                </div>
+
+                <div className="row mt-2">
+                    <div className="col">
+                        <h3>Nội dung nâng cao</h3>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col">
+                        <TabManager ref={this.tabManager} tabContents={this.state.formValues.tab_contents}/>
+                    </div>
+                </div>
+
+                <div className="row mt-3">
+                    <div className="col">
+                        <button
+                            className="btn btn-primary btn-save-project"
+                            onClick={this.onClickSaveProjectButton}
+                            disabled={this.state.loading}
+                        >
+                            {this.state.loading ? 'Đang lưu...' : 'Lưu dự án'}
+                        </button>
                     </div>
                 </div>
             </div>

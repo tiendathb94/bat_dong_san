@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Editor } from 'react-draft-wysiwyg'
 import { EditorState } from 'draft-js'
+import { stateFromHTML } from "draft-js-import-html"
 
 class LocationInfrastructure extends Component {
     constructor (props) {
@@ -15,7 +16,17 @@ class LocationInfrastructure extends Component {
     }
 
     static getDerivedStateFromProps (props, state) {
-        return { formValues: { ...state.formValues, ...props.values } }
+        const values = props.values || {}
+
+        return {
+            formValues: {
+                ...state.formValues,
+                location: values.location instanceof EditorState ? values.location :
+                    EditorState.createWithContent(stateFromHTML(values.location || '')),
+                infrastructure: values.infrastructure instanceof EditorState ? values.infrastructure :
+                    EditorState.createWithContent(stateFromHTML(values.infrastructure || '')),
+            }
+        }
     }
 
     setEditorState (name, editorState) {
