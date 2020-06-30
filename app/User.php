@@ -55,7 +55,7 @@ class User extends Authenticatable
 
     protected $with = ['address'];
     
-    protected $appends = ['url_avatar'];
+    protected $appends = ['url_avatar', 'date_of_birth_format'];
 
     const PATH_AVATAR = '/avatar';
 
@@ -81,5 +81,10 @@ class User extends Authenticatable
     public function getUrlAvatarAttribute()
     {
         return '/storage' . self::PATH_AVATAR . '/' . $this->avatar;
+    }
+
+    public function getDateOfBirthFormatAttribute()
+    {
+        return \Carbon\Carbon::parse($this->date_of_birth)->format(config('app.format.date'));
     }
 }

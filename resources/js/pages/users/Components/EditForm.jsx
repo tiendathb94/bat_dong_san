@@ -18,7 +18,8 @@ class EditForm extends Component {
             errorByFields: {},
             loading: false,
             message: {},
-            avatar: '',
+            avatar: {},
+            previewImg: ''
         }
 
         this.addressField = React.createRef()
@@ -30,16 +31,16 @@ class EditForm extends Component {
         }
 
         return {
-            avatar: user.avatar,
-            fullname: user.fullname,
-            date_of_birth: user.date_of_birth,
-            gender: user.gender,
-            phone: user.phone,
-            tax: user.tax,
-            facebook: user.facebook,
-            zalo: user.zalo,
-            skype: user.skype,
-            viber: user.viber,
+            avatar: user.avatar ?? '',
+            fullname: user.fullname ?? '',
+            date_of_birth: user.date_of_birth_format,
+            gender: user.gender ?? 1,
+            phone: user.phone ?? '',
+            tax: user.tax ?? '',
+            facebook: user.facebook ?? '',
+            zalo: user.zalo ?? '',
+            skype: user.skype ?? '',
+            viber: user.viber ?? '',
             address: user.address || {},
             url_avatar: user.avatar ? user.url_avatar : '/images/default-user-avatar-blue.jpg'
         }
@@ -87,12 +88,16 @@ class EditForm extends Component {
         const errorByFields = {}
 
         // Validate required fields
-        const requiredFields = ['fullname', 'date_of_birth', 'tax', 'phone']
+        const requiredFields = ['fullname', 'tax', 'phone']
         for (let i = 0; i < requiredFields.length; i++) {
             const fieldName = requiredFields[i]
             if (!this.state.formValues[fieldName]) {
                 errorByFields[fieldName] = 'Bạn không được bỏ trống trường này'
             }
+        }
+
+        if (!$('.datepicker').val()) {
+            errorByFields['date_of_birth'] = 'Bạn không được bỏ trống trường này'
         }
 
         this.setState({ errorByFields })
@@ -109,13 +114,13 @@ class EditForm extends Component {
         }
         const { formValues} = this.state;
         var formData = new FormData();
-        if(formValues.avatar) {
-            Array.from(formValues.avatar).forEach(image => {
+        if(this.state.previewImg) {
+            Array.from(this.state.avatar).forEach(image => {
                 formData.append('avatar', image);
             });
         }
         formData.append('fullname', formValues.fullname);
-        formData.append('date_of_birth', formValues.date_of_birth);
+        formData.append('date_of_birth', $('.datepicker').val());
         formData.append('gender', formValues.gender);
         formData.append('phone', formValues.phone);
         formData.append('tax', formValues.tax);
@@ -141,12 +146,15 @@ class EditForm extends Component {
                 loading: false,
                 message: response
             })
-            document.getElementById('js-set-avatar').src = response.user.url_avatar + '?d=' + Date.now()
+            if (response.user.avatar) {
+                document.getElementById('js-set-avatar').src = response.user.url_avatar + '?d=' + Date.now()
+            }
+            window.scrollTo(0, 0)
             setTimeout(() => {
                 this.setState({
                     message: {}
                 })
-            }, 2000)
+            }, 5000)
         } catch (e) {
             if (e.response && e.response.data) {
                 window.scrollTo(0, 0)
@@ -164,7 +172,7 @@ class EditForm extends Component {
                     this.setState({
                         errors: {}
                     })
-                }, 2000)
+                }, 5000)
             }
         }
     }
@@ -173,9 +181,9 @@ class EditForm extends Component {
         this.setState({
           formValues: {
             ...this.state.formValues,
-            avatar: event.target.files
           },
-          avatar: URL.createObjectURL(event.target.files[0])
+          avatar: event.target.files,
+          previewImg: URL.createObjectURL(event.target.files[0])
         });
       };
 
@@ -183,91 +191,91 @@ class EditForm extends Component {
         return (
             <div>
                 <div className="container">
-                    {
-                        this.state.errors.length > 0 && <div className="row">
-                            <div className="col alert alert-danger" role="alert">
-                                <ul className="mb-0">
-                                    {this.state.errors.map((err) => <li key={err}>{err}</li>)}
-                                </ul>
-                            </div>
-                        </div>
-                    }
-                    
-                    {
-                        this.state.message.status && <div className="row mt-3">
-                            <div className={`col-12 alert alert-${this.state.message.status}`} role="alert">
-                                {this.state.message.text}
-                            </div>
-                        </div>
-                    }
-
-                    <div className="row mt-3">
-                        <div className="col-12 col-lg-8">
-                            <div className="form-group">
-                                <label>Họ và tên <span className="text-danger">(*)</span></label>
-                                <input
-                                    name="fullname"
-                                    value={this.state.formValues.fullname || ''}
-                                    onChange={this.setFormFieldValue}
-                                    placeholder=""
-                                    className={classnames({
-                                        'form-control': true,
-                                        'is-invalid': !!this.state.errorByFields.fullname
-                                    })}
-                                />
-                                {this.renderFieldError('fullname')}
-                            </div>
-                            <div className="form-group">
-                                <label>Ngày sinh <span className="text-danger">(*)</span></label>
-                                <input
-                                    type="date"
-                                    name="date_of_birth"
-                                    value={this.state.formValues.date_of_birth || ''}
-                                    onChange={this.setFormFieldValue}
-                                    placeholder=""
-                                    className={classnames({
-                                        'form-control': true,
-                                        'is-invalid': !!this.state.errorByFields.date_of_birth
-                                    })}
-                                />
-                                {this.renderFieldError('date_of_birth')}
-                            </div>
-
-                            <div className="form-group form-inline">
-                                <label className="mr-3">Giới tính</label>
-                                <input
-                                    type="radio"
-                                    name="gender"
-                                    value="1"
-                                    checked={this.state.formValues.gender === '1'}
-                                    onChange={this.setFormFieldValue}
-                                    className="form-control fs-12"
-                                />
-                                <span className="mr-3 ml-1">Nam</span>
-                                <input
-                                    type="radio"
-                                    name="gender"
-                                    value="0"
-                                    checked={this.state.formValues.gender === '0'}
-                                    onChange={this.setFormFieldValue}
-                                    className="form-control fs-12"
-                                />
-                                <span className="ml-1">Nữ</span>
-                            </div>
-                        </div>
-                        <div className="col-12 col-lg-4 p-5">
-                            <label htmlFor="avatar">
-                                <div className="position-relative cursor-pointer overflow-hidden rounded-circle margin-auto">
-                                    <img className="img-avatar" src={this.state.avatar || this.state.formValues.url_avatar} alt=""/>
-                                    <div className="position-absolute w-100 top-70 bg-dark d-flex justify-content-center align-items-center opacity-8 bottom-0">
-                                        <i className="ti-camera text-white"></i>
-                                    </div>
-                                </div>
-                            </label>
-                            <input type="file" id="avatar" name="avatar" onChange={this.onImageChange} className="d-none"/>
+                {
+                    this.state.errors.length > 0 && <div className="row mt-3">
+                        <div className="col-12 alert alert-danger" role="alert">
+                            <ul className="mb-0">
+                                {this.state.errors.map((err) => <li key={err}>{err}</li>)}
+                            </ul>
                         </div>
                     </div>
-                    <div className="row">
+                }
+                
+                {
+                    this.state.message.status && <div className="row mt-3">
+                        <div className={`col-12 alert alert-${this.state.message.status}`} role="alert">
+                            {this.state.message.text}
+                        </div>
+                    </div>
+                }
+                </div>
+                <div className="row mt-3">
+                    <div className="col-12 col-lg-8">
+                        <div className="form-group">
+                            <label>Họ và tên <span className="text-danger">(*)</span></label>
+                            <input
+                                name="fullname"
+                                value={this.state.formValues.fullname || ''}
+                                onChange={this.setFormFieldValue}
+                                placeholder=""
+                                className={classnames({
+                                    'form-control': true,
+                                    'is-invalid': !!this.state.errorByFields.fullname
+                                })}
+                            />
+                            {this.renderFieldError('fullname')}
+                        </div>
+                        <div className="form-group">
+                            <label>Ngày sinh <span className="text-danger">(*)</span></label>
+                            <input
+                                name="date_of_birth"
+                                defaultValue={this.state.formValues.date_of_birth || ''}
+                                // onChange={this.setFormFieldValue}
+                                placeholder=""
+                                className={classnames({
+                                    'datepicker': true,
+                                    'form-control': true,
+                                    'is-invalid': !!this.state.errorByFields.date_of_birth
+                                })}
+                            />
+                            {this.renderFieldError('date_of_birth')}
+                        </div>
+
+                        <div className="form-group form-inline">
+                            <label className="mr-3">Giới tính</label>
+                            <input
+                                type="radio"
+                                name="gender"
+                                value="1"
+                                checked={this.state.formValues.gender === '1'}
+                                onChange={this.setFormFieldValue}
+                                className="form-control fs-12"
+                            />
+                            <span className="mr-3 ml-1">Nam</span>
+                            <input
+                                type="radio"
+                                name="gender"
+                                value="0"
+                                checked={this.state.formValues.gender === '0'}
+                                onChange={this.setFormFieldValue}
+                                className="form-control fs-12"
+                            />
+                            <span className="ml-1">Nữ</span>
+                        </div>
+                    </div>
+                    <div className="col-12 col-lg-4 d-flex justify-content-center">
+                        <label htmlFor="avatar">
+                            <div className="position-relative cursor-pointer overflow-hidden rounded-circle margin-auto upload-avatar">
+                                <img className="img-avatar" src={this.state.previewImg || this.state.formValues.url_avatar} alt=""/>
+                                <div className="position-absolute w-100 h-100 bg-dark d-flex justify-content-center align-items-center bottom-0">
+                                    <i className="ti-camera text-white"></i>
+                                </div>
+                            </div>
+                        </label>
+                        <input type="file" id="avatar" name="avatar" onChange={this.onImageChange} className="d-none"/>
+                    </div>
+                </div>
+                <div className="row">
                         <div className="col-12 col-lg-6">
                             <div className="form-group">
                                 <label>Số điện thoại <span className="text-danger">(*)</span></label>
@@ -349,7 +357,6 @@ class EditForm extends Component {
                             </div>
                         </div>
                     </div>
-                </div>
                 <AddressForm
                         onSync={this.onSyncAddress}
                         ref={this.addressField}

@@ -14,6 +14,7 @@ use Hash;
 use Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\UpdateInfoRequest;
+use \Carbon\Carbon;
 
 class AuthController extends Controller
 {
@@ -31,6 +32,7 @@ class AuthController extends Controller
             } else {
                 $data['avatar'] = $user->avatar;
             }
+            $data['date_of_birth'] = Carbon::createFromFormat('d/m/Y', $request->date_of_birth)->format('Y-m-d');
             $user->update($data);
             $user->address()->updateOrCreate([
                 'addressable_id' => $user->id,

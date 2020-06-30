@@ -26,7 +26,7 @@ class UpdateInfoRequest extends FormRequest
         return [
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'fullname' => 'required',
-            'date_of_birth' => 'required|date',
+            'date_of_birth' => 'required',
             'gender' => 'required',
             'phone' => 'required|numeric',
             'tax' => 'required|numeric',
