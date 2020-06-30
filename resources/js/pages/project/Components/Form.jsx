@@ -145,7 +145,7 @@ class Form extends Component {
                     }
                     this.setState({ errors: stateErrors })
                 } else {
-                    this.setState({ errors: e.response.data.message || 'Đã có lỗi sảy ra vui lòng thử lại' })
+                    this.setState({ errors: [e.response.data.message || 'Đã có lỗi sảy ra vui lòng thử lại'] })
                 }
             }
         }
@@ -195,7 +195,7 @@ class Form extends Component {
             return ''
         }
 
-        return <div className="text-danger form-text">{this.state.errorByFields.long_name}</div>
+        return <div className="text-danger form-text">{this.state.errorByFields[fieldName]}</div>
     }
 
     render () {

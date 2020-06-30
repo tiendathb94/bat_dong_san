@@ -1,1 +1,27 @@
 @import '~react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+
+#investor-form-container {
+    .crdw-editor-wrapper {
+        border: 1px solid #e2e2e2;
+    }
+
+    .rdw-editor-main {
+        background: #fff;
+        padding: 5px;
+        margin-top: -4px;
+        min-height: 300px;
+    }
+
+    .custom-file-label {
+        cursor: pointer;
+        overflow: hidden;
+
+        &:after {
+            content: "Chọn";
+        }
+    }
+
+    .custom-file-input {
+        cursor: pointer;
+    }
+}
