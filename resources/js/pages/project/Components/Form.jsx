@@ -195,7 +195,7 @@ class Form extends Component {
             return ''
         }
 
-        return <div className="text-danger form-text">{this.state.errorByFields.long_name}</div>
+        return <div className="text-danger form-text">{this.state.errorByFields[fieldName]}</div>
     }
 
     render () {

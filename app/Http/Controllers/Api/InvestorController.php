@@ -23,4 +23,9 @@ class InvestorController extends Controller
 
         return response()->json($investors);
     }
+
+    public function create()
+    {
+        
+    }
 }
