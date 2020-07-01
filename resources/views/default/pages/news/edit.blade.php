@@ -62,8 +62,8 @@
 
                 <div class="form-group">
                     <label for="meta_content" style="display: block">Mô tả ngắn</label>
-                    <textarea name="meta_content" id="meta_content" style="width: 100%;" class="" rows="5">{{ old('meta_content', $news->meta_content) }}</textarea>
-                    <em> - Tối đa 255 ký tự!</em>
+                    <textarea name="meta_content" id="meta_content" style="width: 100%;" class="form-control" maxlength=255 rows="5">{{ old('meta_content', $news->meta_content) }}</textarea>
+                    <div class="form-text small text-muted">Tối đa 255 ký tự!</div>
 
                 </div>
 
