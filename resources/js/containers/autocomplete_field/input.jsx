@@ -32,6 +32,9 @@ class Input extends Component {
 
     onFocus = () => {
         this.setState({ showKeyword: true })
+        if (this.props.onInputComplete) {
+            this.props.onInputComplete(this.props.selectedItemName)
+        }
     }
 
     onBlur = () => {
