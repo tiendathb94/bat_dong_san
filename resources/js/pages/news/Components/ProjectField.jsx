@@ -44,7 +44,7 @@ class ProjectField extends Component {
                     } : {}
                 }
             />
-            <input type="hidden" name="project_id" value={this.state.project_id} />
+            <input type="hidden" name="project_id" id="project_id" value={this.state.project_id} />
             <input type="hidden" name="project_name" value={this.state.project_name} />
         </div>
         )

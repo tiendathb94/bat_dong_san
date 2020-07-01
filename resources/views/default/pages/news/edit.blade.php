@@ -24,12 +24,13 @@
             @endif
 
         </div>
-        <form action="{{ route('news.store') }}" method="POST" class="row" enctype="multipart/form-data">
+        <form action="{{ route('news.update', $news->slug) }}" method="POST" class="row" enctype="multipart/form-data">
             @csrf
+            @method('patch')
             <div class="col-sm-12">
                 <div class="form-group">
                     <label for="title">Tiêu đề</label>
-                    <input type="text" name="title" value="{{ old('title') }}" class="form-control" id="title" placeholder="Tiêu đề">
+                    <input type="text" name="title" value="{{  old('title', $news->title) }}" class="form-control" id="title" placeholder="Tiêu đề">
                 </div>
 
                 <div class="row">
@@ -44,7 +45,7 @@
                             <select class="form-control" name="category_id" id="exampleFormControlSelect1">
                                 <option>--Chọn--</option>
                                 @foreach( $categories as $category )
-                                    <option @if(old('category_id') == $category->id) selected @endif value="{{ $category->id }}">{{ $category->name }}</option>
+                                    <option @if( old('category_id', $news->category_id) == $category->id) selected @endif value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -55,13 +56,13 @@
                         </div>
                     </div>
                     <div class="col-sm-6">
-                        <img style="width: 200px; margin-top: 10px"  alt="" id="blah">
+                        <img style="width: 200px; margin-top: 10px" src="{{ $pathImageThumbnail . $news->thumbnail }}"  alt="" id="blah">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="meta_content" style="display: block">Mô tả ngắn</label>
-                    <textarea name="meta_content" id="meta_content" style="width: 100%;" class="" rows="5">{{ old('meta_content') }}</textarea>
+                    <textarea name="meta_content" id="meta_content" style="width: 100%;" class="" rows="5">{{ old('meta_content', $news->meta_content) }}</textarea>
                     <em> - Tối đa 255 ký tự!</em>
 
                 </div>
@@ -73,7 +74,7 @@
 
                 <div class="row">
                     <div class="form-group col-sm-6">
-                        <button class="btn btn-success" type="submit" style="width: 100%; font-size: 16px;height: 34px;">Đăng bài</button>
+                        <button class="btn btn-success" type="submit" style="width: 100%; font-size: 16px;height: 34px;">Cập nhật</button>
                     </div>
                 </div>
             </div>
@@ -90,7 +91,7 @@
 @endpush
 @push('scripts')
     <script>
-        window.requestOld = @json(old());
+        window.requestOld = @json(count(old()) ? old() : $news);
         function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();

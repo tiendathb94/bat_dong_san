@@ -15,10 +15,13 @@ class AutocompleteField extends Component {
 
     onInputComplete = (keyword) => {
         this.setState({ keyword })
+        if (this.props.onChange) {
+            this.props.onChange('','')
+        }
     }
 
     onSelectItem = (selectedItem) => {
-        this.setState({ selectedItem })
+        this.setState({ selectedItem, keyword: selectedItem.name })
         if (this.props.onChange) {
             this.props.onChange(selectedItem.value, selectedItem.name)
         }

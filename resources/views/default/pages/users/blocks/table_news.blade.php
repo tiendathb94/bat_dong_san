@@ -29,7 +29,7 @@
                 <td><p class="text-white {{ $bgColor }} px-2 py-1 rounded">{{ $newsChild->status_name }}</p></td>
                 <td>
                     <div class="d-flex justify-content-center">
-                        <a title="" href="" class="mr-3">Sửa</a>|
+                        <a title="" href="{{ route('news.edit', $newsChild->slug) }}" class="mr-3">Sửa</a>|
                         <span id="btnDelete" data-action="{{ route('news.destroy', $newsChild->id) }}" title="" class="ml-3 text-danger cursor-pointer">Xóa</span>
                     </div>
                 </td>

@@ -26,9 +26,10 @@ class EditorField extends Component {
     }
 
     onContentChange = (editorState) => {
+        var content = draftToHtml(convertToRaw(editorState.getCurrentContent()))
         this.setState({  
             content: editorState,
-            value: draftToHtml(convertToRaw(editorState.getCurrentContent()))
+            value: content.indexOf('<p></p>') == -1 ? content : ''
         })
     }
 

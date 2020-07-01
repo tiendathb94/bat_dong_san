@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use App\User;
 use Cviebrock\EloquentSluggable\Sluggable;
+use App\Entities\Project;
 
 class News extends Model
 {
@@ -20,6 +21,8 @@ class News extends Model
     protected $fillable = [
         'title', 'slug', 'meta_content','content','thumbnail','status', 'category_id', 'user_id', 'project_id'
     ];
+
+    protected $appends = ['project_name'];
 
     const DECLINE = 1;
     const APPROVED = 2;
@@ -36,6 +39,11 @@ class News extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
+    }
+
     public function getCreatedAtDateAttribute()
     {
         $date = new Carbon($this->created_at);
@@ -50,5 +58,10 @@ class News extends Model
     public function sluggable()
     {
         return ['slug' => ['source' => 'title']];
+    }
+
+    public function getProjectNameAttribute()
+    {
+        return $this->project_id ? $this->project->long_name : '';
     }
 }

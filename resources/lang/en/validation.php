@@ -173,6 +173,25 @@ return [
             'image' => 'Ảnh đại diện chưa đúng định dạng',
             'mimes' => 'Ảnh đại diện chưa đúng định dạng',
             'max' => 'Ảnh đại diện có dung lượng lớn, vui lòng tải ảnh khác nhỏ hơn 2MB'
+        ],
+        'title' => [
+            'required' => 'Vui lòng nhập tiêu đề',
+            'max' => 'Vui lòng nhập tiêu đề ít hơn :max ký tự',
+            'min' => 'Vui lòng nhập tiêu đề lớn hơn :min ký tự',
+        ],
+        'content' => [
+            'required' => 'Vui lòng nhập nội dung'
+        ],
+        'meta_content' => [
+            'required' => 'Vui lòng nhập mô tả ngắn'
+        ],
+        'thumbnail' => [
+            'required' => 'Vui lòng tải lên ảnh thumbnail',
+            'max' => 'Quá dung lương cho phép :max/1024 MB, vui lòng tải ảnh khác',
+            'mimes' => 'Sai định dạng ảnh thumbnail, vui lòng tải lên ảnh với định dạng :mimes'
+        ],
+        'category_id' => [
+            'required' => 'Vui lòng chọn danh mục'
         ]
     ],
 

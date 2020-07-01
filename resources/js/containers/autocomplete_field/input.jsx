@@ -8,12 +8,13 @@ class Input extends Component {
         super(props)
 
         this.state = {
-            keyword: '',
+            keyword: props.selectedItemName,
             showKeyword: false
         }
     }
 
     static getDerivedStateFromProps (props) {
+
         return { selectedItemName: props.selectedItemName }
     }
 
@@ -35,7 +36,9 @@ class Input extends Component {
     }
 
     onBlur = () => {
-        this.setState({ showKeyword: false })
+        if (!$('#project_id').val()) {
+            this.setState({ showKeyword: false })
+        }
     }
 
     render () {
