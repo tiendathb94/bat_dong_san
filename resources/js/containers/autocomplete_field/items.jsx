@@ -11,6 +11,10 @@ class Items extends Component {
             data: [],
             show: false,
             loading: true,
+            emptyData: {
+                value: '',
+                name: ''
+            }
         }
 
         this.node = React.createRef()
@@ -84,6 +88,11 @@ class Items extends Component {
 
                     {
                         !this.state.loading && this.state.data && this.state.data.length > 0 && <ul>
+                            {
+                                this.props.emptyValue && <li key='' onClick={() => this.onClickItem(this.state.emptyData)} title=''>
+                                    <span>Bỏ chọn</span>
+                                </li>
+                            }
                             {
                                 this.state.data.map((item) =>
                                     <li key={item.value} onClick={() => this.onClickItem(item)} title={item.name}>
