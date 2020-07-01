@@ -3,18 +3,21 @@ import AddressForm from "../../../containers/address_form"
 import { Editor } from "react-draft-wysiwyg"
 import { convertToRaw, EditorState } from "draft-js"
 import classnames from "classnames"
-import { cloneDeep } from "lodash"
+import PropTypes from 'prop-types'
 import draftToHtml from "draftjs-to-html"
 import axios from "axios"
 import config from "../../../config"
+import { stateFromHTML } from "draft-js-import-html"
 
 class Form extends Component {
     constructor (props) {
         super(props)
+        this.isEditMode = this.props.investor && this.props.investor.id > 0
 
         this.state = {
             formValues: {
-                overview: EditorState.createEmpty()
+                overview: EditorState.createEmpty(),
+                ...this.prepareFormValues(),
             },
             errorByFields: {},
             errors: [],
@@ -22,6 +25,28 @@ class Form extends Component {
         }
 
         this.addressField = React.createRef()
+    }
+
+    prepareFormValues () {
+        if (!this.isEditMode) {
+            return {}
+        }
+
+        const address = this.props.investor.address || {}
+
+        return {
+            name: this.props.investor.name,
+            phone: this.props.investor.phone,
+            email: this.props.investor.email,
+            website: this.props.investor.website,
+            overview: EditorState.createWithContent(stateFromHTML(this.props.investor.overview)),
+            address: {
+                province_id: address.province_id,
+                district_id: address.district_id,
+                ward_id: address.ward_id,
+                address: address.address,
+            }
+        }
     }
 
     setFormFieldValue = (event) => {
@@ -58,6 +83,11 @@ class Form extends Component {
             if (fieldName === 'overview' && !this.state.formValues[fieldName].getCurrentContent().hasText()) {
                 errorByFields[fieldName] = 'Bạn không được bỏ trống trường này'
             } else if (!this.state.formValues[fieldName]) {
+                if (fieldName === 'logo' && this.isEditMode) {
+                    // No require update logo on edit mode
+                    continue
+                }
+
                 errorByFields[fieldName] = 'Bạn không được bỏ trống trường này'
             }
         }
@@ -89,11 +119,19 @@ class Form extends Component {
                 }
             }
 
-            await axios.post(`${config.api.baseUrl}/investor/create`, formData, {
-                headers: {
-                    'content-type': 'multipart/form-data'
-                }
-            })
+            if (this.isEditMode) {
+                await axios.post(`${config.api.baseUrl}/investor/update/${this.props.investor.id}`, formData, {
+                    headers: {
+                        'content-type': 'multipart/form-data'
+                    }
+                })
+            } else {
+                await axios.post(`${config.api.baseUrl}/investor/create`, formData, {
+                    headers: {
+                        'content-type': 'multipart/form-data'
+                    }
+                })
+            }
 
             window.location = '/investor/posted'
         } catch (e) {
@@ -184,8 +222,18 @@ class Form extends Component {
                                 onChange={this.setFormFieldValue}
                             />
                             <label className="custom-file-label" htmlFor="inputGroupFile01">
-                                {this.state.formValues.logo ? this.state.formValues.logo.name : 'Chọn ảnh logo'}
+                                {
+                                    this.state.formValues.logo ?
+                                        this.state.formValues.logo.name :
+                                        this.isEditMode ? this.props.investor.logo : 'Chọn ảnh logo'
+                                }
                             </label>
+                            {
+                                this.isEditMode && this.props.investor.logo &&
+                                <span className="text-muted small">
+                                    Xem logo đã tải <a href={`/storage/${this.props.investor.logo}`} target="_blank">bấm vào đây</a>
+                                </span>
+                            }
                         </div>
                         {this.renderFieldError('logo')}
                     </div>
@@ -228,6 +276,10 @@ class Form extends Component {
                     onSync={this.onSyncAddress}
                     required={true}
                     ref={this.addressField}
+                    wardId={this.state.formValues.address.ward_id}
+                    provinceId={this.state.formValues.address.province_id}
+                    districtId={this.state.formValues.address.district_id}
+                    line={this.state.formValues.address.address}
                 />
 
                 <div className="row">
@@ -254,6 +306,10 @@ class Form extends Component {
             </div>
         )
     }
+}
+
+Form.propTypes = {
+    investor: PropTypes.object
 }
 
 export default Form
