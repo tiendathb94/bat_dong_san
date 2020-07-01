@@ -55,6 +55,11 @@ function personalMenuItemsDefinition()
                     'permission' => 'pages.project.show_posted'
                 ],
                 [
+                    'route_name' => 'pages.project.awaiting_review',
+                    'label' => 'Xem dự án đang đợi duyệt',
+                    'permission' => 'pages.project.awaiting_review'
+                ],
+                [
                     'route_name' => 'pages.investor.create',
                     'label' => 'Đăng thông tin chủ đầu tư',
                     'permission' => 'pages.investor.create'
