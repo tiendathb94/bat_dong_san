@@ -20,6 +20,7 @@ mix
     .react('resources/js/pages/users/info.js', 'public/js/pages/users')
     .react('resources/js/pages/news/editor.js', 'public/js/pages/news')
     .react('resources/js/pages/news/project.js', 'public/js/pages/news')
+    .react('resources/js/pages/investor/manage.js', 'public/js/pages/investor')
     .sass('resources/sass/app.scss', 'public/css')
     .sass('resources/sass/pages/project/form.scss', 'public/css/pages/project')
     .sass('resources/sass/pages/investor/form.scss', 'public/css/pages/investor')

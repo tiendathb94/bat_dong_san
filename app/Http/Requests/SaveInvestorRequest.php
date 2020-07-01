@@ -25,7 +25,7 @@ class SaveInvestorRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'phone' => 'required|min:10|max:12',
+            'phone' => 'required|min:10|max:14',
             'email' => 'required|email:rfc,dns',
             'website' => 'required|url',
             'overview' => 'required',
@@ -39,7 +39,7 @@ class SaveInvestorRequest extends FormRequest
         return [
             'required' => 'Bạn không được để trống trường :attribute',
             'phone.min' => 'Số điện thoại hợp lệ sẽ có ít nhất 10 chữ số',
-            'phone.max' => 'Số điện thoại hợp lệ sẽ có tối đa 12 chữ số',
+            'phone.max' => 'Số điện thoại hợp lệ sẽ có tối đa 14 chữ số',
             'email.email' => 'Địa chỉ email không hợp lệ',
             'website.url' => 'Địa chỉ website không hợp lệ',
             'logo.mimes' => 'Ảnh logo chỉ chấp nhận ảnh định dạng jpeg,gif,png',

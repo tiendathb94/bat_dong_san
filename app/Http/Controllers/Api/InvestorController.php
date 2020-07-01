@@ -112,6 +112,23 @@ class InvestorController extends Controller
         return response()->json(['message' => 'Đã có lỗi xảy ra khi lưu chủ đầu tư vui lòng thử lại'], 500);
     }
 
+    public function deleteInvestorById($investorId)
+    {
+        $user = auth()->user();
+
+        try {
+            DB::beginTransaction();
+            Project::query()->where('investor_id', '=', $investorId)->update(['investor_id' => null, 'investor_type' => null]);
+            Investor::query()->where('user_id', '=', $user->id)->where('id', '=', $investorId)->delete();
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return response()->json(['message' => 'Xóa thông tin chủ đầu tư thất bại, vui lòng thử lại'], 500);
+        }
+
+        return response()->noContent();
+    }
+
     private function uploadInvestorLogo(Investor $investor, UploadedFile $logo)
     {
         $fileName = $investor->id . "." . $logo->extension();

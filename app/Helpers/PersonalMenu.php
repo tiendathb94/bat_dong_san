@@ -58,6 +58,11 @@ function personalMenuItemsDefinition()
                     'route_name' => 'pages.investor.create',
                     'label' => 'Đăng thông tin chủ đầu tư',
                     'permission' => 'pages.investor.create'
+                ],
+                [
+                    'route_name' => 'pages.investor.posted',
+                    'label' => 'Quản lý chủ đầu tư đã đăng',
+                    'permission' => 'pages.investor.posted'
                 ]
             ],
         ],
