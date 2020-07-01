@@ -20,4 +20,4 @@ Route::group(['guard' => 'web', 'middleware' => ['auth', 'permission']], functio
 
 Route::get('/du-an/{categorySlug}/{slug}', 'Web\ProjectController@showProjectDetail')
     ->defaults('_config', ['view' => 'default.pages.project.project_detail'])
-    ->name('pages.project.awaiting_review');
+    ->name('pages.project.project_detail');

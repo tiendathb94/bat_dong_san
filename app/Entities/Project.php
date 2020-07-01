@@ -22,6 +22,9 @@ class Project extends Model
     const PriceUnitHundredThousandPermM2 = 3;
     const PriceUnitMillionPermM2 = 4;
 
+    const ImageLibraryTypeGallery = 'gallery';
+    const ImageLibraryTypeProgress = 'progress';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -47,7 +50,7 @@ class Project extends Model
 
     public function imageLibraries()
     {
-        return $this->morphMany('App\Entities\ImageLibrary', 'image_libraryable')->co;
+        return $this->morphMany('App\Entities\ImageLibrary', 'image_libraryable');
     }
 
     public function category()

@@ -98,7 +98,7 @@ class ProjectController extends Controller
 
         return view($this->_config['view'], [
             'project' => $project,
-            'gallery'=>$project->imageLibraries()->where('library_type')
+            'galleries' => $project->imageLibraries()->where('library_type', '=', Project::ImageLibraryTypeGallery)->get()
         ]);
     }
 }

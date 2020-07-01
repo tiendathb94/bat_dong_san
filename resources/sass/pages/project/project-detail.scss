@@ -1,0 +1,23 @@
+.page-project-detail-container {
+    .general-info-wrapper .row {
+        margin-bottom: 1rem;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    #project-image-gallery {
+        .slide-image {
+            object-fit: none;
+            object-position: center;
+            max-height: 500px;
+            width: 100%;
+        }
+    }
+
+    .project-short-name {
+        font-size: 2.5rem;
+        font-style: italic;
+    }
+}
