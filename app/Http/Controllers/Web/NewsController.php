@@ -79,13 +79,17 @@ class NewsController extends Controller
         return redirect()->back()->with('message', $message);
     }
 
-    public function update( $slug ) {
+    public function edit( $slug ) {
         $news = DB::table('news')
-        ->join('projects', 'projects.id', '=', 'project_id')
-        ->where('news.slug', $slug)
-        ->select('news.*', 'projects.long_name as projectName')
-        ->first();
-        return view('default.pages.news.update', ['categories'=>getAllCategoriesNews(), 'news' => $news]);
+            ->join('projects', 'projects.id', '=', 'project_id')
+            ->where('news.slug', $slug)
+            ->select('news.*', 'projects.long_name as projectName')
+            ->first();
+        $data = [
+            'categories' => getAllCategoriesNews(),
+            'news' => $news
+        ];
+        return view('default.pages.news.edit', $data);
     }
 
     public function postUpdate(Request $request)

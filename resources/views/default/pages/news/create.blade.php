@@ -73,7 +73,7 @@
 
                 <div class="row">
                     <div class="form-group col-sm-6">
-                        <button class="btn btn-success" type="submit" onclick="onSubmit()" style="width: 100%; font-size: 16px;height: 34px;">Đăng bài</button>
+                        <button class="btn btn-success" type="submit" style="width: 100%; font-size: 16px;height: 34px;">Đăng bài</button>
                     </div>
                 </div>
             </div>
@@ -104,57 +104,6 @@
         $("#imgInp").change(function() {
             readURL(this);
         });
-
-        var dataCate = [];
-        var dataPro = [];
-        $( function() {
-            var availableTags = [];
-            var debounce = null;
-            $('#project').on('keyup', function(e){
-                clearTimeout(debounce);
-                $('.loader').css('display', 'block');
-                debounce = setTimeout(function(){
-                    $.ajax({
-                        url:'{{ asset('') }}' + 'api/project/search',
-                        method:"GET", 
-                        data:{search:e.target.value},
-                        success:function(data){ 
-                            dataPro = data;
-                            availableTags = [];
-                            for( let i = 0; i < data.length; i++ ) {
-                                availableTags.push(data[i].long_name)
-                            }
-                            if( data.length < 1 ) {
-                                $('.nothing').css('display', 'block');
-                            } else {
-                                $('.nothing').css('display', 'none');
-                            }
-                            $('.loader').css('display', 'none');
-                        }
-                    }).then( function() { 
-                        $( "#project" ).autocomplete({
-                            source: availableTags
-                        });
-                    })
-                }, 300);
-            }); 
-        } );
-
-    function onSubmit(){
-        event.preventDefault();
-        for( let i = 0; i < dataPro.length; i++ ) {
-            if( dataPro[i].long_name == $('#project').val() ) {
-                $( "input[name='project_id']" ).val(dataPro[i].id)
-            }
-        }
-
-        for( let i = 0; i < dataCate.length; i++ ) {
-            if( dataCate[i].title == $('#project').val() ) {
-                $( "input[name='project_id']" ).val(dataCate[i].id)
-            }
-        }
-        $('form').submit();
-    }
     </script>
     <script src="{{ asset('js/pages/news/editor.js') . '?m=' . filemtime('js/pages/news/editor.js') }}"></script>
     <script src="{{ asset('js/pages/news/project.js') . '?m=' . filemtime('js/pages/news/project.js') }}"></script>
