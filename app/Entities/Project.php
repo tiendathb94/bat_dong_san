@@ -17,6 +17,11 @@ class Project extends Model
     const InvestorTypeInvest = 1;
     const InvestorTypeDistribute = 2;
 
+    const PriceUnitMillion = 1;
+    const PriceUnitBillion = 2;
+    const PriceUnitHundredThousandPermM2 = 3;
+    const PriceUnitMillionPermM2 = 4;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -42,7 +47,7 @@ class Project extends Model
 
     public function imageLibraries()
     {
-        return $this->morphMany('App\Entities\ImageLibrary', 'image_libraryable');
+        return $this->morphMany('App\Entities\ImageLibrary', 'image_libraryable')->co;
     }
 
     public function category()
@@ -63,5 +68,23 @@ class Project extends Model
     public function sluggable()
     {
         return ['slug' => ['source' => 'long_name']];
+    }
+
+    public function getPriceFormatted()
+    {
+        switch ($this->price_unit) {
+            case self::PriceUnitBillion:
+                return "{$this->price} Tỷ";
+                break;
+            case self::PriceUnitMillion:
+                return "{$this->price} Triệu";
+                break;
+            case self::PriceUnitMillionPermM2:
+                return "{$this->price} triệu/m²";
+                break;
+            case self::PriceUnitHundredThousandPermM2:
+                return "{$this->price} trăm nghìn/m²";
+                break;
+        }
     }
 }

@@ -61,8 +61,6 @@ class ProjectController extends Controller
 
     public function manageAwaitingReviewProject(Request $request)
     {
-        $user = auth()->user();
-
         $qb = Project::query()->where('status', '=', Project::StatusPending);
 
         $keyword = $request->get('keyword');
@@ -80,6 +78,27 @@ class ProjectController extends Controller
             'categories' => Category::query()->where('destination_entity', Project::class)->get(),
             'keyword' => $keyword,
             'categoryId' => $categoryId,
+        ]);
+    }
+
+    public function showProjectDetail(Request $request)
+    {
+        $slug = $request->route()->parameter('slug');
+
+        /** @var Project $project */
+        $project = Project::query()
+            ->with('category')
+            ->where('status', '=', Project::StatusApproved)
+            ->where('slug', '=', $slug)
+            ->first();
+
+        if (!$project) {
+            return abort(404);
+        }
+
+        return view($this->_config['view'], [
+            'project' => $project,
+            'gallery'=>$project->imageLibraries()->where('library_type')
         ]);
     }
 }

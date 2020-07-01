@@ -36,4 +36,27 @@ class Address extends Model
     {
         return $this->belongsTo('App\Entities\Ward');
     }
+
+    public function show()
+    {
+        $parts = [];
+
+        if (!empty($this->address)) {
+            $parts[] = $this->address;
+        }
+
+        if (!empty($this->ward) && !empty($this->ward->name)) {
+            $parts[] = $this->ward->name;
+        }
+
+        if (!empty($this->district) && !empty($this->district->name)) {
+            $parts[] = $this->district->name;
+        }
+
+        if (!empty($this->province) && !empty($this->province->name)) {
+            $parts[] = $this->province->name;
+        }
+
+        return join(', ', $parts);
+    }
 }
