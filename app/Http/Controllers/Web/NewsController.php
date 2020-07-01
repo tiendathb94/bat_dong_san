@@ -101,6 +101,7 @@ class NewsController extends Controller
         if ( $request->thumbnail) {
             $data['thumbnail'] = $this->storeFileReturnName($request->thumbnail);
         }
+        $data['slug'] = str_slug($request->title, '-');
         $news->update($data);
         $message = [
             'status' => 'success',
