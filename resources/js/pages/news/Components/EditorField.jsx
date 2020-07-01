@@ -11,7 +11,6 @@ class EditorField extends Component {
         this.state = {
             content: EditorState.createEmpty(),
             ...this.initFormValuesForEditExistRequest(props.request),
-            value: ''
         }
     }
 

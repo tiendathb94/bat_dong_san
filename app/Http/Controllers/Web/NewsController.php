@@ -31,7 +31,7 @@ class NewsController extends Controller
             $data = $request->only('title', 'meta_content', 'content', 'project_id', 'category_id');
             $data['thumbnail'] = $this->storeFileReturnPath($request->thumbnail);
             $data['user_id'] = Auth::user()->id;
-            $data['status'] = News::PENDING;
+            $data['status'] = News::AWAITING_REVIEW;
             $this->news->create($data);
             return  redirect()->route('pages.user.news')->with('success', 'Đăng thành bài thành công!');
         } catch ( \Exception $e ) {
