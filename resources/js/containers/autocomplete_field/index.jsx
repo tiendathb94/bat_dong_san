@@ -20,7 +20,7 @@ class AutocompleteField extends Component {
     onSelectItem = (selectedItem) => {
         this.setState({ selectedItem })
         if (this.props.onChange) {
-            this.props.onChange(selectedItem.value)
+            this.props.onChange(selectedItem.value, selectedItem.name)
         }
     }
 
@@ -32,7 +32,12 @@ class AutocompleteField extends Component {
                     selectedItemName={this.state.selectedItem.name || ''}
                     placeholder={this.props.placeholder}
                 />
-                <Items keyword={this.state.keyword} endpoint={this.props.endpoint} onSelectItem={this.onSelectItem}/>
+                <Items 
+                    keyword={this.state.keyword} 
+                    endpoint={this.props.endpoint}
+                    selectedItemName={this.props.name || ''} 
+                    onSelectItem={this.onSelectItem}
+                />
             </div>
         )
     }
