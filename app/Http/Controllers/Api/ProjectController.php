@@ -159,4 +159,23 @@ class ProjectController extends Controller
 
         return response()->json(['message' => 'Đã có lỗi khi lưu dự án'], 500);
     }
+
+    public function updateProjectStatus($projectId, $action)
+    {
+        $newStatus = Project::StatusPending;
+        switch ($action) {
+            case 'approve':
+                $newStatus = Project::StatusApproved;
+                break;
+            case 'decline':
+                $newStatus = Project::StatusDeclined;
+        }
+
+        try {
+            Project::query()->where('id', '=', $projectId)->update(['status' => $newStatus]);
+            return response()->noContent();
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Cập nhật trạng thái của dự án không thành công vui lòng thử lại'], 500);
+        }
+    }
 }

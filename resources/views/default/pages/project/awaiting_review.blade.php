@@ -1,11 +1,11 @@
 @extends('default.layouts.personal')
 
 @section('page_title')
-    Quản lý dự án đã đăng
+    Quản lý dự án chờ duyệt
 @endsection
 
 @section('main_content')
-    <h3 class="mb-3">Quản lý dự án đã đăng</h3>
+    <h3 class="mb-3">Quản lý dự án chờ duyệt</h3>
     <form class="mb-5">
         <div class="row">
             <div class="form-group col-sm-12 col-md-6">
@@ -33,7 +33,7 @@
     </form>
 
     @if(count($projects)<1)
-        @include('default.partials.no-data',['message'=>'Bạn chưa đăng dự án nào hoặc không có kết quả phù hợp với tìm kiếm của bạn.'])
+        @include('default.partials.no-data',['message'=>'Không có dự án nào đợi duyệt hoặc không có kết quả phù hợp với tìm kiếm của bạn.'])
     @else
         <table class="table table-bordered fs-12 text-center">
             <thead>
@@ -71,13 +71,17 @@
                     </td>
                     <td class="d-none d-md-table-cell">{{\Carbon\Carbon::parse($project->created_at)->format('d/m/Y')}}</td>
                     <td>
-                        <a href="{{route('pages.project.update',['projectId'=>$project->id])}}">
-                            <span class="ti-pencil-alt"></span> Sửa
-                        </a>
-
-                        <a href="" class="delete-project-button" data-project-id="{{$project->id}}">
-                            <span class="ti-trash"></span> Xóa
-                        </a>
+                        <a
+                            href="#"
+                            class="approve-project-button"
+                            data-project-id="{{$project->id}}"
+                            data-action="approve">Duyệt</a>
+                        -
+                        <a
+                            href="#"
+                            class="decline-project-button text-danger"
+                            data-project-id="{{$project->id}}"
+                            data-action="decline">Từ chối</a>
                     </td>
                 </tr>
             @endforeach
