@@ -13,7 +13,6 @@ class EditorField extends Component {
             ...this.initFormValuesForEditExistRequest(props.request),
             value: ''
         }
-        console.log(this.state);
     }
 
     initFormValuesForEditExistRequest (request) {

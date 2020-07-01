@@ -8,7 +8,7 @@ class AutocompleteField extends Component {
     constructor (props) {
         super(props)
         this.state = {
-            keyword: '',
+            keyword: props.name ?? '',
             selectedItem: props.selectedItem || {}
         }
     }
@@ -20,7 +20,7 @@ class AutocompleteField extends Component {
     onSelectItem = (selectedItem) => {
         this.setState({ selectedItem })
         if (this.props.onChange) {
-            this.props.onChange(selectedItem.value)
+            this.props.onChange(selectedItem.value, selectedItem.name)
         }
     }
 

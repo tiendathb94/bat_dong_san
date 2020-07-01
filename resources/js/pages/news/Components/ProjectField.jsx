@@ -19,24 +19,24 @@ class ProjectField extends Component {
         if (!request) {
             return {}
         }
-
         return {
             project_id: request.project_id ?? '',
             project_name: request.project_name ?? ''
         }
     }
 
-    onChangeProjectId = (projectId) => {
-        this.setState({ project_id: projectId })
+    onChangeProjectId = (projectId, projectName) => {
+        this.setState({ project_id: projectId, project_name: projectName })
     }
 
     render () {
         return (
         <div>
             <AutocompleteField
-                endpoint="investor/autocomplete-field-search"
+                endpoint="project/search"
                 onChange={this.onChangeProjectId}
                 placeholder="Nhập tên dự án để tìm kiếm"
+                name={this.state.project_name}
                 selectedItem={
                     this.props.request && this.props.request.project_id ? {
                         value: this.props.request.project_id,
@@ -44,6 +44,8 @@ class ProjectField extends Component {
                     } : {}
                 }
             />
+            <input type="hidden" name="project_id" value={this.state.project_id} />
+            <input type="hidden" name="project_name" value={this.state.project_name} />
         </div>
         )
     }

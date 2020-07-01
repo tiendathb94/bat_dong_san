@@ -13,10 +13,16 @@ class ProjectController extends Controller
 {
     public function searchByName(Request $request)
     {
-        $categories = DB::table('projects')
+        $keyword = $request->get('keyword');
+        if (empty($keyword)) {
+            return response()->json([]);
+        }
+        $projects = DB::table('projects')
             ->where('status', Project::StatusApproved)
-            ->where('long_name', 'LIKE', "%$request->search%")->take(20)->get();
-        return response()->json($categories);
+            ->where('long_name', 'LIKE', "%$request->search%")
+            ->select([DB::raw('id as value'), DB::raw('long_name as name')])
+            ->limit(10)->get();
+        return response()->json($projects);
     }
 
     public function createProject(SaveProjectRequest $request)
