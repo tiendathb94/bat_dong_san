@@ -32,7 +32,7 @@ class Input extends Component {
 
     onFocus = () => {
         this.setState({ showKeyword: true })
-        if (this.props.onInputComplete) {
+        if (this.props.onInputComplete && !this.state.keyword) {
             this.props.onInputComplete(this.props.selectedItemName)
         }
     }

@@ -37,7 +37,6 @@ class ProjectField extends Component {
                 onChange={this.onChangeProjectId}
                 placeholder="Nhập tên dự án để tìm kiếm"
                 name={this.state.project_name}
-                emptyValue={true}
                 selectedItem={
                     this.props.request && this.props.request.project_id ? {
                         value: this.props.request.project_id,

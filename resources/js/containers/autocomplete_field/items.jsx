@@ -85,7 +85,7 @@ class Items extends Component {
                     {
                         !this.state.loading && this.state.data && this.state.data.length > 0 && <ul>
                             {
-                                this.props.selectedItemName && <li key='' onClick={() => this.onClickItem(this.emptyData)} title=''>
+                                this.props.selectedItemName && this.state.keyword == this.props.selectedItemName && <li key='' onClick={() => this.onClickItem(this.emptyData)} title=''>
                                     <span>Bỏ chọn "{this.props.selectedItemName}"</span>
                                 </li>
                             }

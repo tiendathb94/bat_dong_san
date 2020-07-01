@@ -31,6 +31,7 @@ class AutocompleteField extends Component {
                     onInputComplete={this.onInputComplete}
                     selectedItemName={this.state.selectedItem.name || ''}
                     placeholder={this.props.placeholder}
+                    name={this.props.name || ''}
                 />
                 <Items 
                     keyword={this.state.keyword} 
