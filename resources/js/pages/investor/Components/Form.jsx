@@ -17,6 +17,7 @@ class Form extends Component {
         this.state = {
             formValues: {
                 overview: EditorState.createEmpty(),
+                address: {},
                 ...this.prepareFormValues(),
             },
             errorByFields: {},
@@ -179,7 +180,7 @@ class Form extends Component {
 
                 <div className="row">
                     <div className="col form-group">
-                        <label>Tên công ty/doanh nghiệp</label>
+                        <label>Tên công ty/tổ chức</label>
                         <input
                             className={classnames({
                                 'form-control': true,
