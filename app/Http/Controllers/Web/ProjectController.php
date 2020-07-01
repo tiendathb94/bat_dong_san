@@ -37,7 +37,7 @@ class ProjectController extends Controller
     {
         $user = auth()->user();
 
-        $qb = Project::query()->where('user_id', $user->id);
+        $qb = Project::query()->where('user_id', '=', $user->id);
 
         $keyword = $request->get('keyword');
         if (!empty($keyword)) {
@@ -53,6 +53,30 @@ class ProjectController extends Controller
 
         return view($this->_config['view'], [
             'projects' => $paginate,
+            'categories' => Category::query()->where('destination_entity', Project::class)->get(),
+            'keyword' => $keyword,
+            'categoryId' => $categoryId,
+        ]);
+    }
+
+    public function manageAwaitingReviewProject(Request $request)
+    {
+        $user = auth()->user();
+
+        $qb = Project::query()->where('status', '=', Project::StatusPending);
+
+        $keyword = $request->get('keyword');
+        if (!empty($keyword)) {
+            $qb->where('long_name', 'like', "%$keyword%");
+        }
+
+        $categoryId = $request->get('category_id');
+        if ($categoryId) {
+            $qb->where('category_id', '=', $categoryId);
+        }
+
+        return view($this->_config['view'], [
+            'projects' => $qb->paginate(15),
             'categories' => Category::query()->where('destination_entity', Project::class)->get(),
             'keyword' => $keyword,
             'categoryId' => $categoryId,
