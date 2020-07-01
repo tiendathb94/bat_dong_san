@@ -26,12 +26,12 @@ class NewsController extends Controller
     public function store(Request $request)
     {
         $request->flash();
-        $this->newsValidate( null );
+        $this->newsValidate('store');
         try{
             $data = $request->only('title', 'meta_content', 'content', 'project_id', 'category_id');
-            $data['thumbnail'] = $this->storeFileReturnPath($request->thumbnail);
+            $data['thumbnail'] = $this->storeFileReturnName($request->thumbnail);
             $data['user_id'] = Auth::user()->id;
-            $data['status'] = News::PENDING;
+            $data['status'] = News::AWAITING_REVIEW;
             $this->news->create($data);
             return  redirect()->route('pages.user.news')->with('success', 'Đăng thành bài thành công!');
         } catch ( \Exception $e ) {
@@ -79,50 +79,38 @@ class NewsController extends Controller
         return redirect()->back()->with('message', $message);
     }
 
-    public function update( $slug ) {
-        $news = DB::table('news')
-        ->join('projects', 'projects.id', '=', 'project_id')
-        ->where('news.slug', $slug)
-        ->select('news.*', 'projects.long_name as projectName')
-        ->first();
-        return view('default.pages.news.update', ['categories'=>getAllCategoriesNews(), 'news' => $news]);
+    public function edit( $slug ) {
+        $news = News::where('slug', $slug)->firstOrFail();
+        $data = [
+            'categories' => getAllCategoriesNews(),
+            'news' => $news,
+            'pathImageThumbnail' => '/storage' . News::PATH_IMAGE
+        ];
+        return view('default.pages.news.edit', $data);
     }
 
-    public function postUpdate(Request $request)
+    public function update(Request $request)
     {
         $request->flash();
-
-        $this->newsValidate(1);
-
-        $data = $request->only('title', 'meta_content', 'content', 'category_id');
-
-        if( request('thumbnail') ) {
-            request()->validate([
-                'thumbnail' => 'mimes:jpeg,jpg,png,gif|max:10000',
-            ],
-            [
-                'thumbnail.max' => 'Ảnh vượt quá dung lượng',
-                'thumbnail.mimes' => 'Ảnh không đúng định dạng',
-            ]);
-            $data['thumbnail'] = $this->storeFileReturnPath(request('thumbnail'));
+        $this->newsValidate('update');
+        $data = $request->only('title', 'meta_content', 'content', 'category_id', 'project_id');
+        $news = $this->news->where('slug', $request->slug)->where('user_id', auth()->id())->firstOrFail();
+        if ($news->status == News:: DECLINE) {
+            $data['status'] =  News::AWAITING_REVIEW;
         }
-        if( request('project_id') ) {
-            $data['project_id'] = request('project_id');
+        if ( $request->thumbnail) {
+            $data['thumbnail'] = $this->storeFileReturnName($request->thumbnail);
         }
-
-        $this->news->where('slug', $request->slug)->where('user_id', Auth::user()->id)->update($data);
-
+        $news->update($data);
         $message = [
             'status' => 'success',
-            'text' => 'Chỉnh sửa thành công'
+            'text' => 'Cập nhật bài đăng thành công'
         ];
 
         return  redirect()->route('pages.user.news')->with('message', $message);
-
-
     }
 
-    public function storeFileReturnPath($file)
+    public function storeFileReturnName($file)
     {
         $fileName = uniqid() . '.' . $file->extension();
         $path = $file->storePubliclyAs(
@@ -132,51 +120,24 @@ class NewsController extends Controller
     }
 
 
-    public function newsValidate( $action )
+    public function newsValidate($action)
     {
-        if( $action == null ) {
+        if( $action == 'store' ) {
             return request()->validate([
                 'title' => 'required|max:191|min:4',
                 'meta_content' => 'required',
                 'content' => 'required',
-                'thumbnail' => 'mimes:jpeg,jpg,png,gif|required|max:10000',
-                'project_id' => 'required',
+                'thumbnail' => 'mimes:jpeg,jpg,png,gif|required|max:2048',
                 'category_id' => 'required',
-            ],
-            [
-                'title.required' => 'Tiêu đề không được để trống',
-                'title.max' => 'Độ dài tiêu đề tối đa là 191 ký tự',
-                'title.min' => 'Độ dài tiêu đề tối đa là 4 ký tự',
-    
-                'content.required' => 'Nội dung không được để trống',
-                'meta_content.required' => 'Mô tả không được để trống',
-    
-                'thumbnail.required' => 'Ảnh không được để trống',
-                'thumbnail.max' => 'Ảnh vượt quá dung lượng',
-                'thumbnail.mimes' => 'Ảnh không đúng định dạng',
-    
-                'project_id.required' => 'Dự án không được để trống',
-                'category_id.required' => 'Danh mục không được để trống',
-    
             ]);
         }
 
-       return request()->validate([
+        return request()->validate([
             'title' => 'required|max:191|min:4',
             'meta_content' => 'required',
             'content' => 'required',
             'category_id' => 'required',
-        ],
-        [
-            'title.required' => 'Tiêu đề không được để trống',
-            'title.max' => 'Độ dài tiêu đề tối đa là 191 ký tự',
-            'title.min' => 'Độ dài tiêu đề tối đa là 4 ký tự',
-
-            'content.required' => 'Nội dung không được để trống',
-            'meta_content.required' => 'Mô tả không được để trống',
-
-            'category_id.required' => 'Danh mục không được để trống',
-
+            'thumbnail' => 'nullable|mimes:jpeg,jpg,png,gif|max:2048',
         ]);
     }
 

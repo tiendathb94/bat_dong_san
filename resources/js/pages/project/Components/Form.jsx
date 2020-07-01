@@ -186,7 +186,7 @@ class Form extends Component {
         return Object.keys(errorByFields).length < 1 && addressValid
     }
 
-    onChangeInvestor = (investorId) => {
+    onChangeInvestor = (investorId, investorName) => {
         this.setState({ formValues: { ...this.state.formValues, investor_id: investorId } })
     }
 

@@ -12,6 +12,7 @@ class Items extends Component {
             show: false,
             loading: true,
         }
+        this.emptyData = { value: '', name: '' }
 
         this.node = React.createRef()
     }
@@ -54,7 +55,6 @@ class Items extends Component {
             this.setState({ data: [] })
             return
         }
-
         this.setState({ show: true, loading: true })
 
         const response = await axios.get(`${config.api.baseUrl}/${this.props.endpoint}?keyword=${this.state.keyword}`)
@@ -84,6 +84,11 @@ class Items extends Component {
 
                     {
                         !this.state.loading && this.state.data && this.state.data.length > 0 && <ul>
+                            {
+                                this.props.selectedItemName && this.state.keyword == this.props.selectedItemName && <li key='' onClick={() => this.onClickItem(this.emptyData)} title=''>
+                                    <span>Bỏ chọn "{this.props.selectedItemName}"</span>
+                                </li>
+                            }
                             {
                                 this.state.data.map((item) =>
                                     <li key={item.value} onClick={() => this.onClickItem(item)} title={item.name}>

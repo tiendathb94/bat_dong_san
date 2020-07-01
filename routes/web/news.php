@@ -13,9 +13,9 @@ Route::group(['guard' => 'web', 'prefix' => 'tin-tuc', 'middleware' => ['auth']]
     Route::group(['middleware' => ['permission']], function () {
         Route::get('dang-tin', 'Web\NewsController@create')->name('news.create');
 
-        Route::get('u/{slug}', 'Web\NewsController@update')->name('news.update');
+        Route::get('{slug}/edit', 'Web\NewsController@edit')->name('news.edit');
 
-        Route::post('u/{slug}', 'Web\NewsController@postUpdate')->name('news.postUpdate');
+        Route::patch('{slug}', 'Web\NewsController@update')->name('news.update');
 
         Route::post('dang-tin', 'Web\NewsController@store')->name('news.store');
 
