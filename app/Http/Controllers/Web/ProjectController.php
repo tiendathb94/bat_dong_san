@@ -98,7 +98,10 @@ class ProjectController extends Controller
 
         return view($this->_config['view'], [
             'project' => $project,
-            'galleries' => $project->imageLibraries()->where('library_type', '=', Project::ImageLibraryTypeGallery)->get()
+            'galleries' => $project->imageLibraries()->where('library_type', '=', Project::ImageLibraryTypeGallery)->get(),
+            'tab' => [
+                'template' => 'overview',
+            ]
         ]);
     }
 }

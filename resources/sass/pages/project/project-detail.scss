@@ -14,10 +14,51 @@
             max-height: 500px;
             width: 100%;
         }
+
+        .carousel-indicators {
+            li {
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                border: 2px solid #d26a6a;
+                margin-right: 7px;
+
+                &:last-child {
+                    margin-right: 0;
+                }
+
+                &.active {
+                    background: #d26a6a;
+                }
+            }
+        }
     }
 
     .project-short-name {
         font-size: 2.5rem;
         font-style: italic;
+    }
+
+    .content-with-border {
+        border: 1px solid #dadada;
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+
+    .tab-btn-wrapper {
+        background: #d5d6d5;
+        margin: 0 -15px 10px;
+        padding: 0;
+
+        .tab-btn-item {
+            cursor: pointer;
+            display: inline;
+            padding: 10px;
+
+            &.active, &:hover {
+                background: #578c5c;
+                color: #fff;
+            }
+        }
     }
 }
