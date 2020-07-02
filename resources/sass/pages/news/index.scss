@@ -1,0 +1,32 @@
+a {
+    color: #000000;
+    &:hover {
+        text-decoration: none;
+        color: #055699;
+    }
+}
+
+.title-category {
+    span {
+        border-bottom: 1px solid #055699;
+        display: block;
+        font-size: 0px;
+        height: 21px;
+        position: absolute;
+        width: calc(100% - 30px);
+        top: 0;
+    }
+
+    h4 {
+        text-transform: uppercase;
+        background-color: #f8fafc;
+        color: #055699;
+        padding-right: 10px;
+        font-weight: bold;
+        z-index: 1;
+    }
+}
+
+.news-time {
+    font-size: 12px;
+}
