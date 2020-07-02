@@ -161,7 +161,10 @@ class NewsController extends Controller
         $categories = Category::with(['news' => function ($query) {
             $query->orderByDesc('created_at')->take(config('app.category.news.take'));
         }])->whereHas('news')->get();
-        $news = News::with('category')->orderByDesc('created_at')->take(config('app.news.take'))->get();
+        $news = News::with('category')->whereStatus(News::APPROVED)->orderByDesc('created_at')->take(config('app.news.take'))->get();
+        $now = now();
+        $time = 
+        dd($time);
         $data = [
             'categories' => $categories,
             'news' => $news
