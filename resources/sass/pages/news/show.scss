@@ -16,3 +16,32 @@
         font-weight: normal;
     }
 }
+
+.related-news {
+    list-style-type: square;
+}
+
+.text-default {
+    color: #055699;
+}
+
+.content-news {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-weight: bold;
+    }
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.search-news {
+    input {
+        min-width: 350px;
+    }
+}

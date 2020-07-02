@@ -145,8 +145,8 @@ class NewsController extends Controller
     public function show($categorySlug, $slug) {
         $category = Category::with(['news' => function ($query) {
             $query->whereStatus(News::APPROVED);
-        }])->where('slug', $categorySlug)->firstOrFail();
-        $news = $category->news()->whereStatus(News::APPROVED)->where('slug', $slug)->firstOrFail();
+        }])->whereSlug($categorySlug)->firstOrFail();
+        $news = $category->news()->with('user')->whereStatus(News::APPROVED)->whereSlug($slug)->firstOrFail();
         $data = [
             'news' => $news,
             'category' => $category,

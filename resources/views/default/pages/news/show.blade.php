@@ -7,6 +7,8 @@
 @section('content')
     @php($partials = 'default.partials.')
     @include($partials . 'news_search', ['title' => $news->title, 'time' => $news->created_at, 'subTitle' => ''])
+    @include($partials . 'news_related', ['category' => $category, 'relatedNews' => $relatedNews])
+    @include($partials . 'news_content', ['category' => $category, 'news' => $news, 'relatedNews' => $relatedNews])
 @endsection
 
 @push('styles')
