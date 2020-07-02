@@ -28,6 +28,8 @@ mix
     .sass('resources/sass/pages/auth/reset-password.scss', 'public/css/pages/auth')
     .sass('resources/sass/layouts/personal.scss', 'public/css/layouts')
     .sass('resources/sass/pages/project/project-detail.scss', 'public/css/pages/project')
+    .sass('resources/sass/pages/news/show.scss', 'public/css/pages/news')
+    .sass('resources/sass/partials/navbar.scss', 'public/css/partials')
 
 // CSS module library
 mix.reactCSSModules()

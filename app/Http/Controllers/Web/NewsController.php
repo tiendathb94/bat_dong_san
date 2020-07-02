@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Entities\News;
+use App\Entities\Category;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Entities\Role;
@@ -139,6 +140,25 @@ class NewsController extends Controller
             'category_id' => 'required',
             'thumbnail' => 'nullable|mimes:jpeg,jpg,png,gif|max:2048',
         ]);
+    }
+
+    public function show($categorySlug, $slug) {
+        $news = News::with('user', 'category')
+            ->whereStatus(News::APPROVED)
+            ->whereSlug($slug)
+            ->firstOrFail();
+        $relatedNews = News::with('user', 'category')
+            ->whereStatus(News::APPROVED)
+            ->where('category_id', $news->category_id)
+            ->orderByDesc('created_at')
+            ->where('id', '<>', $news->id)
+            ->take(2)
+            ->get();
+        $data = [
+            'news' => $news,
+            'relatedNews' => $relatedNews,
+        ];
+        return view('default.pages.news.show', $data);
     }
 
 }
