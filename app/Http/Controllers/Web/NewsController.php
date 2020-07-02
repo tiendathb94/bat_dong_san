@@ -151,9 +151,9 @@ class NewsController extends Controller
             ->whereStatus(News::APPROVED)
             ->where('category_id', $news->category_id)
             ->orderByDesc('created_at')
-            ->get()
-            ->except($news->id)
-            ->take(2);
+            ->where('id', '<>', $news->id)
+            ->take(2)
+            ->get();
         $data = [
             'news' => $news,
             'relatedNews' => $relatedNews,
