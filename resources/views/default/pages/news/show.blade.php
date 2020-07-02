@@ -10,10 +10,10 @@
         'title' => $news->title, 
         'time' => $news->created_at, 
         'subTitle' => '', 
-        'actionSearch' => route('news.show', [$category->slug, $news->slug])
+        'actionSearch' => route('news.show', [ $news->category->slug, $news->slug])
         ])
-    @include($partials . 'news_related', ['category' => $category, 'relatedNews' => $relatedNews])
-    @include($partials . 'news_content', ['category' => $category, 'news' => $news, 'relatedNews' => $relatedNews])
+    @include($partials . 'news_related', ['category' => $news->category, 'relatedNews' => $relatedNews])
+    @include($partials . 'news_content', ['category' => $news->category, 'news' => $news, 'relatedNews' => $relatedNews])
 @endsection
 
 @push('styles')

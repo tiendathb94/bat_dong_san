@@ -12,7 +12,9 @@
     <div class="row">
         @foreach($relatedNews as $childRelatedNews)
             <div class="col-12 font-weight-bold">
-                <a class="text-default" href="{{ route('news.show', [$category->slug, $childRelatedNews->slug]) }}" >>> {{ $childRelatedNews->title }}</a>
+                <a class="text-default" href="{{ route('news.show', [$category->slug, $childRelatedNews->slug]) }}" >
+                    &gt;&gt; {{ $childRelatedNews->title }}
+                </a>
             </div>
         @endforeach
     </div>

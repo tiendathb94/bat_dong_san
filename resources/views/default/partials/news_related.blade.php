@@ -11,9 +11,11 @@
     <div class="row">
         <div class="col-12">
             <ul class="related-news">
-                @foreach($relatedNews as $news)
+                @foreach($relatedNews as $childRelatedNews)
                     <li>
-                        <a class="font-weight-bold text-default" href="{{ route('news.show', [$category->slug, $news->slug]) }}">{{ $news->title }}</a>
+                        <a class="font-weight-bold text-default" href="{{ route('news.show', [$category->slug, $childRelatedNews->slug]) }}">
+                            {{ $childRelatedNews->title }}
+                        </a>
                     </li>
                 @endforeach
             </ul>

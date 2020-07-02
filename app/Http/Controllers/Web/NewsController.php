@@ -143,14 +143,20 @@ class NewsController extends Controller
     }
 
     public function show($categorySlug, $slug) {
-        $category = Category::with(['news' => function ($query) {
-            $query->whereStatus(News::APPROVED);
-        }])->whereSlug($categorySlug)->firstOrFail();
-        $news = $category->news()->with('user')->whereStatus(News::APPROVED)->whereSlug($slug)->firstOrFail();
+        $news = News::with('user', 'category')
+            ->whereStatus(News::APPROVED)
+            ->whereSlug($slug)
+            ->firstOrFail();
+        $relatedNews = News::with('user', 'category')
+            ->whereStatus(News::APPROVED)
+            ->where('category_id', $news->category_id)
+            ->orderByDesc('created_at')
+            ->get()
+            ->except($news->id)
+            ->take(2);
         $data = [
             'news' => $news,
-            'category' => $category,
-            'relatedNews' => $category->news->except($news->id)->sortByDesc('created_at')->take(2),
+            'relatedNews' => $relatedNews,
         ];
         return view('default.pages.news.show', $data);
     }
