@@ -24,7 +24,7 @@
     <div class="row page-title mt-3">
         <div class="col-12">
             <h1>{{ $title }}</h1>
-            <span>{{ $time }}</span>
+            <span>{{ getDifferentTime($time) }}</span>
             <p>{{ $subTitle }}</p>
         </div>
     </div>

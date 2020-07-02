@@ -21,7 +21,8 @@ class NewsController extends Controller
 
     public function create(Request $request)
     {
-        return view('default.pages.news.create', ['categories'=>getAllCategoriesNews()]);
+        $categories = Category::where('destination_entity', News::class)->get();
+        return view('default.pages.news.create', ['categories' => $categories]);
     }
 
     public function store(Request $request)
@@ -142,16 +143,21 @@ class NewsController extends Controller
         ]);
     }
 
-    public function show($categorySlug, $slug)
-    {
-        $category = Category::with(['news' => function ($query) {
-            $query->whereStatus(News::APPROVED);
-        }])->whereSlug($categorySlug)->firstOrFail();
-        $news = $category->news()->with('user')->whereStatus(News::APPROVED)->whereSlug($slug)->firstOrFail();
+    public function show($categorySlug, $slug) {
+        $news = News::with('user', 'category')
+            ->whereStatus(News::APPROVED)
+            ->whereSlug($slug)
+            ->firstOrFail();
+        $relatedNews = News::with('user', 'category')
+            ->whereStatus(News::APPROVED)
+            ->where('category_id', $news->category_id)
+            ->orderByDesc('created_at')
+            ->where('id', '<>', $news->id)
+            ->take(2)
+            ->get();
         $data = [
             'news' => $news,
-            'category' => $category,
-            'relatedNews' => $category->news->except($news->id)->sortByDesc('created_at')->take(config('app.news.related')),
+            'relatedNews' => $relatedNews,
         ];
         return view('default.pages.news.show', $data);
     }
@@ -162,9 +168,6 @@ class NewsController extends Controller
             $query->orderByDesc('created_at')->take(config('app.category.news.take'));
         }])->whereHas('news')->get();
         $news = News::with('category')->whereStatus(News::APPROVED)->orderByDesc('created_at')->take(config('app.news.take'))->get();
-        $now = now();
-        $time = 
-        dd($time);
         $data = [
             'categories' => $categories,
             'news' => $news

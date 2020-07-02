@@ -7,7 +7,7 @@
                 <div class="col-12">
                     <img src="{{ $firstNews->thumbnail_path }}" alt="" class="w-100 mb-3">
                     <h4><a class="text-default" title="{{ $firstNews->title }}" href="{{ route('news.show', [$firstNews->category->slug, $firstNews->slug]) }}">{{ $firstNews->title }}</a></h4>
-                    <span class="news-time">{{ $firstNews->created_at }}</span>
+                    <p class="news-time">{{ getDifferentTime($firstNews->created_at) }}</span>
                     <p>{{ $firstNews->meta_content }}</p>
                 </div>
                 @foreach($news->except($firstNews->id) as $childNews)
@@ -16,7 +16,7 @@
                         <a class="text-default" title="{{ $childNews->title }}" href="{{ route('news.show', [$childNews->category->slug, $childNews->slug]) }}">
                             {{ $childNews->title }}
                         </a>
-                        <span class="news-time">{{ $childNews->created_at }}</span>
+                        <p class="news-time">{{ getDifferentTime($childNews->created_at) }}</span>
                     </div>
                 @endforeach
             </div>
