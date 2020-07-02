@@ -153,7 +153,7 @@ class NewsController extends Controller
             ->where('category_id', $news->category_id)
             ->orderByDesc('created_at')
             ->where('id', '<>', $news->id)
-            ->take(2)
+            ->take(config('app.news.related'))
             ->get();
         $data = [
             'news' => $news,
