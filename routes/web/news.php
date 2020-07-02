@@ -15,3 +15,5 @@ Route::group(['guard' => 'web', 'prefix' => 'tin-tuc'], function () {
 
     Route::get('{categorySlug}/{slug}', 'Web\NewsController@show')->name('news.show');
 });
+
+Route::get('{slug}', 'Web\CategoryController@show')->name('category.show');
