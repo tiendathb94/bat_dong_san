@@ -64,4 +64,9 @@ class News extends Model
     {
         return $this->project_id ? $this->project->long_name : '';
     }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }
