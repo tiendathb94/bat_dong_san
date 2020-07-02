@@ -27,7 +27,7 @@ class SaveInvestorRequest extends FormRequest
             'name' => 'required',
             'phone' => 'required|min:10|max:14',
             'email' => 'required|email:rfc,dns',
-            'website' => 'required|url',
+            'website' => 'required',
             'overview' => 'required',
             'logo' => 'mimes:jpeg,jpg,gif,png',
             'address' => 'required|array'
