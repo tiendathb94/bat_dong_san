@@ -344,14 +344,14 @@ class Form extends Component {
                         />
                     </div>
                     <div className="col col-sm-12 col-md-6 form-group">
-                        <label>Loại hình đầu tư</label>
+                        <label>Vai trò</label>
                         <select
                             name="investor_type"
                             value={this.state.formValues.investor_type}
                             className={classnames({ 'form-control': true, 'is-invalid': !!this.state.message })}
                             onChange={this.setFormFieldValue}
                         >
-                            <option>-- Loại hình đầu tư --</option>
+                            <option>-- Vai trò --</option>
                             <option value={1}>Chủ đầu tư</option>
                             <option value={2}>Nhà phân phối</option>
                         </select>

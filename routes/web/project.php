@@ -18,6 +18,12 @@ Route::group(['guard' => 'web', 'middleware' => ['auth', 'permission']], functio
         ->name('pages.project.awaiting_review');
 });
 
+// View project detail
 Route::get('/du-an/{categorySlug}/{slug}', 'Web\ProjectController@showProjectDetail')
     ->defaults('_config', ['view' => 'default.pages.project.project_detail'])
     ->name('pages.project.project_detail');
+
+// View project detail & tab
+Route::get('/du-an/{categorySlug}/{slug}/{tabId}', 'Web\ProjectController@showProjectDetail')
+    ->defaults('_config', ['view' => 'default.pages.project.project_detail'])
+    ->name('pages.project.project_detail_tab');

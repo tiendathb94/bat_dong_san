@@ -84,10 +84,11 @@ class ProjectController extends Controller
     public function showProjectDetail(Request $request)
     {
         $slug = $request->route()->parameter('slug');
+        $tabId = $request->route()->parameter('tabId');
 
         /** @var Project $project */
         $project = Project::query()
-            ->with('category')
+            ->with('category', 'investor')
             ->where('status', '=', Project::StatusApproved)
             ->where('slug', '=', $slug)
             ->first();
@@ -96,12 +97,34 @@ class ProjectController extends Controller
             return abort(404);
         }
 
+        if ($tabId === 'investor') {
+            $activeTab = [
+                'template' => 'investor',
+                'id' => 0
+            ];
+        } else if ($tabId && $project->tabs) {
+            $tabs = $project->tabs->keyBy('id');
+            if (isset($tabs[$tabId])) {
+                $tab = $tabs[$tabId];
+                $activeTab = [
+                    'template' => $tab->template,
+                    'id' => $tab->id,
+                    'contents' => $tab->contents ? $tab->contents : []
+                ];
+            } else {
+                return response()->redirectTo(route('pages.project.project_detail', ['slug' => $slug, 'categorySlug' => $project->category->slug]));
+            }
+        } else {
+            $activeTab = [
+                'template' => 'overview',
+                'id' => 0
+            ];
+        }
+
         return view($this->_config['view'], [
             'project' => $project,
             'galleries' => $project->imageLibraries()->where('library_type', '=', Project::ImageLibraryTypeGallery)->get(),
-            'tab' => [
-                'template' => 'overview',
-            ]
+            'activeTab' => $activeTab
         ]);
     }
 }

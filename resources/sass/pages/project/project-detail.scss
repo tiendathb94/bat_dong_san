@@ -1,4 +1,9 @@
 .page-project-detail-container {
+    h1 {
+        font-size: 3.3rem;
+        color: #38673c;
+    }
+
     .general-info-wrapper .row {
         margin-bottom: 1rem;
 
@@ -48,17 +53,43 @@
     .tab-btn-wrapper {
         background: #d5d6d5;
         margin: 0 -15px 10px;
-        padding: 0;
+        display: block;
+        white-space: nowrap;
+        overflow-x: auto;
+        padding: 9px 0;
+        border-radius: 2px;
 
         .tab-btn-item {
             cursor: pointer;
             display: inline;
-            padding: 10px;
+            padding: 9px;
+            margin-right: 1px;
 
             &.active, &:hover {
                 background: #578c5c;
-                color: #fff;
+
+                a {
+                    color: #fff;
+                }
             }
+
+            a {
+                padding: 10px;
+                color: #353535;
+
+                &:hover {
+                    text-decoration: none;
+                    color: #fff;
+                }
+            }
+        }
+    }
+
+    .tab-content {
+        max-width: 100%;
+
+        img {
+            max-width: 100%;
         }
     }
 }

@@ -70,7 +70,7 @@
 </div>
 
 <div class="row mt-4 mb-2">
-    <h5>GIỚI THIỆU DỰ ÁN</h5>
+    <h5>Giới thiệu dự án</h5>
 </div>
 <div class="row content-with-border">
     <div class="col">
