@@ -7,7 +7,7 @@
                     <select name="" id="" class="form-control mx-2 mb-2">
                         <option value="">Nhà đất bán</option>
                         <option value="">Nhà đất cho thuê</option>
-                        <option value="">Tin tức</option>
+                        <option value="" selected>Tin tức</option>
                         <option value="">Hỏi đáp</option>
                         <option value="">Dự án</option>
                         <option value="">Doanh nghiệp</option>

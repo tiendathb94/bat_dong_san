@@ -1,6 +1,7 @@
 <?php
     
 Route::group(['guard' => 'web', 'prefix' => 'tin-tuc'], function () {
+    Route::get('', 'Web\NewsController@index')->name('news.index');
     Route::group(['middleware' => ['auth']], function () {
         Route::group(['middleware' => ['permission']], function () {
             Route::get('dang-tin', 'Web\NewsController@create')->name('news.create');

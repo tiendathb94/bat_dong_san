@@ -142,7 +142,8 @@ class NewsController extends Controller
         ]);
     }
 
-    public function show($categorySlug, $slug) {
+    public function show($categorySlug, $slug)
+    {
         $category = Category::with(['news' => function ($query) {
             $query->whereStatus(News::APPROVED);
         }])->whereSlug($categorySlug)->firstOrFail();
@@ -150,9 +151,21 @@ class NewsController extends Controller
         $data = [
             'news' => $news,
             'category' => $category,
-            'relatedNews' => $category->news->except($news->id)->sortByDesc('created_at')->take(2),
+            'relatedNews' => $category->news->except($news->id)->sortByDesc('created_at')->take(config('app.news.related')),
         ];
         return view('default.pages.news.show', $data);
     }
 
+    public function index()
+    {
+        $categories = Category::with(['news' => function ($query) {
+            $query->orderByDesc('created_at')->take(config('app.category.news.take'));
+        }])->whereHas('news')->get();
+        $news = News::with('category')->orderByDesc('created_at')->take(config('app.news.take'))->get();
+        $data = [
+            'categories' => $categories,
+            'news' => $news
+        ];
+        return view('default.pages.news.index', $data);
+    }
 }
