@@ -1,4 +1,4 @@
-<ul class="navbar-nav mr-auto navbar-header-menu flex-wrap">
+<ul class="navbar-nav mr-auto navbar-header-menu">
     @foreach(navbarMenuItemsDefinition() as $key => $menu)
         <li class="nav-item mr-1 position-relative">
             <a class="nav-link @if(count($menu['items'])) menu-parent @endif" 
