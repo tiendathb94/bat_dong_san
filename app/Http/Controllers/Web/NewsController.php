@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Entities\Role;
 use Illuminate\Support\Facades\DB;
+use App\Jobs\UpdateViewsJob;
 
 class NewsController extends Controller
 {   
@@ -158,6 +159,7 @@ class NewsController extends Controller
             'news' => $news,
             'relatedNews' => $relatedNews,
         ];
+        UpdateViewsJob::dispatch($news);
         return view('default.pages.news.show', $data);
     }
 
