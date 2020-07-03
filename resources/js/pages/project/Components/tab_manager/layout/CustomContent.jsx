@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Editor } from 'react-draft-wysiwyg'
-import { EditorState } from "draft-js"
-import { stateFromHTML } from "draft-js-import-html"
+import { EditorState, ContentState } from "draft-js"
+import htmlToDraft from 'html-to-draftjs'
 
 class CustomContent extends Component {
     constructor (props) {
@@ -21,15 +21,20 @@ class CustomContent extends Component {
             formValues: {
                 ...state.formValues,
                 content: values.content instanceof EditorState ? values.content :
-                    EditorState.createWithContent(stateFromHTML(values.content || '')),
+                    EditorState.createWithContent(ContentState.createFromBlockArray(htmlToDraft(values.content || '').contentBlocks)),
             }
         }
     }
 
     onContentChange = (editorState) => {
-        const formValues = { content: editorState }
-        this.setState({ formValues })
-        this.props.onFormChange(formValues)
+        const currentContentState = this.state.formValues.content.getCurrentContent()
+        const newContentState = editorState.getCurrentContent()
+
+        if (currentContentState !== newContentState) {
+            const formValues = { content: editorState }
+            this.setState({ formValues })
+            this.props.onFormChange(formValues)
+        }
     }
 
     render () {

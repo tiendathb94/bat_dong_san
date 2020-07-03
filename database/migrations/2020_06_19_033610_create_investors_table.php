@@ -22,7 +22,7 @@ class CreateInvestorsTable extends Migration
             $table->string('website', 255)->nullable();
             $table->unsignedBigInteger('user_id');
             $table->string('logo', 255)->nullable();
-            $table->string('overview', 255);
+            $table->longText('overview');
             $table->foreign('user_id')->references('id')->on('users');
         });
     }
