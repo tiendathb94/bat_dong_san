@@ -39,7 +39,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     @include('default.partials.navbar_menu')
     <form class="my-2 my-lg-0">
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0 flex-wrap">
           @if(!Auth::user())
             <li class="nav-item active">
               <a class="nav-link" href="{{ route('login') }}">Đăng nhập <span class="sr-only">(current)</span></a>

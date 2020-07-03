@@ -1,5 +1,5 @@
 a {
-    color: #000000;
+    color: #055699;
     &:hover {
         text-decoration: none;
         color: #055699;
@@ -33,4 +33,25 @@ a {
 
 .search-news input {
     min-width: 350px;
+}
+
+.h-300 {
+    height: 300px;
+}
+
+.h-150 {
+    height: 150px;
+}
+
+.bg-image-title {
+    background-color: #6c757d33;
+}
+
+.h-200 {
+    height: 200px;
+}
+
+.news-more {
+    font-style: italic;
+    color: #3490dc;
 }
