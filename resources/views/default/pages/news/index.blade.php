@@ -12,17 +12,27 @@
         'subTitle' => '', 
         'actionSearch' => route('news.index')
         ])
-    @include($partials . 'new_news', ['news' => $news])
+    @if(count($news))
+        @include($partials . 'new_news', ['news' => $news])
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <p><span class="font-weight-bold">Tin tức bất động sản </span>theo chuyên mục:</p>
+                </div>
+            </div>
+        </div>
+        @foreach($categories as $category)
+            @include($partials . 'category_news', ['category' => $category])
+        @endforeach
+    @else
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <p><span class="font-weight-bold">Tin tức bất động sản </span>theo chuyên mục:</p>
+                <p class="text-center">Chưa có tin tức hiển thị, vui lòng quay lại sau.</p>
             </div>
         </div>
     </div>
-    @foreach($categories as $category)
-        @include($partials . 'category_news', ['category' => $category])
-    @endforeach
+    @endif
 @endsection
 
 @push('styles')

@@ -8,7 +8,7 @@ Route::group(['guard' => 'web', 'prefix' => 'tin-tuc'], function () {
             Route::get('{slug}/edit', 'Web\NewsController@edit')->name('news.edit');
             Route::patch('{slug}', 'Web\NewsController@update')->name('news.update');
             Route::post('dang-tin', 'Web\NewsController@store')->name('news.store');
-            Route::patch('{id}', 'Web\NewsController@updateStatus')->name('news.update_status');
+            Route::patch('update-status/{id}', 'Web\NewsController@updateStatus')->name('news.update_status');
         });
     
         Route::delete('{id}', 'Web\NewsController@destroy')->name('news.destroy');

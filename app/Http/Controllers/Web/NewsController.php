@@ -165,7 +165,7 @@ class NewsController extends Controller
     public function index()
     {
         $categories = Category::with(['news' => function ($query) {
-            $query->orderByDesc('created_at')->take(config('app.category.news.take'));
+            $query->whereStatus(News::APPROVED)->orderByDesc('created_at')->take(config('app.category.news.take'));
         }])->whereHas('news')->get();
         $news = News::with('category')->whereStatus(News::APPROVED)->orderByDesc('created_at')->take(config('app.news.take'))->get();
         $data = [
