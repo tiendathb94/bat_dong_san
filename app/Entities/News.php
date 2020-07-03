@@ -22,7 +22,7 @@ class News extends Model
         'title', 'slug', 'meta_content','content','thumbnail','status', 'category_id', 'user_id', 'project_id'
     ];
 
-    protected $appends = ['project_name'];
+    protected $appends = ['project_name', 'thumbnail_path'];
 
     const DECLINE = 1;
     const APPROVED = 2;
@@ -68,5 +68,10 @@ class News extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function getThumbnailPathAttribute()
+    {
+        return '/storage' . self::PATH_IMAGE . $this->thumbnail;
     }
 }
