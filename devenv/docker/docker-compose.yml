@@ -18,6 +18,8 @@ services:
       - /home/quyen/workspace/project/hoikientruc/batdongsan:/home/quyen/workspace/project/hoikientruc/batdongsan
     sysctls:
       - net.ipv6.conf.all.disable_ipv6=1
+    networks:
+      - batdongsan
 
   #MYSQL
   batdongsan-mysql:
@@ -28,3 +30,8 @@ services:
       - /home/quyen/workspace/project/hoikientruc/mysql-data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
+    networks:
+      - batdongsan
+
+networks:
+  batdongsan:

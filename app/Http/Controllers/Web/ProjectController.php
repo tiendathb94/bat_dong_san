@@ -127,4 +127,9 @@ class ProjectController extends Controller
             'activeTab' => $activeTab
         ]);
     }
+
+    public function projectLanding()
+    {
+        return view($this->_config['view']);
+    }
 }

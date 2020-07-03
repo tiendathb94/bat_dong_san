@@ -104,7 +104,7 @@ function navbarMenuItemsDefinition()
 
         [
             'label' => 'Dự án',
-            'route_name' => '',
+            'route_name' => 'pages.project.project_landing',
             'items' => [
                 [
                     'label' => 'Căn hộ, chung cư',
