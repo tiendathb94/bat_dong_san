@@ -1,0 +1,95 @@
+.page-project-detail-container {
+    h1 {
+        font-size: 3.3rem;
+        color: #38673c;
+    }
+
+    .general-info-wrapper .row {
+        margin-bottom: 1rem;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    #project-image-gallery {
+        .slide-image {
+            object-fit: none;
+            object-position: center;
+            max-height: 500px;
+            width: 100%;
+        }
+
+        .carousel-indicators {
+            li {
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                border: 2px solid #d26a6a;
+                margin-right: 7px;
+
+                &:last-child {
+                    margin-right: 0;
+                }
+
+                &.active {
+                    background: #d26a6a;
+                }
+            }
+        }
+    }
+
+    .project-short-name {
+        font-size: 2.5rem;
+        font-style: italic;
+    }
+
+    .content-with-border {
+        border: 1px solid #dadada;
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+
+    .tab-btn-wrapper {
+        background: #d5d6d5;
+        margin: 0 -15px 10px;
+        display: block;
+        white-space: nowrap;
+        overflow-x: auto;
+        padding: 9px 0;
+        border-radius: 2px;
+
+        .tab-btn-item {
+            cursor: pointer;
+            display: inline;
+            padding: 9px;
+            margin-right: 1px;
+
+            &.active, &:hover {
+                background: #578c5c;
+
+                a {
+                    color: #fff;
+                }
+            }
+
+            a {
+                padding: 10px;
+                color: #353535;
+
+                &:hover {
+                    text-decoration: none;
+                    color: #fff;
+                }
+            }
+        }
+    }
+
+    .tab-content {
+        max-width: 100%;
+
+        img {
+            max-width: 100%;
+        }
+    }
+}
