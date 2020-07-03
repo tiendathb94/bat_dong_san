@@ -160,7 +160,13 @@ class NewsController extends Controller
             'news' => $news,
             'relatedNews' => $relatedNews,
         ];
-        UpdateViewsJob::dispatch($news)->delay(Carbon::now()->addSeconds(5));
+        if(cache()->get($news->slug)) {
+            $countViews = cache()->get($news->slug) + 1;
+            cache()->set($news->slug, $countViews);
+        } else {
+            cache()->set($news->slug, 1);
+            UpdateViewsJob::dispatch($news)->delay(Carbon::now()->addSeconds(10));
+        }
         return view('default.pages.news.show', $data);
     }
 

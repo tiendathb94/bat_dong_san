@@ -8,6 +8,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use App\Entities\News;
+use Illuminate\Support\Facades\Queue;
 
 class UpdateViewsJob implements ShouldQueue
 {
@@ -32,7 +33,8 @@ class UpdateViewsJob implements ShouldQueue
      */
     public function handle()
     {
-        $this->news->views += 1;
+        $this->news->views += cache()->get($this->news->slug);
         $this->news->save();
+        cache()->forget($this->news->slug);
     }
 }
