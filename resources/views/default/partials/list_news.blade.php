@@ -2,8 +2,8 @@
     @if(!$key)
         <div class="row border-solid-default py-3">
             <div class="col-12 col-md-4">
-                <div class="border border-dark p-1 d-flex align-items-center">
-                    <div class="bg-default-image w-100 h-150">
+                <div class="border border-dark p-1">
+                    <div class="bg-default-image w-100 h-150 d-flex align-items-center overflow-hidden">
                         <img src="{{ $childNews->thumbnail_path }}" alt="" class="w-100">
                     </div>
                 </div>
@@ -15,15 +15,15 @@
                         {{ $childNews->title }}
                     </a>
                 </h4>
-                <p class="text-subtitle">{{ $childNews->created_at }}</p>
+                <p class="text-subtitle">{{ getDifferentTime($childNews->created_at) }}</p>
                 <p class="text-justify">{{ $childNews->meta_content }}</p>
             </div>
         </div>
     @else
         <div class="row border-dotted-default py-3">
             <div class="col-12 col-md-3">
-                <div class="border border-dark p-1 d-flex align-items-center">
-                    <div class="bg-default-image w-100 h-120">
+                <div class="border border-dark p-1">
+                    <div class="bg-default-image w-100 h-120 d-flex align-items-center overflow-hidden">
                         <img src="{{ $childNews->thumbnail_path }}" alt="" class="w-100">
                     </div>
                 </div>
@@ -35,7 +35,7 @@
                         {{ $childNews->title }}
                     </a>
                 </h4>
-                <p class="text-subtitle">{{ $childNews->created_at }}</p>
+                <p class="text-subtitle">{{ getDifferentTime($childNews->created_at) }}</p>
                 <p class="text-justify">{{ $childNews->meta_content }}</p>
             </div>
         </div>

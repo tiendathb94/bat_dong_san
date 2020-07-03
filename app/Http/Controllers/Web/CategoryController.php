@@ -14,7 +14,7 @@ class CategoryController extends Controller
             $query->whereSlug($slug);
         })
             ->whereStatus(News::APPROVED)
-            ->paginate(20);
+            ->paginate(config('app.category.news.paginate'));
         $data = [
             'news' => $news
         ];
