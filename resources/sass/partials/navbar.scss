@@ -2,7 +2,7 @@
     li:hover {
         .sub-menu-items {
             display: block;
-            z-index: 1;
+            z-index: 99;
         }
 
         a.nav-link {
@@ -50,7 +50,7 @@
     li:hover {
         .sub-menu-child-items {
             display: block;
-            z-index: 1;
+            z-index: 99;
         }
     }
 }
@@ -59,7 +59,7 @@
     li:hover {
         .sub-menu-child-child-items {
             display: block;
-            z-index: 1;
+            z-index: 99;
         }
     }
 }

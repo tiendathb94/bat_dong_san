@@ -30,6 +30,7 @@ mix
     .sass('resources/sass/pages/project/project-detail.scss', 'public/css/pages/project')
     .sass('resources/sass/pages/news/show.scss', 'public/css/pages/news')
     .sass('resources/sass/partials/navbar.scss', 'public/css/partials')
+    .sass('resources/sass/pages/news/index.scss', 'public/css/pages/news')
     .sass('resources/sass/partials/company-detail.scss', 'public/css/partials')
 
 // CSS module library
