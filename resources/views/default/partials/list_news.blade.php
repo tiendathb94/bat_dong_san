@@ -1,6 +1,6 @@
 @foreach($news as $key => $childNews)
     @if(!$key)
-        <div class="row">
+        <div class="row border-bottom border-dark">
             <div class="col-12 col-md-4">
                 <img src="{{ $childNews->thumbnail_path }}" alt="">
             </div>
