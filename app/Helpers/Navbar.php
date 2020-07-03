@@ -265,7 +265,7 @@ function navbarMenuItemsDefinition()
 
         [
             'label' => 'Tin tức',
-            'route_name' => '',
+            'route_name' => 'news.index',
             'items' => [
                 [
                     'label' => 'BĐS & Covid-19',
