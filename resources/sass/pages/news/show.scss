@@ -45,3 +45,66 @@ a:hover {
         min-width: 350px;
     }
 }
+
+.content-first-news {
+    h4 {
+        font-size: 16px;
+    }
+    p {
+        font-size: 12px;
+    }
+}
+
+.content-news {
+    h4 {
+        font-size: 13px;
+    }
+    p {
+        font-size: 12px;
+    }
+}
+
+.text-subtitle {
+    color: #999;
+}
+
+.text-default {
+    color: #055699;
+}
+
+.h-120 {
+    height: 120px;
+}
+
+.h-150 {
+    height: 150px;
+}
+
+.bg-default-image {
+    background-color: #999;
+}
+
+.border-dotted-default {
+    border-bottom: 1px dotted #999;
+}
+
+.pagination-news {
+    nav {
+        float: right;
+    }
+
+    .page-item.active {
+        .page-link {
+            background-color: #055699;
+            border-color: #055699;
+        }
+    }
+
+    .page-link {
+        color: #055699;
+    }
+}
+
+.border-solid-default {
+    border-bottom: 1px solid #999;
+}

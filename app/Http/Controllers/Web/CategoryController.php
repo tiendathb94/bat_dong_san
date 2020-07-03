@@ -9,9 +9,12 @@ class CategoryController extends Controller
 {
     public function show($slug)
     {
-        $news = News::with('category')->whereHas('category', function ($query) use ($slug) {
+        $news = News::with('category')
+            ->whereHas('category', function ($query) use ($slug) {
             $query->whereSlug($slug);
-        })->paginate(20);
+        })
+            ->whereStatus(News::APPROVED)
+            ->paginate(20);
         $data = [
             'news' => $news
         ];
