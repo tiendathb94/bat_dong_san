@@ -27,3 +27,7 @@ Route::get('/du-an/{categorySlug}/{slug}', 'Web\ProjectController@showProjectDet
 Route::get('/du-an/{categorySlug}/{slug}/{tabId}', 'Web\ProjectController@showProjectDetail')
     ->defaults('_config', ['view' => 'default.pages.project.project_detail'])
     ->name('pages.project.project_detail_tab');
+
+Route::get('/du-an-bat-dong-san', 'Web\ProjectController@projectLanding')
+    ->defaults('_config', ['view' => 'default.pages.project.project_landing'])
+    ->name('pages.project.project_landing');

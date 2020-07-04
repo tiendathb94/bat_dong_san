@@ -1,0 +1,61 @@
+@import "~bootstrap/scss/_functions";
+@import "~bootstrap/scss/_variables";
+@import "~bootstrap/scss/_mixins";
+
+.project-items-card {
+    h3 {
+        font-size: 1.8rem;
+    }
+
+    @include media-breakpoint-down(sm) {
+        .project-item-wrapper {
+            margin-bottom: 6px;
+        }
+
+        .project-item-wrapper:first-child, .project-item-wrapper:nth-child(2n+1) {
+            padding-right: 3px;
+        }
+
+        .project-item-wrapper:last-child, .project-item-wrapper:nth-child(2n+0) {
+            padding-left: 3px;
+        }
+    }
+
+    @include media-breakpoint-up(sm) {
+        .project-item-wrapper {
+            margin-bottom: 10px;
+            padding-left: 5px;
+            padding-right: 5px;
+
+            &:nth-child(3n) {
+                padding-right: 15px;
+            }
+
+            &:nth-child(3n+1) {
+                padding-left: 15px;
+            }
+
+            .card:hover {
+                border-color: #acc3ae;
+                box-shadow: 2px 3px 10px #dadada;
+            }
+        }
+    }
+
+    .card-img {
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: auto;
+            max-height: 200px;
+            object-fit: none;
+            object-position: center;
+            transition: transform .5s ease;
+
+            &:hover {
+                transform: scale(1.1);
+            }
+        }
+    }
+}
