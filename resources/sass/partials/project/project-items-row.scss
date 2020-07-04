@@ -1,0 +1,35 @@
+.project-items-row {
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    .row {
+        border: 1px solid #ccc;
+        transition: box-shadow 0.2s;
+
+        &:hover {
+            border-color: #acc3ae;
+            box-shadow: 2px 3px 5px #dadada;
+        }
+    }
+
+    .image-wrapper {
+        padding-left: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: 100%;
+            max-height: 300px;
+            object-fit: none;
+            object-position: center;
+            transition: transform .5s ease;
+
+            &:hover {
+                transform: scale(1.1);
+            }
+        }
+    }
+}

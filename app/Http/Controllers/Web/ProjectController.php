@@ -130,6 +130,49 @@ class ProjectController extends Controller
 
     public function projectLanding()
     {
-        return view($this->_config['view']);
+        // Show the random project as slider
+        $projectsInSlider = Project::query()
+            ->with(['imageLibraries', 'category'])
+            ->where('status', '=', Project::StatusApproved)
+            ->whereHas('imageLibraries')
+            ->limit(4)
+            ->inRandomOrder()
+            ->get();
+
+
+        // Show the newest project
+        $newestProjects = Project::query()
+            ->with(['imageLibraries', 'category'])
+            ->where('status', '=', Project::StatusApproved)
+            ->limit(6)
+            ->orderByDesc('created_at')
+            ->get();
+
+        // Project by categories
+        $projectsMapByCategory = [];
+        $envCategoryIds = env('PROJECT_CATEGORIES_SHOW_IN_PROJECT_LANDING');
+        if ($envCategoryIds) {
+            $categoryIds = explode(',', $envCategoryIds);
+            if ($categoryIds) {
+                $categories = Category::query()->whereIn('id', $categoryIds)->get();
+                foreach ($categories as $category) {
+                    $projectsByCategory = Project::query()
+                        ->where('category_id', '=', $category->id)->limit(7)
+                        ->where('status', '=', Project::StatusApproved)
+                        ->get();
+                    $projectsMapByCategory[] = [
+                        'name' => $category->name,
+                        'id' => $category->id,
+                        'projects' => $projectsByCategory,
+                    ];
+                }
+            }
+        }
+
+        return view($this->_config['view'], [
+            'projectsInSlider' => $projectsInSlider,
+            'newestProjects' => $newestProjects,
+            'projectsMapByCategory' => $projectsMapByCategory,
+        ]);
     }
 }
