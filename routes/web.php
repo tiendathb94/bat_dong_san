@@ -24,3 +24,6 @@ foreach($routes as $route) {
         require_once(base_path("routes/web/$route"));
     }
 }
+
+Route::get('{slug}', 'Web\CategoryController@show')->name('category.show');
+

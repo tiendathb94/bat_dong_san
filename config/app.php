@@ -128,7 +128,8 @@ return [
     ],
     'category' => [
         'news' => [
-            'take' => 5
+            'take' => 5,
+            'paginate' => 20,
         ]
     ],
     'news' => [

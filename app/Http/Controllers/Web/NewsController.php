@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Entities\Role;
 use Illuminate\Support\Facades\DB;
+use App\Jobs\UpdateViewsJob;
 
 class NewsController extends Controller
 {   
@@ -159,6 +160,16 @@ class NewsController extends Controller
             'news' => $news,
             'relatedNews' => $relatedNews,
         ];
+        if(cache()->get($news->slug)) {
+            $countViews = cache()->get($news->slug) + 1;
+            cache()->set($news->slug, $countViews);
+            if (cache()->get($news->slug) > 10) {
+                UpdateViewsJob::dispatch($news)->delay(Carbon::now()->addSeconds(10));
+            }
+        } else {
+            cache()->set($news->slug, 1);
+            UpdateViewsJob::dispatch($news)->delay(Carbon::now()->addSeconds(10));
+        }
         return view('default.pages.news.show', $data);
     }
 

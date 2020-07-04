@@ -44,6 +44,11 @@ class News extends Model
         return $this->belongsTo(Project::class);
     }
 
+    public function statistics()
+    {
+        return $this->morphMany(Statistic::class, 'statisticable');
+    }
+
     public function getCreatedAtDateAttribute()
     {
         $date = new Carbon($this->created_at);
