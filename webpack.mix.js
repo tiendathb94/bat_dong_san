@@ -32,6 +32,9 @@ mix
     .sass('resources/sass/partials/navbar.scss', 'public/css/partials')
     .sass('resources/sass/pages/news/index.scss', 'public/css/pages/news')
     .sass('resources/sass/partials/company-detail.scss', 'public/css/partials')
+    .sass('resources/sass/partials/project/project-items-card.scss', 'public/css/partials/project')
+    .sass('resources/sass/partials/project/project-items-row.scss', 'public/css/partials/project')
+    .sass('resources/sass/pages/project/project-landing.scss', 'public/css/pages/project')
 
 // CSS module library
 mix.reactCSSModules()

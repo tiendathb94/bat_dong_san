@@ -90,4 +90,14 @@ class Project extends Model
                 break;
         }
     }
+
+    public function getThumbnail()
+    {
+        if ($this->imageLibraries && $this->imageLibraries->first()) {
+            $filePath = $this->imageLibraries->first()->file_path;
+            return "/storage/$filePath";
+        }
+
+        return '/images/placeholder.png';
+    }
 }

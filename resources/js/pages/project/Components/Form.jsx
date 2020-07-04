@@ -130,8 +130,6 @@ class Form extends Component {
                 )
             }
 
-            this.setState({ loading: true })
-
             // Redirect to posted project
             window.location = '/project/posted'
         } catch (e) {
@@ -149,6 +147,8 @@ class Form extends Component {
                 }
             }
         }
+
+        this.setState({ loading: false})
     }
 
     getAddressValue (fieldName) {
