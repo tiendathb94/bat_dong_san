@@ -1,4 +1,9 @@
 @extends('default.layouts.personal')
+
+@section('page_title')
+    Đăng tin tức
+@endsection
+
 @section('main_content')
     <div class="container main">
         <div>

@@ -33,27 +33,26 @@ function checkPermission($permName)
     return false;
 }
 
-
-function renderSlug($str)
+function getDifferentTime($time)
 {
-    $str = trim(mb_strtolower($str));
-    $str = preg_replace('/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/', 'a', $str);
-    $str = preg_replace('/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/', 'e', $str);
-    $str = preg_replace('/(ì|í|ị|ỉ|ĩ)/', 'i', $str);
-    $str = preg_replace('/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/', 'o', $str);
-    $str = preg_replace('/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/', 'u', $str);
-    $str = preg_replace('/(ỳ|ý|ỵ|ỷ|ỹ)/', 'y', $str);
-    $str = preg_replace('/(đ)/', 'd', $str);
-    $str = preg_replace('/[^a-z0-9-\s]/', '', $str);
-    $str = preg_replace('/([\s]+)/', '-', $str);
-    return $str;
+    $text = '';
+    if($time) {
+        $now = Carbon\Carbon::now();
+        $minuteDifferent = $now->diffInMinutes($time);
+        $hourDifferrent = number_format($minuteDifferent / 60);
+        $dayDifferent = number_format($hourDifferrent / 24);
+        
+        if ($minuteDifferent < 60) {
+            $text = $minuteDifferent . ' phút trước';
+        } else if ($hourDifferrent < 24) {
+            $text = $hourDifferrent . ' giờ trước';
+        } else if ($dayDifferent < 7) {
+            $text = $dayDifferent . ' ngày trước';
+        } else {
+            $text = $time->format('d/m/y H:s');
+        }
+    }
+    return $text;
 }
 
-if (!function_exists('getAllCategoriesNews'))  
-{ 
-    function getAllCategoriesNews(){
-        $categories = [];
-        $categories = DB::table('categories')->where('destination_entity', News::class)->get();
-        return $categories;
-    }
-}  
+

@@ -21,7 +21,8 @@ class NewsController extends Controller
 
     public function create(Request $request)
     {
-        return view('default.pages.news.create', ['categories'=>getAllCategoriesNews()]);
+        $categories = Category::where('destination_entity', News::class)->get();
+        return view('default.pages.news.create', ['categories' => $categories]);
     }
 
     public function store(Request $request)
@@ -152,7 +153,7 @@ class NewsController extends Controller
             ->where('category_id', $news->category_id)
             ->orderByDesc('created_at')
             ->where('id', '<>', $news->id)
-            ->take(2)
+            ->take(config('app.news.related'))
             ->get();
         $data = [
             'news' => $news,
@@ -161,4 +162,16 @@ class NewsController extends Controller
         return view('default.pages.news.show', $data);
     }
 
+    public function index()
+    {
+        $categories = Category::with(['news' => function ($query) {
+            $query->whereStatus(News::APPROVED)->orderByDesc('created_at')->take(config('app.category.news.take'));
+        }])->whereHas('news')->get();
+        $news = News::with('category')->whereStatus(News::APPROVED)->orderByDesc('created_at')->take(config('app.news.take'))->get();
+        $data = [
+            'categories' => $categories,
+            'news' => $news
+        ];
+        return view('default.pages.news.index', $data);
+    }
 }

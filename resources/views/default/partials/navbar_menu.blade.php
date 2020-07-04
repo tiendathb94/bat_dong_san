@@ -1,7 +1,9 @@
 <ul class="navbar-nav mr-auto navbar-header-menu">
-    @foreach(navbarMenuItemsDefinition() as $menu)
+    @foreach(navbarMenuItemsDefinition() as $key => $menu)
         <li class="nav-item mr-1 position-relative">
-            <a class="nav-link " href="{{ $menu['route_name'] ? route($menu['route_name']) : '' }}">
+            <a class="nav-link @if(count($menu['items'])) menu-parent @endif" 
+                data-key="{{ $key + 1 }}" 
+                href="{{ $menu['route_name'] ? route($menu['route_name']) : '' }}">
                 {{ $menu['label'] }}
             </a>
 

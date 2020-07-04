@@ -7,7 +7,7 @@
                     <select name="" id="" class="form-control mx-2 mb-2">
                         <option value="">Nhà đất bán</option>
                         <option value="">Nhà đất cho thuê</option>
-                        <option value="">Tin tức</option>
+                        <option value="" selected>Tin tức</option>
                         <option value="">Hỏi đáp</option>
                         <option value="">Dự án</option>
                         <option value="">Doanh nghiệp</option>
@@ -24,7 +24,7 @@
     <div class="row page-title mt-3">
         <div class="col-12">
             <h1>{{ $title }}</h1>
-            <span>{{ $time }}</span>
+            <span>{{ getDifferentTime($time) }}</span>
             <p>{{ $subTitle }}</p>
         </div>
     </div>
