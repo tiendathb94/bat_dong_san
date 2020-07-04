@@ -80,7 +80,7 @@
             </div>
 
             <div class="row">
-                <div class="tab-content cols-12 col-md-8">
+                <div class="category-tab-content tab-content cols-12 col-md-8">
                     @foreach($projectsMapByCategory as $index => $projectMapByCategory)
                         <div
                             class="tab-pane fade {{$index===0?'show active':''}}"
