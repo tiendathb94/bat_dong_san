@@ -1,28 +1,30 @@
 <div class="row content-with-border">
-    <div class="col-md-7 col-sm-12 mb-5 mb-md-0">
-        <div id="project-image-gallery" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-                @for($i =0;$i<count($galleries);$i++)
-                    <li data-target="#project-image-gallery"
-                        data-slide-to="{{$i}}"
-                        class="{{$i==0?'active':''}}"></li>
-                @endfor
-            </ol>
+    @if(count($galleries)>0)
+        <div class="col-md-7 col-sm-12 mb-5 mb-md-0">
+            <div id="project-image-gallery" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    @for($i =0;$i<count($galleries);$i++)
+                        <li data-target="#project-image-gallery"
+                            data-slide-to="{{$i}}"
+                            class="{{$i==0?'active':''}}"></li>
+                    @endfor
+                </ol>
 
-            <div class="carousel-inner">
-                @foreach($galleries as $index => $gallery)
-                    <div class="carousel-item {{$index === 0 ? 'active':''}}">
-                        <img
-                            src="/storage/{{$gallery->file_path}}"
-                            class="d-block w-100 slide-image"
-                            alt="Hình ảnh dự án">
-                    </div>
-                @endforeach
+                <div class="carousel-inner">
+                    @foreach($galleries as $index => $gallery)
+                        <div class="carousel-item {{$index === 0 ? 'active':''}}">
+                            <img
+                                src="/storage/{{$gallery->file_path}}"
+                                class="d-block w-100 slide-image"
+                                alt="Hình ảnh dự án">
+                        </div>
+                    @endforeach
+                </div>
             </div>
         </div>
-    </div>
+    @endif
 
-    <div class="col-md-5 col-sm-12 general-info-wrapper">
+    <div class="{{count($galleries)>0?'col-md-5 col-sm-12':'col'}} general-info-wrapper">
         <div class="row">
             <div class="col"><h3>Thông tin chung</h3></div>
         </div>

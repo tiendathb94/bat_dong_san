@@ -58,10 +58,36 @@
                 @break
             @endswitch
         </div>
+
+        @if($project->address)
+            @php($projectsSameLocation = getProjectsInLocation([
+                'ward_id'=>$project->address->ward_id,
+                'district_id'=>$project->address->district_id,
+                'province_id'=>$project->address->province_id,
+            ], 3, [$project->id]))
+
+            @if($projectsSameLocation->count() > 0)
+                <div class="projects-in-same-location">
+                    <div class="row mt-4 mb-2">
+                        <div class="col p-0">
+                            <h4>Dự án cùng khu vực</h4>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        @include('default.partials.project.project-items-card',['projects'=>$projectsSameLocation])
+                    </div>
+                </div>
+            @endif
+        @endif
     </div>
 @endsection
 
 @push('styles')
+    <link
+        rel="stylesheet"
+        href="{{ asset('css/partials/project/project-items-card.css') . '?m=' . filemtime('css/partials/project/project-items-card.css') }}">
+
     <link
         rel="stylesheet"
         href="{{ asset('css/pages/project/project-detail.css') . '?m=' . filemtime('css/pages/project/project-detail.css') }}">

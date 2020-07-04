@@ -16,7 +16,7 @@
             padding-right: 3px;
         }
 
-        .project-item-wrapper:last-child, .project-item-wrapper:nth-child(2n+0) {
+        .project-item-wrapper:last-child:not(:nth-child(3)), .project-item-wrapper:nth-child(2n+0) {
             padding-left: 3px;
         }
     }
