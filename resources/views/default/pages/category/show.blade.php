@@ -16,9 +16,12 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-md-8">
-            @include($partials . 'list_news', [
-                'news' => $news, 
-            ])
+                @include($partials . 'list_news', [
+                    'news' => $news, 
+                ])
+            </div>
+            <div class="col-12 col-md-4 news-many-read mb-3">
+                @include($partials . 'news_many_read')
             </div>
         </div>
     </div>

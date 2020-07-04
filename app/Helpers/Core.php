@@ -5,6 +5,8 @@ use App\Entities\Project;
 use App\Permissions;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use \Carbon\Carbon;
+use App\Entities\Statistic;
 
 function checkPermission($permName)
 {
@@ -37,7 +39,7 @@ function getDifferentTime($time)
 {
     $text = '';
     if($time) {
-        $now = Carbon\Carbon::now();
+        $now = Carbon::now();
         $minuteDifferent = $now->diffInMinutes($time);
         $hourDifferrent = number_format($minuteDifferent / 60);
         $dayDifferent = number_format($hourDifferrent / 24);
@@ -53,6 +55,21 @@ function getDifferentTime($time)
         }
     }
     return $text;
+}
+
+function getStatisticsNewsManyPeopleRead($categoryId)
+{
+    $time = Carbon::now()->subDay(7)->format('Ymd');
+    $statistics = Statistic::with('news.category')
+        ->select('statisticable_id', DB::raw('sum(value) as views'))
+        ->where('name', Statistic::COUNT_VIEWS)
+        ->where('day_id', '>', $time)
+        ->where('statisticable_type', News::class)
+        ->groupBy('statisticable_id')
+        ->take(8)
+        ->orderByDesc('views')
+        ->get();
+    return $statistics;
 }
 
 
