@@ -66,7 +66,7 @@ function getStatisticsNewsManyPeopleRead($categoryId)
         ->where('day_id', '>', $time)
         ->where('statisticable_type', News::class)
         ->groupBy('statisticable_id')
-        ->take(8)
+        ->take(config('app.news.many_read'))
         ->orderByDesc('views')
         ->get();
     return $statistics;
