@@ -59,3 +59,17 @@
         }
     }
 }
+
+.title-block {
+    border-bottom: 1px solid #dedede;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+
+    span {
+        color: #055699;
+        font-size: 18px;
+        padding-bottom: 3px;
+        border-bottom: 2px solid #055699;
+        text-transform: uppercase;
+    }
+}

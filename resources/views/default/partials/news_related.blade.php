@@ -1,4 +1,3 @@
-<div class="container">
     <div class="row">
         <div class="col-12">
             <span class="font-weight-bold">
@@ -21,4 +20,3 @@
             </ul>
         </div>
     </div>
-</div>

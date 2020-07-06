@@ -12,27 +12,34 @@
         'subTitle' => '', 
         'actionSearch' => route('news.index')
         ])
-    @if(count($news))
-        @include($partials . 'new_news', ['news' => $news])
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <p><span class="font-weight-bold">Tin tức bất động sản </span>theo chuyên mục:</p>
-                </div>
-            </div>
-        </div>
-        @foreach($categories as $category)
-            @include($partials . 'category_news', ['category' => $category])
-        @endforeach
-    @else
     <div class="container">
         <div class="row">
-            <div class="col-12">
-                <p class="text-center">Chưa có tin tức hiển thị, vui lòng quay lại sau.</p>
+            <div class="col-12 col-md-8">
+                @if(count($news))
+                    @include($partials . 'new_news', ['news' => $news])
+                    <div class="row">
+                        <div class="col-12">
+                            <p><span class="font-weight-bold">Tin tức bất động sản </span>theo chuyên mục:</p>
+                        </div>
+                    </div>
+                    @foreach($categories as $category)
+                        @include($partials . 'category_news', ['category' => $category])
+                    @endforeach
+                @else
+                <div class="row">
+                    <div class="col-12">
+                        <p class="text-center">Chưa có tin tức hiển thị, vui lòng quay lại sau.</p>
+                    </div>  
+                </div>
+                @endif
+            </div>
+
+            <div class="col-12 col-md-4 news-many-read mb-3 category-many-care">
+                @include($partials . 'news_many_read')
+                @include($partials . 'category_many_care')
             </div>
         </div>
     </div>
-    @endif
 @endsection
 
 @push('styles')

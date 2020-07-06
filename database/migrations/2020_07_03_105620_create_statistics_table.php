@@ -21,6 +21,7 @@ class CreateStatisticsTable extends Migration
             $table->string('statisticable_type');
             $table->unsignedBigInteger('statisticable_id');
             $table->index(['name', 'statisticable_type', 'statisticable_id']);
+            $table->index(['day_id', 'statisticable_type', 'statisticable_id']);
             $table->timestamps();
         });
     }

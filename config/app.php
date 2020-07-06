@@ -130,11 +130,14 @@ return [
         'news' => [
             'take' => 5,
             'paginate' => 20,
-        ]
+        ],
+        'many_care' => 8,
     ],
     'news' => [
         'take' => 7,
-        'related' => 2
+        'related' => 2,
+        'many_read' => 8,
+        'review_project' => 4
     ],
 
     /*

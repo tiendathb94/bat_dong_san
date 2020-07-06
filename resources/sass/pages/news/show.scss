@@ -52,13 +52,13 @@ a:hover {
         font-size: 16px;
     }
     p {
-        font-size: 12px;
+        font-size: 14px;
     }
 }
 
 .content-news {
     h4 {
-        font-size: 13px;
+        font-size: 14px;
     }
     p {
         font-size: 12px;
@@ -108,4 +108,30 @@ a:hover {
 
 .border-solid-default {
     border-bottom: 1px solid #999;
+}
+
+.news-many-read {
+    a {
+        font-size: 14px;
+        &:hover {
+            color: #055699!important;
+        }
+    }
+
+    h4 {
+        background-color: #055699;
+        font-size: 16px;
+        text-transform: uppercase;
+    }
+
+    .rounded-top {
+        border-top-left-radius: 10px !important;
+        border-top-right-radius: 10px !important;
+    }
+}
+
+.category-many-care {
+    ul {
+        list-style-type: square;
+    }
 }
