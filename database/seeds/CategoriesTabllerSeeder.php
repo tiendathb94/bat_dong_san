@@ -48,7 +48,7 @@ class CategoriesTabllerSeeder extends Seeder
             ],
             [
                 'name' => 'Thông tin quy hoạch',
-                'slug' => 'Thong-tin-quy-hoach',
+                'slug' => 'thong-tin-quy-hoach',
                 'thumbnail' => '',
                 'destination_entity' => News::class,
                 'created_at' => now(),
