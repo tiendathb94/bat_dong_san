@@ -7,6 +7,8 @@ class ProjectProgress extends Component {
 
         this.state = {
             formValues: {
+                date_updload_file: '',
+                progressImageFiles: []
             }
         }
         this.imageLibraryUpload = React.createRef()
@@ -24,7 +26,7 @@ class ProjectProgress extends Component {
             <div className="row mt-2">
                 <div className="col-12">
                     <label>Ngày cập nhật tiến độ</label>
-                    <input type="date" className="form-control datepicker" name="date_updload_file" />
+                    <input className="form-control datepicker" name="date_updload_file" />
                 </div>
                 <div className="col-12">
                     <label>Tải lên hình ảnh của dự án</label>

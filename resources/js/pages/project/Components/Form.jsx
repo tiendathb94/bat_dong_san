@@ -131,7 +131,7 @@ class Form extends Component {
             }
 
             // Redirect to posted project
-            window.location = '/project/posted'
+            // window.location = '/project/posted'
         } catch (e) {
             if (e.response && e.response.data) {
                 window.scrollTo(0, 0)

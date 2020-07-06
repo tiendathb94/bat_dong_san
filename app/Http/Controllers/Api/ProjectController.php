@@ -90,6 +90,7 @@ class ProjectController extends Controller
 
     public function updateProject($projectId, SaveProjectRequest $request)
     {
+        dd($request->all());
         $validated = $request->validated();
         $user = auth()->user();
 
