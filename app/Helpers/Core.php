@@ -2,6 +2,7 @@
 
 use App\Entities\News;
 use App\Entities\Project;
+use App\Entities\Category;
 use App\Permissions;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -57,7 +58,7 @@ function getDifferentTime($time)
     return $text;
 }
 
-function getStatisticsNewsManyPeopleRead($categoryId)
+function getStatisticsNewsManyPeopleRead()
 {
     $time = Carbon::now()->subDay(7)->format('Ymd');
     $statistics = Statistic::with('news.category')
@@ -70,6 +71,16 @@ function getStatisticsNewsManyPeopleRead($categoryId)
         ->orderByDesc('views')
         ->get();
     return $statistics;
+}
+
+function getCategoryManyPeopleCare()
+{
+    $categories = Category::with('statistics')
+        ->where('destination_entity', News::class)
+        ->get()
+        ->sortByDesc('total_views_last_week')
+        ->take(config('app.category.many_care'));
+    return $categories;
 }
 
 

@@ -1,8 +1,8 @@
-@php($statistics = getStatisticsNewsManyPeopleRead($category->id))
+@php($statistics = getStatisticsNewsManyPeopleRead())
 <div class="w-100">
     <h4 class="text-white rounded-top mb-0 text-center py-2 font-weight-bold">Tin nhiều người đọc</h4>
 </div>
-<div class="w-100 border p-2">
+<div class="w-100 border p-2 mb-5">
     @foreach($statistics as $statistic)
         <div class="row mb-3">
             <div class="col-4">

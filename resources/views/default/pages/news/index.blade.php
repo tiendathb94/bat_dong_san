@@ -29,13 +29,14 @@
                 <div class="row">
                     <div class="col-12">
                         <p class="text-center">Chưa có tin tức hiển thị, vui lòng quay lại sau.</p>
-                    </div>
+                    </div>  
                 </div>
                 @endif
             </div>
 
-            <div class="col-12 col-md-4 news-many-read mb-3">
+            <div class="col-12 col-md-4 news-many-read mb-3 category-many-care">
                 @include($partials . 'news_many_read')
+                @include($partials . 'category_many_care')
             </div>
         </div>
     </div>

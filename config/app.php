@@ -130,7 +130,8 @@ return [
         'news' => [
             'take' => 5,
             'paginate' => 20,
-        ]
+        ],
+        'many_care' => 8,
     ],
     'news' => [
         'take' => 7,
