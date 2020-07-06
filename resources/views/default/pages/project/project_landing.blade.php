@@ -61,26 +61,24 @@
         </div>
 
         <div class="mb-5">
-            <div class="row mb-2 mt-4">
-                <div class="col category-tab">
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        @foreach($projectsMapByCategory as $index => $projectMapByCategory)
-                            <li class="nav-item category-item"
-                                role="presentation" {{$index===0?'aria-selected="true"':''}}>
-                                <a data-toggle="tab" href="#project-in-category-{{$projectMapByCategory['id']}}"
-                                   class="nav-link {{$index===0?'active':''}}" role="tab"
-                                   aria-controls="project-in-category-{{$projectMapByCategory['id']}}">
-                                    {{$projectMapByCategory['name']}}
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
-                    <hr/>
-                </div>
-            </div>
-
             <div class="row">
                 <div class="category-tab-content tab-content cols-12 col-md-8">
+                    <div class="col category-tab">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            @foreach($projectsMapByCategory as $index => $projectMapByCategory)
+                                <li class="nav-item category-item"
+                                    role="presentation" {{$index===0?'aria-selected="true"':''}}>
+                                    <a data-toggle="tab" href="#project-in-category-{{$projectMapByCategory['id']}}"
+                                       class="nav-link {{$index===0?'active':''}}" role="tab"
+                                       aria-controls="project-in-category-{{$projectMapByCategory['id']}}">
+                                        {{$projectMapByCategory['name']}}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                        <hr/>
+                    </div>
+
                     @foreach($projectsMapByCategory as $index => $projectMapByCategory)
                         <div
                             class="tab-pane fade {{$index===0?'show active':''}}"
@@ -96,7 +94,8 @@
                         </div>
                     @endforeach
                 </div>
-                <div class="cols-12 col-md-4">
+                <div class="cols-12 col-md-4 mt-4">
+                    @include('default.partials.project.show-categories-with-province')
                     @include('default.partials.project.news_review')
                 </div>
             </div>
@@ -108,6 +107,10 @@
     <link
         rel="stylesheet"
         href="{{ asset('css/partials/project/project-items-card.css') . '?m=' . filemtime('css/partials/project/project-items-card.css') }}">
+
+    <link
+        rel="stylesheet"
+        href="{{ asset('css/partials/project/block-show-categories-with-province.css') . '?m=' . filemtime('css/partials/project/block-show-categories-with-province.css') }}">
 
     <link
         rel="stylesheet"
