@@ -1,5 +1,5 @@
 @php($newsReviewProject = getNewsReviewProject())
-@php($firstNews = $newsReviewProject->first())
+@php($firstNews = $newsReviewProject ? $newsReviewProject->first() : [])
 @if($firstNews)
     <div class="w-100">
         <h4 class="font-weight-bold title-block"><span>Đánh giá dự án</span></h4>

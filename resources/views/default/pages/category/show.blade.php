@@ -1,5 +1,4 @@
 @extends('default.layouts.default')
-@php($category = $news->first()->category )
 
 @section('page_title')
     {{ $category->name }}
@@ -16,9 +15,15 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-md-8">
-                @include($partials . 'list_news', [
-                    'news' => $news, 
-                ])
+                @if($news->count())
+                    @include($partials . 'list_news', [
+                        'news' => $news, 
+                    ])
+                @else
+                    @include($partials . 'no-data', [
+                        'message' => 'Danh mục hiện tại chưa có dữ liệu bài đăng, vui lòng quay lại sau.', 
+                    ])  
+                @endif
             </div>
             <div class="col-12 col-md-4 news-many-read mb-3 category-many-care">
                 @include($partials . 'news_many_read')
