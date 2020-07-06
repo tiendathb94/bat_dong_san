@@ -1,5 +1,8 @@
 <?php
 
+use App\Entities\Category;
+use App\Entities\Project;
+
 function navbarMenuItemsDefinition()
 {
     return [
@@ -125,68 +128,20 @@ function navbarMenuItemsDefinition()
             'label' => 'Dự án',
             'parameter' => '',
             'route_name' => 'pages.project.project_landing',
-            'items' => [
-                [
-                    'label' => 'Căn hộ, chung cư',
-                    'route_name' => '',
-                    'parameter' => '',
-                    'items' => []
-                ],
-                [
-                    'label' => 'Cao ốc văn phòng',
-                    'route_name' => '',
-                    'parameter' => '',
-                    'items' => []
-                ],
-                [
-                    'label' => 'Trung tâm thương mại',
-                    'route_name' => '',
-                    'parameter' => '',
-                    'items' => []
-                ],
-                [
-                    'label' => 'Khu đô thị mới',
-                    'route_name' => '',
-                    'parameter' => '',
-                    'items' => []
-                ],
-                [
-                    'label' => 'Khu phức hợp',
-                    'route_name' => '',
-                    'parameter' => '',
-                    'items' => []
-                ],
-                [
-                    'label' => 'Nhà ở xã hội',
-                    'route_name' => '',
-                    'parameter' => '',
-                    'items' => []
-                ],
-                [
-                    'label' => 'Khu nghỉ dưỡng, sinh thái',
-                    'route_name' => '',
-                    'parameter' => '',
-                    'items' => []
-                ],
-                [
-                    'label' => 'Khu công nghiệp',
-                    'route_name' => '',
-                    'parameter' => '',
-                    'items' => []
-                ],
-                [
-                    'label' => 'Biệt thự, liền kề',
-                    'route_name' => '',
-                    'parameter' => '',
-                    'items' => []
-                ],
-                [
-                    'label' => 'Dự án khác',
-                    'route_name' => '',
-                    'parameter' => '',
-                    'items' => []
-                ],
-            ],
+            'items' => (function () {
+                $items = [];
+                $categories = Category::query()->where('destination_entity', Project::class)->get();
+                foreach ($categories as $category) {
+                    $items[] = [
+                        'label' => $category->name,
+                        'route_name' => 'pages.project.show_projects_in_category',
+                        'parameter' => ['categorySlug' => $category->slug],
+                        'items' => [],
+                    ];
+                }
+
+                return $items;
+            })(),
         ],
 
         [
