@@ -97,7 +97,7 @@
                     @endforeach
                 </div>
                 <div class="cols-12 col-md-4">
-                    <p>Right sidebar here</p>
+                    @include('default.partials.project.news_review')
                 </div>
             </div>
         </div>

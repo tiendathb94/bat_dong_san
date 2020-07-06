@@ -86,6 +86,14 @@ class CategoriesTabllerSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now()
             ],
+            [
+                'name' => 'Đánh giá dự án',
+                'slug' => 'danh-gia-du-an',
+                'thumbnail' => '',
+                'destination_entity' => News::class,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
         ];
 
         

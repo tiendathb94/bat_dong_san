@@ -136,7 +136,8 @@ return [
     'news' => [
         'take' => 7,
         'related' => 2,
-        'many_read' => 8
+        'many_read' => 8,
+        'review_project' => 4
     ],
 
     /*
