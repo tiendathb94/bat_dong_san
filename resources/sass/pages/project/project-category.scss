@@ -1,0 +1,15 @@
+.project-category-container {
+    .block-title {
+        text-align: left;
+        margin-bottom: 2px;
+
+        h4 {
+            padding-left: 0;
+        }
+
+        &:before {
+            top: unset;
+            bottom: 10px;
+        }
+    }
+}

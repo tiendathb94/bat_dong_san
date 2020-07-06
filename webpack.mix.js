@@ -34,7 +34,9 @@ mix
     .sass('resources/sass/partials/company-detail.scss', 'public/css/partials')
     .sass('resources/sass/partials/project/project-items-card.scss', 'public/css/partials/project')
     .sass('resources/sass/partials/project/project-items-row.scss', 'public/css/partials/project')
+    .sass('resources/sass/partials/project/block-show-categories-with-province.scss', 'public/css/partials/project')
     .sass('resources/sass/pages/project/project-landing.scss', 'public/css/pages/project')
+    .sass('resources/sass/pages/project/project-category.scss', 'public/css/pages/project')
 
 // CSS module library
 mix.reactCSSModules()
