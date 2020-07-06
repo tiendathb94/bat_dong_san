@@ -22,10 +22,4 @@
     </script>
 
     <script src="{{ asset('js/pages/project/form.js') . '?m=' . filemtime('js/pages/project/form.js') }}"></script>
-    <script>
-        $('.datepicker').datepicker({
-            uiLibrary: 'bootstrap4',
-            format: 'dd/mm/yyyy',
-        })
-    </script>
 @endpush

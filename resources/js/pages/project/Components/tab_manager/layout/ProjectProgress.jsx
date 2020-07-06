@@ -12,6 +12,13 @@ class ProjectProgress extends Component {
         this.imageLibraryUpload = React.createRef()
     }
 
+    componentDidMount() {
+        $('.datepicker').datepicker({
+            uiLibrary: 'bootstrap4',
+            format: 'dd/mm/yyyy',
+        })
+    }
+
     render () {
         return (
             <div className="row mt-2">
