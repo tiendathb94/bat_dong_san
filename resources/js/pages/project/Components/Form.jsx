@@ -387,7 +387,7 @@ class Form extends Component {
 
                 <div className="row">
                     <div className="col">
-                        <TabManager ref={this.tabManager} tabContents={this.state.formValues.tab_contents}/>
+                        <TabManager ref={this.tabManager} project={this.props.project} tabContents={this.state.formValues.tab_contents}/>
                     </div>
                 </div>
 
