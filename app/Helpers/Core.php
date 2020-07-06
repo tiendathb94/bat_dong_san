@@ -2,9 +2,12 @@
 
 use App\Entities\News;
 use App\Entities\Project;
+use App\Entities\Category;
 use App\Permissions;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use \Carbon\Carbon;
+use App\Entities\Statistic;
 
 function checkPermission($permName)
 {
@@ -37,7 +40,7 @@ function getDifferentTime($time)
 {
     $text = '';
     if($time) {
-        $now = Carbon\Carbon::now();
+        $now = Carbon::now();
         $minuteDifferent = $now->diffInMinutes($time);
         $hourDifferrent = number_format($minuteDifferent / 60);
         $dayDifferent = number_format($hourDifferrent / 24);
@@ -53,6 +56,31 @@ function getDifferentTime($time)
         }
     }
     return $text;
+}
+
+function getStatisticsNewsManyPeopleRead()
+{
+    $time = Carbon::now()->subDay(7)->format('Ymd');
+    $statistics = Statistic::with('news.category')
+        ->select('statisticable_id', DB::raw('sum(value) as views'))
+        ->where('name', Statistic::COUNT_VIEWS)
+        ->where('day_id', '>', $time)
+        ->where('statisticable_type', News::class)
+        ->groupBy('statisticable_id')
+        ->take(config('app.news.many_read'))
+        ->orderByDesc('views')
+        ->get();
+    return $statistics;
+}
+
+function getCategoryManyPeopleCare()
+{
+    $categories = Category::with('statistics')
+        ->where('destination_entity', News::class)
+        ->get()
+        ->sortByDesc('total_views_last_week')
+        ->take(config('app.category.many_care'));
+    return $categories;
 }
 
 

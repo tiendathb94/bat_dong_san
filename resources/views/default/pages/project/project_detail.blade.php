@@ -80,6 +80,14 @@
                 </div>
             @endif
         @endif
+        <div class="row mt-3">
+            <div class="col-12 col-md-8">
+
+            </div>
+            <div class="cols-12 col-md-4">
+                @include('default.partials.project.news_review')
+            </div>
+        </div>
     </div>
 @endsection
 

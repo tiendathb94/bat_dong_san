@@ -20,7 +20,7 @@ class UserController extends Controller
         }
         $categories = Category::select('id', 'name')->get();
         $data = [
-            'news' => $news->paginate(config('app.paginate')),
+            'news' => $news->orderByDesc('created_at')->paginate(config('app.paginate')),
             'categories' => $categories,
             'statuses' => News::STATUSES
         ];

@@ -163,7 +163,7 @@ class NewsController extends Controller
         if(cache()->get($news->slug)) {
             $countViews = cache()->get($news->slug) + 1;
             cache()->set($news->slug, $countViews);
-            if (cache()->get($news->slug) > 10) {
+            if (cache()->get($news->slug) % 10 == 1) {
                 UpdateViewsJob::dispatch($news)->delay(Carbon::now()->addSeconds(10));
             }
         } else {

@@ -14,4 +14,14 @@ class Statistic extends Model
     {
         return $this->morphTo();
     }
+
+    public function news()
+    {
+        return $this->belongsTo(News::class, 'statisticable_id');
+    }
+
+    public function getCategoryIdAttribute()
+    {
+        return $this->news->category->id;
+    }
 }

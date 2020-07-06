@@ -57,3 +57,4 @@ function getProjectsInLocation($address, $limit, $notIn = [])
 
     return $projects;
 }
+
