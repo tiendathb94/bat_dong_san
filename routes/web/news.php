@@ -14,5 +14,7 @@ Route::group(['guard' => 'web', 'prefix' => 'tin-tuc'], function () {
         Route::delete('{id}', 'Web\NewsController@destroy')->name('news.destroy');
     });
 
+    Route::get('{slug}', 'Web\CategoryController@show')->name('category.show');
+
     Route::get('{categorySlug}/{slug}', 'Web\NewsController@show')->name('news.show');
 });
