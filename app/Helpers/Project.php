@@ -1,6 +1,10 @@
 <?php
 
 use App\Entities\Project;
+use App\Entities\Category;
+use App\Entities\Address;
+use App\Entities\Province;
+use Illuminate\Support\Facades\DB;
 
 function getProjectsInLocation($address, $limit, $notIn = [])
 {
@@ -58,3 +62,22 @@ function getProjectsInLocation($address, $limit, $notIn = [])
     return $projects;
 }
 
+function getProjectCategoriesWithProjectCount()
+{
+    return Category::query()
+        ->select('*', DB::raw("(select count(id) from projects where status = 2 and category_id = categories.id) as total_projects"))
+        ->where('destination_entity', '=', Project::class)
+        ->get();
+}
+
+function getProvincesInProjectCategory($categoryId)
+{
+    return Province::query()->whereIn(
+        'id',
+        Address::query()
+            ->select('addresses.province_id')
+            ->join('projects', 'projects.id', '=', 'addresses.addressable_id')
+            ->where('addresses.addressable_type', '=', Project::class)
+            ->where('projects.category_id', '=', $categoryId)
+    )->get();
+}

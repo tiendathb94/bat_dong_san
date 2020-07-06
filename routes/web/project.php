@@ -28,6 +28,10 @@ Route::get('/du-an/{categorySlug}/{slug}/{tabId}', 'Web\ProjectController@showPr
     ->defaults('_config', ['view' => 'default.pages.project.project_detail'])
     ->name('pages.project.project_detail_tab');
 
+Route::get('/du-an/{categorySlug}', 'Web\ProjectController@showProjectsInCategory')
+    ->defaults('_config', ['view' => 'default.pages.project.show_projects_in_category'])
+    ->name('pages.project.show_projects_in_category');
+
 Route::get('/du-an-bat-dong-san', 'Web\ProjectController@projectLanding')
     ->defaults('_config', ['view' => 'default.pages.project.project_landing'])
     ->name('pages.project.project_landing');
