@@ -42,7 +42,7 @@ class TabForm extends Component {
                     />
                 </div>
 
-                {LayoutComponent && <LayoutComponent onFormChange={this.onFormChange} values={this.state.values}/>}
+                {LayoutComponent && <LayoutComponent project={this.props.project} onFormChange={this.onFormChange} values={this.state.values}/>}
             </div>
         )
     }

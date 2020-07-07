@@ -27,7 +27,7 @@ class ImageLibraryRequest extends FormRequest
             'libraryable_type' => 'required',
             'libraryable_id' => 'required',
             'library_type' => 'required',
-            'meta_data' => 'array',
+            'meta_data' => 'nullable|array',
             'files' => 'required',
         ];
     }

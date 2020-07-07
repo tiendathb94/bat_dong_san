@@ -16,6 +16,7 @@ const Helper = {
                 name: 'Tiến độ dự án', 
                 layout: 'project_progress',
                 component: ProjectProgress,
+                contentFields: ['date_updload_file', 'progressImageFiles', 'removeFileIds'],
             },
             {
                 name: 'Nội dung tùy chỉnh',

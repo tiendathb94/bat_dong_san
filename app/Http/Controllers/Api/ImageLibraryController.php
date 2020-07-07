@@ -28,7 +28,6 @@ class ImageLibraryController extends Controller
         $savedFiles = [];
         try {
             DB::beginTransaction();
-
             $uploadedFiles = $request->file('files');
             if ($uploadedFiles) {
                 foreach ($uploadedFiles as $file) {
@@ -38,7 +37,7 @@ class ImageLibraryController extends Controller
                         'library_type' => $libraryType,
                         'file_path' => str_replace('public', '', $uploadedFilePath),
                         'user_id' => $user->id,
-                        'meta_data' => $metaData,
+                        'meta_data' => json_encode($metaData),
                     ]);
                 }
             }

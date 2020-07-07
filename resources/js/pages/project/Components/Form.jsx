@@ -95,6 +95,51 @@ class Form extends Component {
         this.setState({ formValues: { ...this.state.formValues, [event.target.name]: event.target.value } })
     }
 
+    async doUpload (libraryableType, libraryableId, libraryType, metaData = [], selectedFiles = []) {
+        if (!selectedFiles || !selectedFiles.length) {
+            return
+        }
+
+        const formData = new FormData()
+        formData.append('libraryable_type', libraryableType)
+        formData.append('libraryable_id', libraryableId)
+        formData.append('library_type', libraryType)
+
+        for (let i = 0; i < selectedFiles.length; i++) {
+            formData.set(`files[${i}]`, selectedFiles[i])
+        }
+
+        for (const k in metaData) {
+            formData.append(`meta_data[${k}]`, metaData[k])
+        }
+
+        const response = await axios.post(
+            `${config.api.baseUrl}/image-library/uploads`,
+            formData,
+            {
+                headers: {
+                    'content-type': 'multipart/form-data'
+                }
+            },
+        )
+
+        return response.data
+    }
+
+    async deleteUploadedLibraries (ids) {
+        if (!ids || ids.length < 1) {
+            return
+        }
+
+        try {
+            await axios.post(`${config.api.baseUrl}/image-library/deletes`, {
+                image_library_ids: ids
+            })
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
     onClickSaveProjectButton = async () => {
         if (!this.validate()) {
             window.scrollTo(0, 0)
@@ -104,13 +149,30 @@ class Form extends Component {
         const values = cloneDeep(this.state.formValues)
         values.project_overview = draftToHtml(convertToRaw(this.state.formValues.project_overview.getCurrentContent()))
         values.tab_contents = this.tabManager.current.getTabContentsFormRawValues()
-
+        console.log(values);
         try {
             this.setState({ loading: true })
 
             // Create project
             if (this.isEditMode) {
                 await axios.put(`${config.api.baseUrl}/project/${this.props.project.id}`, values)
+
+                // Upload progress images
+                values.tab_contents.map((tab) => {
+                    if(tab.layout == 'project_progress') {
+                        this.deleteUploadedLibraries(tab.contents.removeFileIds)
+                        this.doUpload(
+                            'App\\Entities\\Project',
+                            this.props.project.id,
+                            'progress',
+                            {
+                                date_upload_file: tab.contents.date_updload_file,
+                                date_sort: tab.contents.date_updload_file.replace(/-/g, '')
+                            },
+                            tab.contents.progressImageFiles
+                        )
+                    }
+                })
 
                 // Upload library images
                 await this.imageLibraryUpload.current.doUpload(
@@ -121,6 +183,23 @@ class Form extends Component {
             } else {
                 const createProjectResponse = await axios.post(`${config.api.baseUrl}/project/create`, values)
                 const createdProject = createProjectResponse.data
+
+                // Upload progress images
+                values.tab_contents.map((tab) => {
+                    if(tab.layout == 'project_progress') {
+                        this.deleteUploadedLibraries(tab.contents.removeFileIds)
+                        this.doUpload(
+                            'App\\Entities\\Project',
+                            createdProject.id,
+                            'progress',
+                            {
+                                date_upload_file: tab.contents.date_updload_file,
+                                date_sort: tab.contents.date_updload_file.replace(/-/g, '')
+                            },
+                            tab.contents.progressImageFiles
+                        )
+                    }
+                })
 
                 // Upload library images
                 await this.imageLibraryUpload.current.doUpload(
