@@ -1,55 +1,68 @@
 <?php
 
+use App\Entities\Category;
+use App\Entities\Project;
+
 function navbarMenuItemsDefinition()
 {
     return [
         [
             'label' => 'Nhà đất bán',
-            'url' => '',
+            'route_name' => '',
+            'parameter' => '',
             'items' => [
                 [
                     'label' => 'Bán căn hộ chung cư',
-                    'url' => '',
+                    'route_name' => '',
+                    'parameter' => '',
                     'items' => []
                 ],
                 [
                     'label' => 'Bán nhà riêng',
-                    'url' => '',
+                    'route_name' => '',
+                    'parameter' => '',
                     'items' => []
                 ],
                 [
                     'label' => 'Bán nhà biệt thự, liền kề',
-                    'url' => '',
+                    'route_name' => '',
+                    'parameter' => '',
                     'items' => []
                 ],
                 [
                     'label' => 'Bán nhà mặt phố',
-                    'url' => '',
+                    'route_name' => '',
+                    'parameter' => '',
                     'items' => []
                 ],
                 [
                     'label' => 'Bán đất nền dự án',
-                    'url' => '',
+                    'route_name' => '',
+                    'parameter' => '',
                     'items' => []
                 ],
                 [
                     'label' => 'Bán đất',
-                    'url' => '',
+                    'route_name' => '',
+                    'parameter' => '',
                     'items' => []
                 ],
                 [
                     'label' => 'Bán trang trại, khu nghỉ dưỡng',
-                    'url' => '',
+                    'route_name' => '',
+                    'parameter' => '',
                     'items' => []
                 ],
                 [
                     'label' => 'Bán kho, nhà xưởng',
-                    'url' => '',
+                    'route_name' => '',
+                    'parameter' => '',
                     'items' => []
                 ],
                 [
                     'label' => 'Bán loại bất động sản khác',
-                    'url' => '',
+                    'route_name' => '',
+                    'parameter' => '',
                     'items' => []
                 ],
             ],
@@ -57,46 +70,55 @@ function navbarMenuItemsDefinition()
 
         [
             'label' => 'Nhà đất cho thuê',
-            'url' => '',
+            'route_name' => '',
+            'parameter' => '',
             'items' => [
                 [
                     'label' => 'Cho thuê căn hộ chung cư',
-                    'url' => '',
+                    'route_name' => '',
+                    'parameter' => '',
                     'items' => []
                 ],
                 [
                     'label' => 'Cho thuê nhà riêng',
-                    'url' => '',
+                    'route_name' => '',
+                    'parameter' => '',
                     'items' => []
                 ],
                 [
                     'label' => 'Cho thuê nhà mặt phố',
-                    'url' => '',
+                    'route_name' => '',
+                    'parameter' => '',
                     'items' => []
                 ],
                 [
                     'label' => 'Cho thuê nhà trọ, phòng trọ',
-                    'url' => '',
+                    'route_name' => '',
+                    'parameter' => '',
                     'items' => []
                 ],
                 [
                     'label' => 'Cho thuê văn phòng',
-                    'url' => '',
+                    'route_name' => '',
+                    'parameter' => '',
                     'items' => []
                 ],
                 [
                     'label' => 'Cho thuê cửa hàng - ki ốt',
-                    'url' => '',
+                    'route_name' => '',
+                    'parameter' => '',
                     'items' => []
                 ],
                 [
                     'label' => 'Cho thuê kho, nhà xưởng, đất',
-                    'url' => '',
+                    'route_name' => '',
+                    'parameter' => '',
                     'items' => []
                 ],
                 [
                     'label' => 'Cho thuê loại bất động sản khác',
-                    'url' => '',
+                    'route_name' => '',
+                    'parameter' => '',
                     'items' => []
                 ],
             ],
@@ -104,158 +126,141 @@ function navbarMenuItemsDefinition()
 
         [
             'label' => 'Dự án',
-            'url' => 'pages.project.project_landing',
-            'items' => [
-                [
-                    'label' => 'Căn hộ, chung cư',
-                    'url' => '',
-                    'items' => []
-                ],
-                [
-                    'label' => 'Cao ốc văn phòng',
-                    'url' => '',
-                    'items' => []
-                ],
-                [
-                    'label' => 'Trung tâm thương mại',
-                    'url' => '',
-                    'items' => []
-                ],
-                [
-                    'label' => 'Khu đô thị mới',
-                    'url' => '',
-                    'items' => []
-                ],
-                [
-                    'label' => 'Khu phức hợp',
-                    'url' => '',
-                    'items' => []
-                ],
-                [
-                    'label' => 'Nhà ở xã hội',
-                    'url' => '',
-                    'items' => []
-                ],
-                [
-                    'label' => 'Khu nghỉ dưỡng, sinh thái',
-                    'url' => '',
-                    'items' => []
-                ],
-                [
-                    'label' => 'Khu công nghiệp',
-                    'url' => '',
-                    'items' => []
-                ],
-                [
-                    'label' => 'Biệt thự, liền kề',
-                    'url' => '',
-                    'items' => []
-                ],
-                [
-                    'label' => 'Dự án khác',
-                    'url' => '',
-                    'items' => []
-                ],
-            ],
+            'parameter' => '',
+            'route_name' => 'pages.project.project_landing',
+            'items' => (function () {
+                $items = [];
+                $categories = Category::query()->where('destination_entity', Project::class)->get();
+                foreach ($categories as $category) {
+                    $items[] = [
+                        'label' => $category->name,
+                        'route_name' => 'pages.project.show_projects_in_category',
+                        'parameter' => ['categorySlug' => $category->slug],
+                        'items' => [],
+                    ];
+                }
+
+                return $items;
+            })(),
         ],
 
         [
             'label' => 'Cần mua - Cần thuê',
-            'url' => '',
+            'route_name' => '',
+            'parameter' => '',
             'items' => [
                 [
                     'label' => 'Nhà đất cần mua',
-                    'url' => '',
+                    'route_name' => '',
+                    'parameter' => '',
                     'items' => [
                         [
                             'label' => 'Mua căn hộ chung cư',
-                            'url' => '',
+                            'route_name' => '',
+                            'parameter' => '',
                             'items' => []
                         ],
                         [
                             'label' => 'Mua nhà riêng',
-                            'url' => '',
+                            'route_name' => '',
+                            'parameter' => '',
                             'items' => []
                         ],
                         [
                             'label' => 'Mua nhà biệt thự, liền kề',
-                            'url' => '',
+                            'route_name' => '',
+                            'parameter' => '',
                             'items' => []
                         ],
                         [
                             'label' => 'Mua nhà mặt phố',
-                            'url' => '',
+                            'route_name' => '',
+                            'parameter' => '',
                             'items' => []
                         ],
                         [
                             'label' => 'Mua đất nền dự án',
-                            'url' => '',
+                            'route_name' => '',
+                            'parameter' => '',
                             'items' => []
                         ],
                         [
                             'label' => 'Mua đất',
-                            'url' => '',
+                            'route_name' => '',
+                            'parameter' => '',
                             'items' => []
                         ],
                         [
                             'label' => 'Mua trang trại, khu nghỉ dưỡng',
-                            'url' => '',
+                            'route_name' => '',
+                            'parameter' => '',
                             'items' => []
                         ],
                         [
                             'label' => 'Mua kho, nhà xưởng',
-                            'url' => '',
+                            'route_name' => '',
+                            'parameter' => '',
                             'items' => []
                         ],
                         [
                             'label' => 'Mua loại bất động sản khác',
-                            'url' => '',
+                            'route_name' => '',
+                            'parameter' => '',
                             'items' => []
                         ],
                     ]
                 ],
                 [
                     'label' => 'Nhà đất cần thuê',
-                    'url' => '',
+                    'route_name' => '',
+                    'parameter' => '',
                     'items' => [
                         [
                             'label' => 'Cần thuê căn hộ chung cư',
-                            'url' => '',
+                            'route_name' => '',
+                            'parameter' => '',
                             'items' => []
                         ],
                         [
                             'label' => 'Cần thuê nhà riêng',
-                            'url' => '',
+                            'route_name' => '',
+                            'parameter' => '',
                             'items' => []
                         ],
                         [
                             'label' => 'Cần thuê nhà mặt phố',
-                            'url' => '',
+                            'route_name' => '',
+                            'parameter' => '',
                             'items' => []
                         ],
                         [
                             'label' => 'Cần thuê nhà trọ, phòng trọ',
-                            'url' => '',
+                            'route_name' => '',
+                            'parameter' => '',
                             'items' => []
                         ],
                         [
                             'label' => 'Cần thuê văn phòng',
-                            'url' => '',
+                            'route_name' => '',
+                            'parameter' => '',
                             'items' => []
                         ],
                         [
                             'label' => 'Cần thuê cửa hàng - ki ốt',
-                            'url' => '',
+                            'route_name' => '',
+                            'parameter' => '',
                             'items' => []
                         ],
                         [
                             'label' => 'Cần thuê kho, nhà xưởng, đất',
-                            'url' => '',
+                            'route_name' => '',
+                            'parameter' => '',
                             'items' => []
                         ],
                         [
                             'label' => 'Cần thuê loại bất động sản khác',
-                            'url' => '',
+                            'route_name' => '',
+                            'parameter' => '',
                             'items' => []
                         ],
                     ]
@@ -265,111 +270,133 @@ function navbarMenuItemsDefinition()
 
         [
             'label' => 'Tin tức',
-            'url' => 'news.index',
+            'route_name' => 'news.index',
+            'parameter' => '',
             'items' => [
                 [
                     'label' => 'BĐS & Covid-19',
-                    'url' => '/tin-tuc/bds-covid-19',
+                    'route_name' => 'category.show',
+                    'parameter' => 'bds-covid-19',
                     'items' => []
                 ],
                 [
                     'label' => 'Tin thị trường',
-                    'url' => '/tin-tuc/tin-thi-truong',
+                    'parameter' => 'tin-thi-truong',
+                    'route_name' => 'category.show',
                     'items' => []
                 ],
                 [
                     'label' => 'Interaktive Story',
-                    'url' => '/tin-tuc/interaktivestory',
+                    'parameter' => 'interaktivestory',
+                    'route_name' => 'category.show',
                     'items' => []
                 ],
                 [
                     'label' => 'Phân tích - Nhận định',
-                    'url' => '/tin-tuc/phan-tich-nhan-dinh',
+                    'parameter' => 'phan-tich-nhan-dinh',
+                    'route_name' => 'category.show',
                     'items' => []
                 ],
                 [
                     'label' => 'Chính sách - Quản lý',
-                    'url' => '/tin-tuc/chinh-sach-quan-ly',
+                    'parameter' => 'chinh-sach-quan-ly',
+                    'route_name' => 'category.show',
                     'items' => []
                 ],
                 [
                     'label' => 'Thông tin quy hoạch',
-                    'url' => '/tin-tuc/thong-tin-quy-hoach',
+                    'parameter' => 'thong-tin-quy-hoach',
+                    'route_name' => 'category.show',
                     'items' => []
                 ],
                 [
                     'label' => 'Bất động sản thế giới',
-                    'url' => '/tin-tuc/bds-the-gioi',
+                    'parameter' => 'bds-the-gioi',
+                    'route_name' => 'category.show',
                     'items' => []
                 ],
                 [
                     'label' => 'Tài chính - Chứng khoán - BĐS',
-                    'url' => '/tin-tuc/tai-chinh-chung-khoan-bds',
+                    'parameter' => 'tai-chinh-chung-khoan-bds',
+                    'route_name' => 'category.show',
                     'items' => []
                 ],
                 [
                     'label' => 'Tư vấn luật',
-                    'url' => '/tin-tuc/tu-van-luat',
+                    'parameter' => 'tu-van-luat',
+                    'route_name' => 'category.show',
                     'items' => [
                         [
                             'label' => 'Trình tự, thủ tục',
-                            'url' => '/tin-tuc/trinh-tu-thu-tuc',
+                            'parameter' => 'trinh-tu-thu-tuc',
+                            'route_name' => 'category.show',
                             'items' => []
                         ],
                         [
                             'label' => 'Quyền sở hữu',
-                            'url' => '/tin-tuc/quyen-so-huu',
+                            'parameter' => 'quyen-so-huu',
+                            'route_name' => 'category.show',
                             'items' => []
                         ],
                         [
                             'label' => 'Tranh chấp',
-                            'url' => '/tin-tuc/tranh-chap',
+                            'parameter' => 'tranh-chap',
+                            'route_name' => 'category.show',
                             'items' => []
                         ],
                         [
                             'label' => 'Xây dựng - Hoàn công',
-                            'url' => '/tin-tuc/xay-dung-hoan-cong',
+                            'parameter' => 'xay-dung-hoan-cong',
+                            'route_name' => 'category.show',
                             'items' => []
                         ],
                         [
                             'label' => 'Nghĩa vụ tài chính',
-                            'url' => '/tin-tuc/nghia-vu-tai-chinh',
+                            'parameter' => 'nghia-vu-tai-chinh',
+                            'route_name' => 'category.show',
                             'items' => []
                         ],
                         [
                             'label' => 'Các vấn đề có yếu tố nước ngoài',
-                            'url' => '/tin-tuc/cac-van-de-co-yeu-to-nuoc-ngoai',
+                            'parameter' => 'cac-van-de-co-yeu-to-nuoc-ngoai',
+                            'route_name' => 'category.show',
                             'items' => []
                         ],
                     ]
                 ],
                 [
                     'label' => 'Lời khuyên',
-                    'url' => '/tin-tuc/loi-khuyen',
+                    'parameter' => 'loi-khuyen',
+                    'route_name' => 'category.show',
                     'items' => [
                         [
                             'label' => 'Lời khuyên cho người mua',
-                            'url' => '/tin-tuc/loi-khuyen-cho-nguoi-mua',
+                            'parameter' => 'loi-khuyen-cho-nguoi-mua',
+                            'route_name' => 'category.show',
                             'items' => []
                         ],
                         [
                             'label' => 'Lời khuyên cho người bán',
-                            'url' => '/tin-tuc/loi-khuyen-cho-nguoi-ban',
+                            'parameter' => 'loi-khuyen-cho-nguoi-ban',
+                            'route_name' => 'category.show',
                             'items' => []
                         ],
                         [
                             'label' => 'Lời khuyên cho nhà đầu tư',
-                            'url' => '/tin-tuc/loi-khuyen-cho-nha-dau-tu',
+                            'parameter' => 'loi-khuyen-cho-nha-dau-tu',
+                            'route_name' => 'category.show',
                             'items' => []
                         ],
                         [
                             'label' => 'Lời khuyên cho người thuê',
-                            'url' => '/tin-tuc/loi-khuyen-cho-nguoi-thue',
+                            'parameter' => 'loi-khuyen-cho-nguoi-thue',
+                            'route_name' => 'category.show',
                             'items' => []
                         ],
                         [
                             'label' => 'Lời khuyên cho người cho thuê',
-                            'url' => '/tin-tuc/loi-khuyen-cho-nguoi-cho-thue',
+                            'parameter' => 'loi-khuyen-cho-nguoi-cho-thue',
+                            'route_name' => 'category.show',
                             'items' => []
                         ],
                     ]
@@ -379,126 +406,151 @@ function navbarMenuItemsDefinition()
 
         [
             'label' => 'Nội - Ngoại thất',
-            'url' => '',
+            'route_name' => '',
+            'parameter' => '',
             'items' => [
                 [
                     'label' => 'Nội thất',
-                    'url' => '',
+                    'route_name' => '',
+                    'parameter' => '',
                     'items' => [
                         [
                             'label' => 'Toàn cảnh ngôi nhà',
-                            'url' => '',
+                            'route_name' => '',
+                            'parameter' => '',
                             'items' => []
                         ],
                         [
                             'label' => 'Phòng khách',
-                            'url' => '',
+                            'route_name' => '',
+                            'parameter' => '',
                             'items' => []
                         ],
                         [
                             'label' => 'Phòng ngủ',
-                            'url' => '',
+                            'route_name' => '',
+                            'parameter' => '',
                             'items' => []
                         ],
                         [
                             'label' => 'Phòng bếp',
-                            'url' => '',
+                            'route_name' => '',
+                            'parameter' => '',
                             'items' => []
                         ],
                         [
                             'label' => 'Phòng tắm',
-                            'url' => '',
+                            'route_name' => '',
+                            'parameter' => '',
                             'items' => []
                         ],
                         [
                             'label' => 'Phòng trẻ em',
-                            'url' => '',
+                            'route_name' => '',
+                            'parameter' => '',
                             'items' => []
                         ],
                         [
                             'label' => 'Nội thất văn phòng',
-                            'url' => '',
+                            'route_name' => '',
+                            'parameter' => '',
                             'items' => []
                         ],
                         [
                             'label' => 'Khách sạn, Nhà hàng, Showroom',
-                            'url' => '',
+                            'route_name' => '',
+                            'parameter' => '',
                             'items' => []
                         ],
                     ]
                 ],
                 [
                     'label' => 'Ngoại thất',
-                    'url' => '',
+                    'route_name' => '',
+                    'parameter' => '',
                     'items' => []
                 ],
                 [
                     'label' => 'Xây dựng',
-                    'url' => '',
+                    'route_name' => '',
+                    'parameter' => '',
                     'items' => [
                         [
                             'label' => 'Vật liệu xây dựng',
-                            'url' => '',
+                            'route_name' => '',
+                            'parameter' => '',
                             'items' => []
                         ],
                         [
                             'label' => 'Kiến thức xây dựng',
-                            'url' => '',
+                            'route_name' => '',
+                            'parameter' => '',
                             'items' => []
                         ],
                         [
                             'label' => 'Giải pháp xây dựng',
-                            'url' => '',
+                            'route_name' => '',
+                            'parameter' => '',
                             'items' => []
                         ],
                     ]
                 ],
                 [
                     'label' => 'Kiến trúc',
-                    'url' => '',
+                    'route_name' => '',
+                    'parameter' => '',
                     'items' => [
                         [
                             'label' => 'Tư vấn thiết kế',
-                            'url' => '',
+                            'route_name' => '',
+                            'parameter' => '',
                             'items' => []
                         ],
                         [
                             'label' => 'Kiến trúc xưa và nay',
-                            'url' => '',
+                            'route_name' => '',
+                            'parameter' => '',
                             'items' => []
                         ],
                         [
                             'label' => 'Thế giới kiến trúc',
-                            'url' => '',
+                            'route_name' => '',
+                            'parameter' => '',
                             'items' => []
                         ],
                         [
                             'label' => 'Nhà đẹp',
-                            'url' => '',
+                            'route_name' => '',
+                            'parameter' => '',
                             'items' => []
                         ],
                         [
                             'label' => 'Thư viện mẫu nhà',
-                            'url' => '',
+                            'route_name' => '',
+                            'parameter' => '',
                             'items' => [
                                 [
                                     'label' => 'Nhà phố',
-                                    'url' => '',
+                                    'route_name' => '',
+                                    'parameter' => '',
                                     'items' => []
                                 ],
                                 [
                                     'label' => 'Biệt thự',
-                                    'url' => '',
+                                    'route_name' => '',
+                                    'parameter' => '',
                                     'items' => []
                                 ],
                                 [
                                     'label' => 'Chung cư',
-                                    'url' => '',
+                                    'route_name' => '',
+                                    'parameter' => '',
                                     'items' => []
                                 ],
                                 [
                                     'label' => 'Văn phòng',
-                                    'url' => '',
+                                    'route_name' => '',
+                                    'parameter' => '',
                                     'items' => []
                                 ],
                             ]
@@ -507,17 +559,17 @@ function navbarMenuItemsDefinition()
                 ],
                 [
                     'label' => 'Tư vấn nội ngoại thất',
-                    'url' => '',
+                    'route_name' => '',
                     'items' => []
                 ],
                 [
                     'label' => 'Mách bạn',
-                    'url' => '',
+                    'route_name' => '',
                     'items' => []
                 ],
                 [
                     'label' => 'Mua sắm',
-                    'url' => '',
+                    'route_name' => '',
                     'items' => []
                 ],
             ],
@@ -525,57 +577,57 @@ function navbarMenuItemsDefinition()
 
         [
             'label' => 'Phong thủy',
-            'url' => '',
+            'route_name' => '',
             'items' => [
                 [
                     'label' => 'Phong thủy toàn cảnh',
-                    'url' => '',
+                    'route_name' => '',
                     'items' => []
                 ],
                 [
                     'label' => 'Tư vấn phong thủy',
-                    'url' => '',
+                    'route_name' => '',
                     'items' => []
                 ],
                 [
                     'label' => 'Phong thủy nhà ở',
-                    'url' => '',
+                    'route_name' => '',
                     'items' => [
                         [
                             'label' => 'Phong thủy phòng ngủ',
-                            'url' => '',
+                            'route_name' => '',
                             'items' => []
                         ],
                         [
                             'label' => 'Phong thủy phòng khách',
-                            'url' => '',
+                            'route_name' => '',
                             'items' => []
                         ],
                         [
                             'label' => 'Phong thủy phòng bếp',
-                            'url' => '',
+                            'route_name' => '',
                             'items' => []
                         ],
                         [
                             'label' => 'Phong thủy phòng tắm',
-                            'url' => '',
+                            'route_name' => '',
                             'items' => []
                         ],
                         [
                             'label' => 'Phong thủy cửa chính, sân vườn',
-                            'url' => '',
+                            'route_name' => '',
                             'items' => []
                         ],
                     ]
                 ],
                 [
                     'label' => 'Phong thủy văn phòng',
-                    'url' => '',
+                    'route_name' => '',
                     'items' => []
                 ],
                 [
                     'label' => 'Phong thủy theo tuổi',
-                    'url' => '',
+                    'route_name' => '',
                     'items' => []
                 ],
             ],
@@ -583,16 +635,16 @@ function navbarMenuItemsDefinition()
 
         [
             'label' => 'Danh bạ',
-            'url' => '',
+            'route_name' => '',
             'items' => [
                 [
                     'label' => 'Nhà môi giới',
-                    'url' => '',
+                    'route_name' => '',
                     'items' => []
                 ],
                 [
                     'label' => 'Doanh nghiệp',
-                    'url' => '',
+                    'route_name' => '',
                     'items' => []
                 ],
             ],

@@ -175,4 +175,24 @@ class ProjectController extends Controller
             'projectsMapByCategory' => $projectsMapByCategory,
         ]);
     }
+
+    public function showProjectsInCategory($categorySlug)
+    {
+        $category = Category::query()
+            ->where('destination_entity', '=', Project::class)
+            ->where('slug', '=', $categorySlug)
+            ->first();
+        if (!$category) {
+            return abort(404);
+        }
+
+        $projects = Project::query()
+            ->where('status', '=', Project::StatusApproved)
+            ->where('category_id', '=', $category->id)->paginate(15);
+
+        return view($this->_config['view'], [
+            'category' => $category,
+            'projects' => $projects,
+        ]);
+    }
 }
