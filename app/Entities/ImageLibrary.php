@@ -37,9 +37,6 @@ class ImageLibrary extends Model
             $metaData = json_decode($this->meta_data);
             if($metaData) {
                 $attr = $metaData->date_upload_file ?: '';
-                if($attr) {
-                    $attr = Carbon::createFromFormat('Y-m-d', $attr)->format('d/m/Y');
-                }
             }
         }
         return $attr;

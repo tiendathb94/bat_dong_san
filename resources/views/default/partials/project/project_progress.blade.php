@@ -11,15 +11,15 @@
                     @foreach($imageProgressProjects->take(5) as $imageProgressProject)
                     <div class="row mb-2">
                         <div class="col-4">
-                            <div class="bg-default-image w-100 h-65 d-flex align-items-center overflow-hidden">
+                            <a title="{{ $imageProgressProject->project->long_name }}" href="{{ route('pages.project.project_detail', [$imageProgressProject->project->category->slug, $imageProgressProject->project->slug]) }}" class="bg-default-image w-100 h-65 d-flex align-items-center overflow-hidden">
                                 <img src="{{ $imageProgressProject->gallery_image }}" alt="{{ $imageProgressProject->project->long_name }}" class="w-100">
-                            </div>
+                            </a>
                         </div>
                         <div class="col-8 pl-0">
                             <a title="{{ $imageProgressProject->project->long_name }}"
                                 href="{{ route('pages.project.project_detail', [$imageProgressProject->project->category->slug, $imageProgressProject->project->slug]) }}" 
                                 class="font-weight-bold">{{ $imageProgressProject->project->short_name }}</a>
-                            <p>Tiến độ dự án cập nhật ngày: {{ $imageProgressProject->date_upload_file }}</p>
+                            <p>Tiến độ dự án cập nhật ngày: {{ convertDateFormat($imageProgressProject->date_upload_file) }}</p>
                         </div>
                     </div>
                     @endforeach
@@ -28,15 +28,15 @@
                     @foreach($imageProgressProjects->skip(5) as $imageProgressProject)
                         <div class="row mb-2">
                             <div class="col-4">
-                                <div class="bg-default-image w-100 h-65 d-flex align-items-center overflow-hidden">
+                                <a title="{{ $imageProgressProject->project->long_name }}" href="{{ route('pages.project.project_detail', [$imageProgressProject->project->category->slug, $imageProgressProject->project->slug]) }}" class="bg-default-image w-100 h-65 d-flex align-items-center overflow-hidden">
                                     <img src="{{ $imageProgressProject->gallery_image }}" alt="{{ $imageProgressProject->project->long_name }}" class="w-100">
-                                </div>
+                                </a>
                             </div>
                             <div class="col-8 pl-0">
                                 <a title="{{ $imageProgressProject->project->long_name }}" 
                                     href="{{ route('pages.project.project_detail', [$imageProgressProject->project->category->slug, $imageProgressProject->project->slug]) }}" 
                                     class="font-weight-bold">{{ $imageProgressProject->project->short_name }}</a>
-                                <p>Tiến độ dự án cập nhật ngày: {{ $imageProgressProject->date_upload_file }}</p>
+                                <p>Tiến độ dự án cập nhật ngày: {{ convertDateFormat($imageProgressProject->date_upload_file) }}</p>
                             </div>
                         </div>
                     @endforeach

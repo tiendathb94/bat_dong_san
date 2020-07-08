@@ -17,8 +17,20 @@ class ProjectProgress extends Component {
 
     getDateNow = () => {
         var today = new Date();
-        var date =  today.toISOString().substr(0, 10);
-        return date;
+        var date = today.getDate();
+        if(date.toString().length == 1) date = '0' + date;
+        var month = today.getMonth() + 1;
+        if(month.toString().length == 1) month = '0' + month;
+        var year = today.getFullYear();
+        return date + '/' + month + '/' + year;
+    }
+
+    componentDidMount () {
+        $('.datepicker').datepicker({
+            uiLibrary: 'bootstrap4',
+            format: 'dd/mm/yyyy',
+            value: this.getDateNow()
+        })
     }
 
     onAddedFiles = (selectedFiles) => {
@@ -57,7 +69,7 @@ class ProjectProgress extends Component {
             <div className="row mt-2">
                 <div className="col-12">
                     <label>Ngày cập nhật tiến độ</label>
-                    <input onChange={this.onChangeInput} defaultValue={this.getDateNow()} type="date" className="form-control" name="date_updload_file" />
+                    <input className="form-control datepicker" name="date_updload_file" />
                 </div>
                 <div className="col-12">
                     <label>Tải lên hình ảnh của dự án</label>

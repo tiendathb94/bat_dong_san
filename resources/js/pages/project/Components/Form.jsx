@@ -143,6 +143,10 @@ class Form extends Component {
 
 
     onClickSaveProjectButton = async () => {
+        var times = $('.datepicker').val().split('/');
+        var date_upload_file = times[2] + '-' + times[1] + '-' + times[0];
+        var date_sort = date_upload_file.replace(/-/g, '')
+
         if (!this.validate()) {
             window.scrollTo(0, 0)
             return
@@ -151,7 +155,6 @@ class Form extends Component {
         const values = cloneDeep(this.state.formValues)
         values.project_overview = draftToHtml(convertToRaw(this.state.formValues.project_overview.getCurrentContent()))
         values.tab_contents = this.tabManager.current.getTabContentsFormRawValues()
-        console.log(values);
         try {
             this.setState({ loading: true })
 
@@ -168,8 +171,8 @@ class Form extends Component {
                             this.props.project.id,
                             'progress',
                             {
-                                date_upload_file: tab.contents.date_updload_file,
-                                date_sort: tab.contents.date_updload_file.replace(/-/g, '')
+                                date_upload_file: date_upload_file,
+                                date_sort: date_sort
                             },
                             tab.contents.progressImageFiles
                         )
@@ -195,8 +198,8 @@ class Form extends Component {
                             createdProject.id,
                             'progress',
                             {
-                                date_upload_file: tab.contents.date_updload_file,
-                                date_sort: tab.contents.date_updload_file.replace(/-/g, '')
+                                date_upload_file: date_upload_file,
+                                date_sort: date_sort
                             },
                             tab.contents.progressImageFiles
                         )
