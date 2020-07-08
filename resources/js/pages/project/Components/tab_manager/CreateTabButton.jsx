@@ -8,11 +8,28 @@ class CreateTabButton extends Component {
         super(props)
         this.state = {
             showTabTypes: false,
+            tabContents: []
         }
     }
 
+    static getDerivedStateFromProps (props) {
+        var tabContents = [];
+        if(props.tabContents) {
+            props.tabContents.map((tab) => {
+                tabContents.push(tab.layout);
+            })
+        }
+        return { tabContents: tabContents }
+    }
+
     getTabContentTypes () {
-        return Helper.getTabTypes()
+        var tab = []
+        Helper.getTabTypes().map((type) => {
+            if(this.state.tabContents.indexOf(type.layout) == -1 || type.layout == 'custom') {
+                tab.push(type)
+            }
+        })
+        return tab;
     }
 
     onClickAddMoreTab = () => {
@@ -20,7 +37,7 @@ class CreateTabButton extends Component {
     }
 
     onClickTabContentType (tabContentType) {
-        this.setState({ showTabTypes: false })
+        this.setState({ showTabTypes: false, tabContents: [ ...this.state.tabContents, tabContentType.layout] })
 
         if (this.props.onAddContent) {
             this.props.onAddContent(tabContentType)

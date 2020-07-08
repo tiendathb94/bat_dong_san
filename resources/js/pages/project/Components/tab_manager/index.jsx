@@ -109,7 +109,7 @@ class TabManager extends Component {
                         </button>
                     ))}
 
-                    <CreateTabButton onAddContent={this.onAddTabContent}/>
+                    <CreateTabButton tabContents={this.state.tabContents}  onAddContent={this.onAddTabContent}/>
                 </div>
 
                 {

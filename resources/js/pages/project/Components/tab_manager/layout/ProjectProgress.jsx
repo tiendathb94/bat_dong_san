@@ -22,7 +22,7 @@ class ProjectProgress extends Component {
     }
 
     onAddedFiles = (selectedFiles) => {
-        const formValues = { ...this.state.formValues, progressImageFiles:  Array.from(selectedFiles) }
+        const formValues = { ...this.state.formValues, progressImageFiles:  [...this.state.formValues.progressImageFiles, ...Array.from(selectedFiles)] }
         this.setState({ formValues })
 
         if (this.props.onFormChange) {
