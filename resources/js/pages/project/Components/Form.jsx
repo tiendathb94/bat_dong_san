@@ -140,6 +140,8 @@ class Form extends Component {
         }
     }
 
+
+
     onClickSaveProjectButton = async () => {
         if (!this.validate()) {
             window.scrollTo(0, 0)
@@ -158,7 +160,7 @@ class Form extends Component {
                 await axios.put(`${config.api.baseUrl}/project/${this.props.project.id}`, values)
 
                 // Upload progress images
-                values.tab_contents.map((tab) => {
+                await values.tab_contents.map((tab) => {
                     if(tab.layout == 'project_progress') {
                         this.deleteUploadedLibraries(tab.contents.removeFileIds)
                         this.doUpload(
@@ -185,7 +187,7 @@ class Form extends Component {
                 const createdProject = createProjectResponse.data
 
                 // Upload progress images
-                values.tab_contents.map((tab) => {
+                await values.tab_contents.map((tab) => {
                     if(tab.layout == 'project_progress') {
                         this.deleteUploadedLibraries(tab.contents.removeFileIds)
                         this.doUpload(
@@ -210,7 +212,7 @@ class Form extends Component {
             }
 
             // Redirect to posted project
-            // window.location = '/project/posted'
+            window.location = '/project/posted'
         } catch (e) {
             if (e.response && e.response.data) {
                 window.scrollTo(0, 0)

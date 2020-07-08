@@ -3,12 +3,17 @@
 namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Entities\ImageLibrary;
+use \Carbon\Carbon;
 
 class ImageLibrary extends Model
 {
     protected $fillable = ['library_type', 'file_path', 'meta_data', 'user_id'];
     protected $casts = ['contents' => 'array'];
-    protected $appends = ['date_upload_file'];
+    protected $appends = ['date_upload_file', 'gallery_image'];
+
+    const PROGRESS = 'progress';
+    const GALLERY = 'gallery';
 
     public function libraryable()
     {
@@ -32,8 +37,25 @@ class ImageLibrary extends Model
             $metaData = json_decode($this->meta_data);
             if($metaData) {
                 $attr = $metaData->date_upload_file ?: '';
+                if($attr) {
+                    $attr = Carbon::createFromFormat('Y-m-d', $attr)->format('d/m/Y');
+                }
             }
         }
         return $attr;
+    }
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class, 'image_libraryable_id');
+    }
+
+    public function getGalleryImageAttribute()
+    {
+        return '/storage' . self::where('image_libraryable_id', $this->image_libraryable_id)
+            ->where('image_libraryable_type', Project::class)
+            ->where('library_type', self::GALLERY)
+            ->first()
+            ->file_path;
     }
 }

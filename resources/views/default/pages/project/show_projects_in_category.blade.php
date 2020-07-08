@@ -28,6 +28,7 @@
             <div class="cols-12 col-md-4">
                 @include('default.partials.project.show-categories-with-province',['activeCategoryId'=>$category->id])
                 @include('default.partials.project.news_review')
+                @include('default.partials.project.project_progress')
             </div>
         </div>
     </div>
