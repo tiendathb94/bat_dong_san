@@ -89,7 +89,7 @@ class ProjectController extends Controller
 
         /** @var Project $project */
         $project = Project::query()
-            ->with('category', 'investor')
+            ->with('category', 'investor', 'imageLibraries')
             ->where('status', '=', Project::StatusApproved)
             ->where('slug', '=', $slug)
             ->first();

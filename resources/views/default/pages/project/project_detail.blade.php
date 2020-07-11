@@ -43,13 +43,16 @@
         <div class="tab-content">
             @switch($activeTab['template'])
                 @case('overview')
-                @include('default.pages.project.project_detail_tabs.overview')
+                    @include('default.pages.project.project_detail_tabs.overview')
                 @break
                 @case('location_infrastructure')
-                @include('default.pages.project.project_detail_tabs.location_infrastructure')
+                    @include('default.pages.project.project_detail_tabs.location_infrastructure')
                 @break
                 @case('custom')
-                @include('default.pages.project.project_detail_tabs.custom')
+                    @include('default.pages.project.project_detail_tabs.custom')
+                @break
+                @case('project_progress')
+                    @include('default.pages.project.project_detail_tabs.project_progress', ['project' => $project])
                 @break
                 @case('investor')
                 <div class="content-with-border row p-3">
@@ -104,4 +107,14 @@
     <link
         rel="stylesheet"
         href="{{ asset('css/partials/company-detail.css') . '?m=' . filemtime('css/partials/company-detail.css') }}">
+@endpush
+
+@push('scripts')
+    <script src="/vendor/js/jquery.waterwheelCarousel.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $(".carousel-progress-project").waterwheelCarousel({
+            });
+        });
+    </script>
 @endpush
