@@ -15,7 +15,7 @@
                 <div>
                     @if($project->address)
                         <div>
-                            Địa{{$project->address->show()}}
+                            Địa điểm: {{$project->address->show()}}
                         </div>
                     @endif
                 </div>

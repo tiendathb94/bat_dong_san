@@ -17,10 +17,10 @@ class ProjectController extends Controller
         if (empty($keyword)) {
             return response()->json([]);
         }
-        $projects = DB::table('projects')
+        $projects = Project::with('category')
             ->where('status', Project::StatusApproved)
             ->where('long_name', 'LIKE', "%$keyword%")
-            ->select([DB::raw('id as value'), DB::raw('long_name as name')])
+            ->select('id as value', 'long_name as name', 'id', 'category_id', 'slug')
             ->limit(10)->get();
         return response()->json($projects);
     }
