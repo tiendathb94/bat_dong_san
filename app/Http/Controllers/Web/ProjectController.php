@@ -176,7 +176,7 @@ class ProjectController extends Controller
         ]);
     }
 
-    public function showProjectsInCategory($categorySlug)
+    public function showProjectsInCategory($categorySlug, Request $request)
     {
         $category = Category::query()
             ->where('destination_entity', '=', Project::class)
@@ -188,11 +188,42 @@ class ProjectController extends Controller
 
         $projects = Project::query()
             ->where('status', '=', Project::StatusApproved)
-            ->where('category_id', '=', $category->id)->paginate(15);
+            ->where('category_id', '=', $category->id)
+            ->whereHas('address', function ($query) use($request) {
+                if($request->province_id) {
+                    $query->where('province_id', $request->province_id);
+                }
+                if($request->district_id) {
+                    $query->where('district_id', $request->district_id);
+                }
+            });
+        if($request->priceFrom) {
+            if ($request->priceFrom >= 1000) {
+                $projects->where('price', '>=', $request->priceFrom / 1000)->where('price_unit', Project::PriceUnitBillion);
+            } else {
+                $projects->where('price', '>=', $request->priceFrom)->where('price_unit', Project::PriceUnitMillion);
+            }
+        }
+        if($request->priceTo) {
+            if ($request->priceTo >= 1000) {
+                $projects->where('price', '<=', $request->pricpriceToeFrom / 1000)->where('price_unit', Project::PriceUnitBillion);
+            } else {
+                $projects->where('price', '<=', $request->priceTo)->where('price_unit', Project::PriceUnitMillion);
+            }
+        }
 
         return view($this->_config['view'], [
             'category' => $category,
-            'projects' => $projects,
+            'projects' => $projects->paginate(15),
         ]);
+    }
+
+    public function search(Request $request)
+    {
+        $projects = Project::whereStatus(Project::StatusApproved)->where('long_name', 'like', "%$request->keyword%")->paginate(config('app.project.search'));
+        $data = [
+            'projects' => $projects
+        ];
+        return view($this->_config['view'], $data);
     }
 }

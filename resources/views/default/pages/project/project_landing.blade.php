@@ -6,6 +6,7 @@
 
 @section('content')
     <div class="container mt-5">
+        <div id="js-form-search"></div>
         @if(count($projectsInSlider)>0)
             <div class="row">
                 <div class="col">
@@ -119,4 +120,11 @@
     <link
         rel="stylesheet"
         href="{{ asset('css/pages/project/project-landing.css') . '?m=' . filemtime('css/pages/project/project-landing.css') }}">
+    <link
+        rel="stylesheet"
+        href="{{ asset('css/partials/project/block-search.css') . '?m=' . filemtime('css/partials/project/block-search.css') }}">
+@endpush
+
+@push('scripts')
+    <script src="{{ asset('js/pages/project/search.js') . '?m=' . filemtime('js/pages/project/search.js') }}"></script>
 @endpush
