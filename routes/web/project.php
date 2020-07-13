@@ -35,3 +35,6 @@ Route::get('/du-an/{categorySlug}', 'Web\ProjectController@showProjectsInCategor
 Route::get('/du-an-bat-dong-san', 'Web\ProjectController@projectLanding')
     ->defaults('_config', ['view' => 'default.pages.project.project_landing'])
     ->name('pages.project.project_landing');
+Route::get('/tim-kiem-du-an', 'Web\ProjectController@search')
+    ->defaults('_config', ['view' => 'default.pages.project.search'])
+    ->name('pages.project.search');

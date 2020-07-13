@@ -6,6 +6,7 @@
 
 @section('content')
     <div class="container page-project-detail-container mt-5 mb-5">
+        <div id="js-form-search"></div>
         <div class="row text-center mb-5">
             <div class="col">
                 <h1>{{$project->long_name}}</h1>
@@ -15,30 +16,34 @@
             </div>
         </div>
 
-        <ul class="tab-btn-wrapper row">
-            <li class="tab-btn-item {{$activeTab['template']=='overview'?'active':''}}">
-                <a href="{{route('pages.project.project_detail',['categorySlug'=>$project->category->slug, 'slug'=>$project->slug])}}">
-                    Tổng quan
-                </a>
-            </li>
-            @if(count($project->tabs)>0)
-                @foreach($project->tabs as $tab)
-                    <li class="tab-btn-item {{$activeTab['id']==$tab->id?'active':''}}">
-                        <a href="{{route('pages.project.project_detail_tab',['categorySlug'=>$project->category->slug, 'slug'=>$project->slug,'tabId' => $tab->id])}}">
-                            {{$tab->name}}
+        <div class="row">
+            <div class="col">
+                <ul class="tab-btn-wrapper">
+                    <li class="tab-btn-item {{$activeTab['template']=='overview'?'active':''}}">
+                        <a href="{{route('pages.project.project_detail',['categorySlug'=>$project->category->slug, 'slug'=>$project->slug])}}">
+                            Tổng quan
                         </a>
                     </li>
-                @endforeach
-            @endif
+                    @if(count($project->tabs)>0)
+                        @foreach($project->tabs as $tab)
+                            <li class="tab-btn-item {{$activeTab['id']==$tab->id?'active':''}}">
+                                <a href="{{route('pages.project.project_detail_tab',['categorySlug'=>$project->category->slug, 'slug'=>$project->slug,'tabId' => $tab->id])}}">
+                                    {{$tab->name}}
+                                </a>
+                            </li>
+                        @endforeach
+                    @endif
 
-            @if($project->investor)
-                <li class="tab-btn-item {{$activeTab['template']=='investor'?'active':''}}">
-                    <a href="{{route('pages.project.project_detail_tab',['categorySlug'=>$project->category->slug, 'slug'=>$project->slug,'tabId'=>'investor'])}}">
-                        {{$project->investor_type === \App\Entities\Project::InvestorTypeInvest ? 'Chủ đầu tư' : 'Nhà phân phối'}}
-                    </a>
-                </li>
-            @endif
-        </ul>
+                    @if($project->investor)
+                        <li class="tab-btn-item {{$activeTab['template']=='investor'?'active':''}}">
+                            <a href="{{route('pages.project.project_detail_tab',['categorySlug'=>$project->category->slug, 'slug'=>$project->slug,'tabId'=>'investor'])}}">
+                                {{$project->investor_type === \App\Entities\Project::InvestorTypeInvest ? 'Chủ đầu tư' : 'Nhà phân phối'}}
+                            </a>
+                        </li>
+                    @endif
+                </ul>
+            </div>
+        </div>
 
         <div class="tab-content">
             @switch($activeTab['template'])
@@ -107,6 +112,13 @@
     <link
         rel="stylesheet"
         href="{{ asset('css/partials/company-detail.css') . '?m=' . filemtime('css/partials/company-detail.css') }}">
+    <link
+        rel="stylesheet"
+        href="{{ asset('css/partials/project/block-search.css') . '?m=' . filemtime('css/partials/project/block-search.css') }}">
+@endpush
+
+@push('scripts')
+    <script src="{{ asset('js/pages/project/search.js') . '?m=' . filemtime('js/pages/project/search.js') }}"></script>
 @endpush
 
 @push('scripts')
