@@ -1,9 +1,9 @@
 <?php
 
-use App\Entities\News;
 use Illuminate\Database\Seeder;
+use App\Entities\Post;
 
-class CategoriesTabllerSeeder extends Seeder
+class PostCategoriesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,94 +12,80 @@ class CategoriesTabllerSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('categories')->delete();
         $data = [
             [
-                'name' => 'BĐS & Covid 19',
+                'name' => 'Bắn căn hộ chung cư',
                 'slug' => 'bds-covid-19',
                 'thumbnail' => '',
-                'destination_entity' => News::class,
+                'destination_entity' => Post::class,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
-                'name' => 'Tin thị trường',
+                'name' => 'Bán nhà riêng',
                 'slug' => 'tin-thi-truong',
                 'thumbnail' => '',
-                'destination_entity' => News::class,
+                'destination_entity' => Post::class,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
-                'name' => 'Phân tích - Nhận định',
+                'name' => 'Bán nhà biệt thự, liền kề',
                 'slug' => 'phan-tich-nhan-dinh',
                 'thumbnail' => '',
-                'destination_entity' => News::class,
+                'destination_entity' => Post::class,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
-                'name' => 'Chính sách - Quản lý',
+                'name' => 'Bán nhà mặt phố',
                 'slug' => 'chinh-sach-quan-ly',
                 'thumbnail' => '',
-                'destination_entity' => News::class,
+                'destination_entity' => Post::class,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
-                'name' => 'Thông tin quy hoạch',
+                'name' => 'Bán đất nền dự án',
                 'slug' => 'thong-tin-quy-hoach',
                 'thumbnail' => '',
-                'destination_entity' => News::class,
+                'destination_entity' => Post::class,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
-                'name' => 'BĐS thế giới',
+                'name' => 'Bán đất',
                 'slug' => 'bds-the-gioi',
                 'thumbnail' => '',
-                'destination_entity' => News::class,
+                'destination_entity' => Post::class,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
-                'name' => 'Tài chính - Chứng khoán - BDS',
+                'name' => 'Bán trang trại, khu nghỉ dưỡng',
                 'slug' => 'tai-chinh-chung-khoan-bds',
                 'thumbnail' => '',
-                'destination_entity' => News::class,
+                'destination_entity' => Post::class,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
-                'name' => 'Tư vấn luật',
+                'name' => 'Bán kho, nhà xưởng',
                 'slug' => 'tu-van-luat',
                 'thumbnail' => '',
-                'destination_entity' => News::class,
+                'destination_entity' => Post::class,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
-                'name' => 'Lời khuyên',
+                'name' => 'Bán loại bất động sản khác',
                 'slug' => 'loi-khuyen',
                 'thumbnail' => '',
-                'destination_entity' => News::class,
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'name' => 'Đánh giá dự án',
-                'slug' => 'danh-gia-du-an',
-                'thumbnail' => '',
-                'destination_entity' => News::class,
+                'destination_entity' => Post::class,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
         ];
-
-        
-        foreach(  $data as $i ) {
-            DB::table('categories')->insert($i);
-        }
-
+        DB::table('categories')->insert($data);
     }
 }
