@@ -172,12 +172,13 @@
         list-style-type: none;
         flex-direction: row;
         display: flex;
+        z-index: 2;
         
         li {
             margin-right: 10px;
             font-size: 12px;
             position: relative;
-            span {
+            a {
                 &::after {
                     content: '';
                     position: absolute;
@@ -197,12 +198,9 @@
                     -webkit-transition: background-color .3s,border-color .3s;
                     -moz-transition: background-color .3s,border-color .3s;
                     transition: background-color .3s,border-color .3s;
-                    z-index: 2;
                     cursor: pointer;
                 }
-            }
-            &:nth-last-child(1) {
-                span::after {
+                &.active::after {
                     background-color: #3d9e10!important;
                     border-color: #3d9e10!important;
                     width: 25px!important;

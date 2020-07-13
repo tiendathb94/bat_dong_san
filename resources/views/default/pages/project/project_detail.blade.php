@@ -113,8 +113,28 @@
     <script src="/vendor/js/jquery.waterwheelCarousel.min.js"></script>
     <script>
         $(document).ready(function() {
-            $(".carousel-progress-project").waterwheelCarousel({
-            });
+            if($(window).width() > 768) {
+                $(".carousel-progress-project").waterwheelCarousel({
+                    separation: 150
+                });
+            } else {
+                $(".carousel-progress-project").waterwheelCarousel({
+                    separation: 80
+                });
+            }
+
+            let translateX = 0; 
+            $('.next').click(function () {
+                translateX -= 30;
+                $('.events-wrapper ol').css('transform', `translateX(${translateX}px)`)
+            })
+
+            $('.prev').click(function () {
+                if(translateX <= -30) {
+                    translateX += 30;
+                    $('.events-wrapper ol').css('transform', `translateX(${translateX}px)`)
+                }
+            })
         });
     </script>
 @endpush

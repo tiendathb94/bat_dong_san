@@ -1,17 +1,21 @@
-@php($images = $project->imageLibraries->where('library_type', 'progress')->sortByDesc('date_sort')->groupBy('date_upload_file'))
+@php($images = $project->imageLibraries->where('library_type', 'progress')->sortBy('date_sort')->groupBy('date_upload_file'))
+@php($date = request()->d ?: $images->last()[0]->date_upload_file)
 <div class="row">
     <div class="col-12">
-        <h4 class="text-uppercase">HÌNH ẢNH DỰ ÁN CẬP NHẬT NGÀY {{ convertDateFormat($images->first()[0]->date_upload_file) }}</h4>
+        <h4 class="text-uppercase">HÌNH ẢNH DỰ ÁN CẬP NHẬT NGÀY {{ convertDateFormat($date) }}</h4>
     </div>
     <div class="col-12">
-        @php($childImage = $images->first() )
-            <div class="border show-image">
+        <div class="border show-image">
+            @foreach($images as $key => $value)
+                @if($date == $key)
                 <div class="carousel-progress-project">
-                    @foreach($childImage as $image)
-                        <img src="{{ '/storage' . $image->file_path }}" alt="" />
+                    @foreach($value as $image)
+                        <img src="{{ '/storage' . $image->file_path }}" alt="" class=""/>
                     @endforeach
                 </div>
-            </div>
+                @endif
+            @endforeach
+        </div>
     </div>
     <div class="col-12">
         <div class="border bg-timeline">
@@ -23,7 +27,7 @@
                         <ol>
                             @foreach($images as $key => $value)
                                 <li>
-                                    <span>{{ convertDateFormat($key) }}</span>
+                                    <a href="{{  url()->current() . '?d=' . $key }}" class="{{ $date == $key ? 'active' : '' }}">{{ convertDateFormat($key) }}</a>
                                 </li>
                             @endforeach
                         </ol>
