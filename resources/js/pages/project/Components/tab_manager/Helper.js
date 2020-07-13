@@ -1,5 +1,6 @@
 import LocationInfrastructure from "./layout/LocationInfrastructure"
 import CustomContent from "./layout/CustomContent"
+import ProjectProgress from "./layout/ProjectProgress"
 import { find } from 'lodash'
 
 const Helper = {
@@ -11,7 +12,12 @@ const Helper = {
                 component: LocationInfrastructure,
                 contentFields: ['location', 'infrastructure'],
             },
-            //{ name: 'Tiến độ dự án', layout: 'project_progress' },
+            { 
+                name: 'Tiến độ dự án', 
+                layout: 'project_progress',
+                component: ProjectProgress,
+                contentFields: ['date_updload_file', 'progressImageFiles', 'removeFileIds'],
+            },
             {
                 name: 'Nội dung tùy chỉnh',
                 layout: 'custom',

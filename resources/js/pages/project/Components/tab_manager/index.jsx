@@ -109,13 +109,14 @@ class TabManager extends Component {
                         </button>
                     ))}
 
-                    <CreateTabButton onAddContent={this.onAddTabContent}/>
+                    <CreateTabButton tabContents={this.state.tabContents}  onAddContent={this.onAddTabContent}/>
                 </div>
 
                 {
                     this.state.tabContents.length > 0 &&
                     <TabForm
                         tabContent={this.state.tabContents[this.state.activeTabIndex]}
+                        project={this.props.project}
                         onChangeTabName={(name) => this.onChangeTabContentName(this.state.activeTabIndex, name)}
                         onChangeTabValues={(values) => this.setTabContentValues(this.state.activeTabIndex, values)}
                         key={this.state.activeTabIndex}

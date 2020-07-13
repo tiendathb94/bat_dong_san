@@ -95,7 +95,58 @@ class Form extends Component {
         this.setState({ formValues: { ...this.state.formValues, [event.target.name]: event.target.value } })
     }
 
+    async doUpload (libraryableType, libraryableId, libraryType, metaData = [], selectedFiles = []) {
+        if (!selectedFiles || !selectedFiles.length) {
+            return
+        }
+
+        const formData = new FormData()
+        formData.append('libraryable_type', libraryableType)
+        formData.append('libraryable_id', libraryableId)
+        formData.append('library_type', libraryType)
+
+        for (let i = 0; i < selectedFiles.length; i++) {
+            formData.set(`files[${i}]`, selectedFiles[i])
+        }
+
+        for (const k in metaData) {
+            formData.append(`meta_data[${k}]`, metaData[k])
+        }
+
+        const response = await axios.post(
+            `${config.api.baseUrl}/image-library/uploads`,
+            formData,
+            {
+                headers: {
+                    'content-type': 'multipart/form-data'
+                }
+            },
+        )
+
+        return response.data
+    }
+
+    async deleteUploadedLibraries (ids) {
+        if (!ids || ids.length < 1) {
+            return
+        }
+
+        try {
+            await axios.post(`${config.api.baseUrl}/image-library/deletes`, {
+                image_library_ids: ids
+            })
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
+
+
     onClickSaveProjectButton = async () => {
+        var times = $('.datepicker').val().split('/');
+        var date_upload_file = times[2] + '-' + times[1] + '-' + times[0];
+        var date_sort = date_upload_file.replace(/-/g, '')
+
         if (!this.validate()) {
             window.scrollTo(0, 0)
             return
@@ -104,13 +155,29 @@ class Form extends Component {
         const values = cloneDeep(this.state.formValues)
         values.project_overview = draftToHtml(convertToRaw(this.state.formValues.project_overview.getCurrentContent()))
         values.tab_contents = this.tabManager.current.getTabContentsFormRawValues()
-
         try {
             this.setState({ loading: true })
 
             // Create project
             if (this.isEditMode) {
                 await axios.put(`${config.api.baseUrl}/project/${this.props.project.id}`, values)
+
+                // Upload progress images
+                await values.tab_contents.map((tab) => {
+                    if(tab.layout == 'project_progress') {
+                        this.deleteUploadedLibraries(tab.contents.removeFileIds)
+                        this.doUpload(
+                            'App\\Entities\\Project',
+                            this.props.project.id,
+                            'progress',
+                            {
+                                date_upload_file: date_upload_file,
+                                date_sort: date_sort
+                            },
+                            tab.contents.progressImageFiles
+                        )
+                    }
+                })
 
                 // Upload library images
                 await this.imageLibraryUpload.current.doUpload(
@@ -121,6 +188,23 @@ class Form extends Component {
             } else {
                 const createProjectResponse = await axios.post(`${config.api.baseUrl}/project/create`, values)
                 const createdProject = createProjectResponse.data
+
+                // Upload progress images
+                await values.tab_contents.map((tab) => {
+                    if(tab.layout == 'project_progress') {
+                        this.deleteUploadedLibraries(tab.contents.removeFileIds)
+                        this.doUpload(
+                            'App\\Entities\\Project',
+                            createdProject.id,
+                            'progress',
+                            {
+                                date_upload_file: date_upload_file,
+                                date_sort: date_sort
+                            },
+                            tab.contents.progressImageFiles
+                        )
+                    }
+                })
 
                 // Upload library images
                 await this.imageLibraryUpload.current.doUpload(
@@ -387,7 +471,7 @@ class Form extends Component {
 
                 <div className="row">
                     <div className="col">
-                        <TabManager ref={this.tabManager} tabContents={this.state.formValues.tab_contents}/>
+                        <TabManager ref={this.tabManager} project={this.props.project} tabContents={this.state.formValues.tab_contents}/>
                     </div>
                 </div>
 

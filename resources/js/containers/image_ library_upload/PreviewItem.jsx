@@ -42,13 +42,17 @@ class PreviewItem extends Component {
     }
 
     displayDate (dateTimeString) {
-        const date = new Date(dateTimeString)
-        return date.toLocaleDateString('vi-VN', {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        })
+        if(dateTimeString) {
+            const date = new Date(dateTimeString)
+            return date.toLocaleDateString('vi-VN', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            })
+        } else {
+            return '';
+        }
     }
 
     render () {
@@ -65,7 +69,7 @@ class PreviewItem extends Component {
                             </div>
                             <div className={classnames(Style.uploadPreviewRowHead, 'row')}>
                                 <div className='col col-sm-4 col-md-5'>Ảnh xem trước</div>
-                                <div className='col col-sm-4 col-md-5'>Ngày tải lên</div>
+                                <div className='col col-sm-4 col-md-5'>{this.props.projectProgressTitleDate ?? 'Ngày tải lên'}</div>
                                 <div className='col col-sm-4 col-md-2'>Hành động</div>
                             </div>
                         </div>
@@ -80,7 +84,7 @@ class PreviewItem extends Component {
                                     <img src={`/storage/${file.file_path}`}/>
                                 </a>
                             </div>
-                            <div className="col col-sm-4 col-md-5">{this.displayDate(file.created_at)}</div>
+                            <div className="col col-sm-4 col-md-5">{this.props.projectProgressTitleDate ? this.displayDate(file.date_upload_file) : this.displayDate(file.created_at)}</div>
                             <div className={classnames('col col-sm-4 col-md-2', Style.deleteBtn)}>
                                 <div onClick={() => this.onClickRemoveUploadedFile(file.id)}>
                                     <span className="ti-trash"></span> Xóa

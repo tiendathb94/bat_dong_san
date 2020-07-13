@@ -37,7 +37,7 @@ class ImageLibraryUpload extends Component {
     }
 
     // Call from parent component
-    async doUpload (libraryableType, libraryableId, libraryType, metaData = {}) {
+    async doUpload (libraryableType, libraryableId, libraryType, metaData = []) {
         await this.deleteUploadedLibraries()
 
         if (!this.state.selectedFiles || !this.state.selectedFiles.length) {
@@ -53,8 +53,9 @@ class ImageLibraryUpload extends Component {
             formData.set(`files[${i}]`, this.state.selectedFiles[i])
         }
 
-        for (const k in metaData) {
-            formData.append(`meta_data[${k}]`, metaData[k])
+        if (metaData) {
+            formData.append('meta_data', metaData)
+
         }
 
         const response = await axios.post(
@@ -91,10 +92,16 @@ class ImageLibraryUpload extends Component {
 
             this.setState({ selectedFiles })
         }
+        if(this.props.onRemoveFile) {
+            this.props.onRemoveFile(fileId, isUploaded)
+        }
     }
 
     onAddedFiles = (selectedFiles) => {
         this.setState({ selectedFiles: [...this.state.selectedFiles, ...Array.from(selectedFiles)] })
+        if(this.props.onAddedFiles) {
+            this.props.onAddedFiles(selectedFiles)
+        }
     }
 
     render () {
@@ -103,6 +110,7 @@ class ImageLibraryUpload extends Component {
                 <UploadBox onAddedFiles={this.onAddedFiles}/>
                 <PreviewItem
                     selectedFiles={this.state.selectedFiles}
+                    projectProgressTitleDate={this.props.projectProgressTitleDate}
                     onRemoveFile={this.onRemoveFile}
                     uploadedImages={this.state.uploadedImages}/>
             </div>

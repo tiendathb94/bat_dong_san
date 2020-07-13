@@ -48,13 +48,16 @@
         <div class="tab-content">
             @switch($activeTab['template'])
                 @case('overview')
-                @include('default.pages.project.project_detail_tabs.overview')
+                    @include('default.pages.project.project_detail_tabs.overview')
                 @break
                 @case('location_infrastructure')
-                @include('default.pages.project.project_detail_tabs.location_infrastructure')
+                    @include('default.pages.project.project_detail_tabs.location_infrastructure')
                 @break
                 @case('custom')
-                @include('default.pages.project.project_detail_tabs.custom')
+                    @include('default.pages.project.project_detail_tabs.custom')
+                @break
+                @case('project_progress')
+                    @include('default.pages.project.project_detail_tabs.project_progress', ['project' => $project])
                 @break
                 @case('investor')
                 <div class="content-with-border row p-3">
@@ -91,6 +94,7 @@
             </div>
             <div class="cols-12 col-md-4">
                 @include('default.partials.project.news_review')
+                @include('default.partials.project.project_progress')
             </div>
         </div>
     </div>
@@ -115,4 +119,34 @@
 
 @push('scripts')
     <script src="{{ asset('js/pages/project/search.js') . '?m=' . filemtime('js/pages/project/search.js') }}"></script>
+@endpush
+
+@push('scripts')
+    <script src="/vendor/js/jquery.waterwheelCarousel.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            if($(window).width() > 768) {
+                $(".carousel-progress-project").waterwheelCarousel({
+                    separation: 150
+                });
+            } else {
+                $(".carousel-progress-project").waterwheelCarousel({
+                    separation: 80
+                });
+            }
+
+            let translateX = 0; 
+            $('.next').click(function () {
+                translateX -= 30;
+                $('.events-wrapper ol').css('transform', `translateX(${translateX}px)`)
+            })
+
+            $('.prev').click(function () {
+                if(translateX <= -30) {
+                    translateX += 30;
+                    $('.events-wrapper ol').css('transform', `translateX(${translateX}px)`)
+                }
+            })
+        });
+    </script>
 @endpush

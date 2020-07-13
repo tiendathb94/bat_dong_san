@@ -83,4 +83,11 @@ function getCategoryManyPeopleCare()
     return $categories;
 }
 
+function convertDateFormat($date, $format = 'd/m/Y') {
+    if ($date) {
+        return Carbon::createFromFormat('Y-m-d', $date)->format($format);
+    }
+    return '';
+}
+
 

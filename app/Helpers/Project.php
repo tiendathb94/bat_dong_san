@@ -5,6 +5,7 @@ use App\Entities\Category;
 use App\Entities\Address;
 use App\Entities\Province;
 use Illuminate\Support\Facades\DB;
+use App\Entities\ImageLibrary;
 
 function getProjectsInLocation($address, $limit, $notIn = [])
 {
@@ -80,4 +81,15 @@ function getProvincesInProjectCategory($categoryId)
             ->where('addresses.addressable_type', '=', Project::class)
             ->where('projects.category_id', '=', $categoryId)
     )->get();
+}
+
+function getImageProjectProgress()
+{
+    return ImageLibrary::with('project.category')
+    ->where('image_libraryable_type', Project::class)
+    ->where('library_type', ImageLibrary::PROGRESS)
+    ->get()
+    ->sortByDesc('date_sort')
+    ->unique('image_libraryable_id')
+    ->take(10);
 }

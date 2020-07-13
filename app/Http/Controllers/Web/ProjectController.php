@@ -28,7 +28,8 @@ class ProjectController extends Controller
             return abort(404);
         }
 
-        $project->galleryImages = $project->imageLibraries()->where('library_type', 'gallery')->get();
+        $project->galleryImages = $project->imageLibraries()->where('library_type', 'gallery')->orderByDesc('created_at')->get();
+        $project->progressImages = $project->imageLibraries()->where('library_type', 'progress')->get()->sortByDesc('date_sort')->values()->all();
 
         return view($this->_config['view'], ['project' => $project]);
     }
@@ -88,7 +89,7 @@ class ProjectController extends Controller
 
         /** @var Project $project */
         $project = Project::query()
-            ->with('category', 'investor')
+            ->with('category', 'investor', 'imageLibraries')
             ->where('status', '=', Project::StatusApproved)
             ->where('slug', '=', $slug)
             ->first();

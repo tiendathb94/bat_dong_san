@@ -73,3 +73,18 @@
         text-transform: uppercase;
     }
 }
+
+.h-65 {
+    height: 65px;
+}
+
+.bg-default-image {
+    background-color: #6c757d33;
+    
+    img {
+        transition: transform 0.5s ease;
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+}
