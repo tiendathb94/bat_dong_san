@@ -1,16 +1,22 @@
 import React, { Component } from 'react'
 import AddressForm from "../../../containers/address_form"
+import CategoryField from '../../../containers/category_field'
+import AutocompleteField from '../../../containers/autocomplete_field'
+import axios from "axios"
+import config from "../../../config"
 
-const FORM_FIELD = {
-    1: 'Nhà đất bán',
-    2: 'Nhà đát cho thuê'
-}
+const FORM_FIELD = [
+    {slug: 'nha-dat-ban', title: 'Nhà đất bán'},
+    {slug: 'nha-dat-cho-thue', title: 'Nhà đất cho thuê'}
+]
 class Form extends Component {
     constructor (props) {
         super(props)
 
         this.state = {
-            formValues: {}
+            formValues: {},
+            errorByFields: {},
+            priceUnits: []
         }
 
         this.addressField = React.createRef()
@@ -35,8 +41,16 @@ class Form extends Component {
             this.state.formValues.address[fieldName] : null
     }
 
-    onChangeCategory = (event) => {
-        this.setState({ formValues: { ...this.state.formValues, category_id: event.target.value } })
+    onChange = (event) => {
+        this.setState({ formValues: { ...this.state.formValues, [event.target.name]: event.target.value } })
+        if (event.target.name == 'slugParent') {
+            this.getPriceUnit(event.target.value)
+        }
+    }
+
+    async getPriceUnit (slug) {
+        const response = await axios.get(`${config.api.baseUrl}/price-unit?slug=${slug}`)
+        this.setState({ priceUnits: response.data })
     }
 
     render () {
@@ -51,18 +65,20 @@ class Form extends Component {
                 <div className="row">
                     <div className="col col-sm-12 col-md-6">
                         <label htmlFor="form">Hình thức</label>
-                        <select className="form-control" id="form">
+                        <select onChange={this.onChange} className="form-control" id="form" name="slugParent">
                             <option value="">-- Hình thức --</option>
                             {
-                                FORM_FIELD.map((index, value) => (<option value={index}>{value}</option>))
+                                FORM_FIELD.map(item => (<option key={item.slug} value={item.slug}>{item.title}</option>))
                             }
                         </select>
                     </div>
                     <div className="col col-sm-12 col-md-6">
                         <CategoryField
                             label="Loại"
+                            isNotFetchCategories={true}
                             destinationEntity="App\Entities\Post"
-                            onChange={this.onChangeCategory}
+                            slugParent={this.state.formValues.slugParent}
+                            onChange={this.onChange}
                             message={this.state.errorByFields.category_id}
                             value={parseInt(this.state.formValues.category_id)}
                         />
@@ -77,6 +93,40 @@ class Form extends Component {
                     wardId={this.getAddressValue('ward_id')}
                     line={this.getAddressValue('address')}
                 />
+
+                <div className="row">
+                    <div className="col col-sm-12 col-md-6">
+                        <label htmlFor="">Dự án</label>
+                        <AutocompleteField
+                            endpoint="project/search"
+                            onChange={this.onChange}    
+                            placeholder="-- Dự án --"
+                        />
+                    </div>
+                    <div className="col col-sm-12 col-md-6">
+                        <label htmlFor="">Diện tích</label>
+                        <div className="w-75 d-flex align-items-center">
+                            <input type="number" className="form-control mr-3" name="total_area"/>
+                            <span>m2</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col col-sm-12 col-md-6">
+                        <label htmlFor="">Giá</label>
+                        <input onChange={this.onChange}  type="number" className="form-control mr-3" name="price"/>
+                    </div>
+                    <div className="col col-sm-12 col-md-6">
+                        <label htmlFor="">Đơn vị</label>
+                        <select onChange={this.onChange}  name="price_unit" id="" className="form-control">
+                            <option value="">Thỏa thuận</option>
+                            {
+                                Object.keys(this.state.priceUnits).map((key) => (<option key={key} value={key}>{this.state.priceUnits[key]}</option>))
+                            }
+                        </select>
+                    </div>
+                </div>
             </div>
         )
     }

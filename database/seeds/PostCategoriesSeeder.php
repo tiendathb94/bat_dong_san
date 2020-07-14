@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Entities\Post;
+use App\Entities\Category;
 
 class PostCategoriesSeeder extends Seeder
 {
@@ -12,18 +13,57 @@ class PostCategoriesSeeder extends Seeder
      */
     public function run()
     {
+        $sellHouse = Category::create([
+            'name' => 'Nhà đất bán',
+            'slug' => 'nha-dat-ban',
+            'thumbnail' => '',
+            'destination_entity' => Post::class,
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+
+        $leaseHouse = Category::create([
+            'name' => 'Nhà đất cho thuê',
+            'slug' => 'nha-dat-cho-thue',
+            'thumbnail' => '',
+            'destination_entity' => Post::class,
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+
+        $buyHouse = Category::create([
+            'name' => 'Nhà đất cần mua',
+            'slug' => 'nha-dat-cam-mua',
+            'thumbnail' => '',
+            'destination_entity' => Post::class,
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+
+        $needEmployHouse = Category::create([
+            'name' => 'Nhà đất cần thuê',
+            'slug' => 'nha-dat-cam-thue',
+            'thumbnail' => '',
+            'destination_entity' => Post::class,
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+
+
         $data = [
             [
                 'name' => 'Bắn căn hộ chung cư',
-                'slug' => 'bds-covid-19',
+                'slug' => 'ban-can-ho-chung-cu',
                 'thumbnail' => '',
+                'parent_id' => $sellHouse->id,
                 'destination_entity' => Post::class,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'name' => 'Bán nhà riêng',
-                'slug' => 'tin-thi-truong',
+                'slug' => 'ban-nha-rieng',
+                'parent_id' => $sellHouse->id,
                 'thumbnail' => '',
                 'destination_entity' => Post::class,
                 'created_at' => now(),
@@ -31,7 +71,8 @@ class PostCategoriesSeeder extends Seeder
             ],
             [
                 'name' => 'Bán nhà biệt thự, liền kề',
-                'slug' => 'phan-tich-nhan-dinh',
+                'slug' => 'ban-nha-biet-thu-lien-ke',
+                'parent_id' => $sellHouse->id,
                 'thumbnail' => '',
                 'destination_entity' => Post::class,
                 'created_at' => now(),
@@ -39,48 +80,282 @@ class PostCategoriesSeeder extends Seeder
             ],
             [
                 'name' => 'Bán nhà mặt phố',
-                'slug' => 'chinh-sach-quan-ly',
+                'slug' => 'ban-nha-mat-pho',
                 'thumbnail' => '',
+                'parent_id' => $sellHouse->id,
                 'destination_entity' => Post::class,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'name' => 'Bán đất nền dự án',
-                'slug' => 'thong-tin-quy-hoach',
+                'slug' => 'ban-dat-nen-du-an',
                 'thumbnail' => '',
+                'parent_id' => $sellHouse->id,
                 'destination_entity' => Post::class,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'name' => 'Bán đất',
-                'slug' => 'bds-the-gioi',
+                'slug' => 'bat-dat',
                 'thumbnail' => '',
+                'parent_id' => $sellHouse->id,
                 'destination_entity' => Post::class,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'name' => 'Bán trang trại, khu nghỉ dưỡng',
-                'slug' => 'tai-chinh-chung-khoan-bds',
+                'slug' => 'ban-trang-trai-khu-nghi-duong',
                 'thumbnail' => '',
+                'parent_id' => $sellHouse->id,
                 'destination_entity' => Post::class,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'name' => 'Bán kho, nhà xưởng',
-                'slug' => 'tu-van-luat',
+                'slug' => 'ban-kho-nha-xuong',
                 'thumbnail' => '',
+                'parent_id' => $sellHouse->id,
                 'destination_entity' => Post::class,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'name' => 'Bán loại bất động sản khác',
-                'slug' => 'loi-khuyen',
+                'slug' => 'ban-loai-bat-dong-san-khac',
                 'thumbnail' => '',
+                'parent_id' => $sellHouse->id,
+                'destination_entity' => Post::class,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+
+            [
+                'name' => 'Cho thuê căn hộ chung cư',
+                'slug' => 'cho-thue-can-ho-chung-cu',
+                'thumbnail' => '',
+                'parent_id' => $leaseHouse->id,
+                'destination_entity' => Post::class,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Cho thuê nhà riêng',
+                'slug' => 'cho-thue-nha-rieng',
+                'thumbnail' => '',
+                'parent_id' => $leaseHouse->id,
+                'destination_entity' => Post::class,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Cho thuê nhà mặt phố',
+                'slug' => 'cho-thue-nha-mat-pho',
+                'thumbnail' => '',
+                'parent_id' => $leaseHouse->id,
+                'destination_entity' => Post::class,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Cho thuê nhà trọ, phòng trọ',
+                'slug' => 'cho-thue-nha-tro-phong-tro',
+                'thumbnail' => '',
+                'parent_id' => $leaseHouse->id,
+                'destination_entity' => Post::class,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Cho thuê văn phòng',
+                'slug' => 'cho-thue-van-phong',
+                'thumbnail' => '',
+                'parent_id' => $leaseHouse->id,
+                'destination_entity' => Post::class,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Cho thuê cửa hàng, ki ốt',
+                'slug' => 'cho-thue-cua-hang-ki-ot',
+                'thumbnail' => '',
+                'parent_id' => $leaseHouse->id,
+                'destination_entity' => Post::class,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Cho thuê kho, nhà xưởng, đất',
+                'slug' => 'cho-thue-kho-nha-xuong-dat',
+                'thumbnail' => '',
+                'parent_id' => $leaseHouse->id,
+                'destination_entity' => Post::class,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Cho thuê loại bất động sản khác',
+                'slug' => 'cho-thue-loai-bat-dong-san-khac',
+                'thumbnail' => '',
+                'parent_id' => $leaseHouse->id,
+                'destination_entity' => Post::class,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+
+            [
+                'name' => 'Mua căn hộ chung cư',
+                'slug' => 'mua-can-ho-chung-cu',
+                'thumbnail' => '',
+                'parent_id' => $buyHouse->id,
+                'destination_entity' => Post::class,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Mua nhà riêng',
+                'slug' => 'mua-nha-rieng',
+                'thumbnail' => '',
+                'parent_id' => $buyHouse->id,
+                'destination_entity' => Post::class,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Mua nhà biệt thự, liền kề',
+                'slug' => 'mua-nha-biet-thu-lien-ke',
+                'thumbnail' => '',
+                'parent_id' => $buyHouse->id,
+                'destination_entity' => Post::class,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Mua nhà mặt phố',
+                'slug' => 'mua-nha-mat-pho',
+                'thumbnail' => '',
+                'parent_id' => $buyHouse->id,
+                'destination_entity' => Post::class,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Mua đất nền dự án',
+                'slug' => 'mua-dat-nen-du-an',
+                'thumbnail' => '',
+                'parent_id' => $buyHouse->id,
+                'destination_entity' => Post::class,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Mua đất',
+                'slug' => 'mua-dat',
+                'parent_id' => $buyHouse->id,
+                'thumbnail' => '',
+                'destination_entity' => Post::class,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Mua trang trại, khu nghỉ dưỡng',
+                'slug' => 'mua-trang-trai-khu-nghi-duong',
+                'thumbnail' => '',
+                'parent_id' => $buyHouse->id,
+                'destination_entity' => Post::class,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Mua kho, nhà xưởng',
+                'slug' => 'mua-kho-nha-xuong',
+                'thumbnail' => '',
+                'parent_id' => $buyHouse->id,
+                'destination_entity' => Post::class,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Mua loại bất động sản khác',
+                'slug' => 'mua-loai-bat-dong-san-khac',
+                'thumbnail' => '',
+                'parent_id' => $buyHouse->id,
+                'destination_entity' => Post::class,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+
+            [
+                'name' => 'Cần thuê căn hộ chung cư',
+                'slug' => 'can-thue-can-ho-chung-cu',
+                'thumbnail' => '',
+                'parent_id' => $needEmployHouse->id,
+                'destination_entity' => Post::class,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Cần thuê nhà riêng',
+                'slug' => 'can-thue-nha-rieng',
+                'thumbnail' => '',
+                'parent_id' => $needEmployHouse->id,
+                'destination_entity' => Post::class,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Cần thuê nhà mặt phố',
+                'slug' => 'can-thue-nha-mat-pho',
+                'thumbnail' => '',
+                'parent_id' => $needEmployHouse->id,
+                'destination_entity' => Post::class,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Cần thuê nhà trọ, phòng trọ',
+                'slug' => 'can-thue-nha-tro-phong-tro',
+                'thumbnail' => '',
+                'parent_id' => $needEmployHouse->id,
+                'destination_entity' => Post::class,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Cần thuê văn phòng',
+                'slug' => 'can-thue-van-phong',
+                'thumbnail' => '',
+                'parent_id' => $needEmployHouse->id,
+                'destination_entity' => Post::class,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Cần thuê cửa hàng, ki ốt',
+                'slug' => 'can-thue-cua-hang-ki-ot',
+                'thumbnail' => '',
+                'parent_id' => $needEmployHouse->id,
+                'destination_entity' => Post::class,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Cần thuê kho, nhà xưởng, đất',
+                'slug' => 'can-thue-kho-nha-xuong-dat',
+                'thumbnail' => '',
+                'parent_id' => $needEmployHouse->id,
+                'destination_entity' => Post::class,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Cần thuê loại bất động sản khác',
+                'slug' => 'can-thue-loai-bat-dong-san-khac',
+                'thumbnail' => '',
+                'parent_id' => $needEmployHouse->id,
                 'destination_entity' => Post::class,
                 'created_at' => now(),
                 'updated_at' => now()
