@@ -13,6 +13,7 @@ class PostCategoriesSeeder extends Seeder
      */
     public function run()
     {
+        \DB::table('categories')->where('destination_entity', Post::class)->delete();
         $sellHouse = Category::create([
             'name' => 'Nhà đất bán',
             'slug' => 'nha-dat-ban',

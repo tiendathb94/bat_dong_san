@@ -19,22 +19,23 @@ class CreatePostsTable extends Migration
             $table->string('slug', 255);
             $table->tinyInteger('form');
             $table->longText('content');
-            $table->tinyInteger('price_unit');
+            $table->tinyInteger('price_unit')->nullable();
             $table->tinyInteger('status');
-            $table->double('facade');
-            $table->double('way_in');
-            $table->integer('direction_house');
-            $table->integer('direction_balcony');
-            $table->integer('number_of_floors');
-            $table->integer('number_of_bedroom');
-            $table->integer('number_of_toilet');
-            $table->string('furniture', 255);
-            $table->string('legal_information', 255);
-            $table->unsignedBigInteger('project_id');
+            $table->double('facade')->nullable();
+            $table->double('way_in')->nullable();
+            $table->integer('direction_house')->nullable();
+            $table->integer('direction_balcony')->nullable();
+            $table->integer('number_of_floors')->nullable();
+            $table->integer('number_of_bedroom')->nullable();
+            $table->integer('number_of_toilet')->nullable();
+            $table->string('furniture', 255)->nullable();
+            $table->string('legal_information', 255)->nullable();
+            $table->unsignedBigInteger('project_id')->nullable();
             $table->unsignedDouble('total_area')->nullable();
             $table->unsignedBigInteger('category_id');
-            $table->unsignedDouble('price');
+            $table->unsignedDouble('price')->nullable();
             $table->unsignedBigInteger('user_id');
+            $table->integer('total_price')->nullable();
             $table->timestamps();
 
             // Index
