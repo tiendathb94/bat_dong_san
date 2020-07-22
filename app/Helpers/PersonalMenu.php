@@ -24,7 +24,7 @@ function personalMenuItemsDefinition()
                     'label' => 'Quản lý tin rao bán/cho thuê'
                 ],
                 [
-                    'route_name' => '',
+                    'route_name' => 'posts.create_sell',
                     'label' => 'Đăng tin rao bán/cho thuê'
                 ],
                 [

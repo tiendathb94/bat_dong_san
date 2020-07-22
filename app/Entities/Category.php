@@ -9,7 +9,7 @@ use App\Entities\Statistic;
 class Category extends Model
 {
     protected $fillable = [
-        'name', 'thumbnail'
+        'name', 'thumbnail', 'parent_id'
     ];
 
     protected $appends = ['total_views_last_week'];

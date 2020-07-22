@@ -12,6 +12,7 @@
         "ckfinder/ckfinder-laravel-package": "v3.5.1.5",
         "cviebrock/eloquent-sluggable": "^7.0",
         "dirape/token": "^2.3",
+        "doctrine/dbal": "^2.10",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.3",

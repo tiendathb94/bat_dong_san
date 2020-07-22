@@ -12,7 +12,7 @@ class CategoriesTabllerSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('news')->delete();
+        \DB::table('categories')->delete();
         $data = [
             [
                 'name' => 'BĐS & Covid 19',

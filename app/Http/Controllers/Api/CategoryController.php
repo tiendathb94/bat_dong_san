@@ -16,12 +16,20 @@ class CategoryController extends Controller
     public function getCategoriesByDestinationEntity(Request $request)
     {
         $destinationEntity = $request->get('destination_entity');
+        $parentId = '';
         if (empty($destinationEntity)) {
             return response()->json(['error' => true, 'message' => 'Thiếu destination entity']);
         }
 
-        $categories = Category::query()->where('destination_entity', '=', $request->get('destination_entity'))->get();
-        return response()->json($categories);
+        if($request->slug_parent) {
+            $parentId = Category::whereSlug($request->slug_parent)->where('destination_entity', $request->destination_entity)->first()->id;
+        }
+
+        $categories = Category::query()->where('destination_entity', $request->destination_entity);
+        if($parentId) {
+            $categories->where('parent_id', $parentId);
+        }
+        return response()->json($categories->get());
     }
 
     public function searchByName( Request $request ) {

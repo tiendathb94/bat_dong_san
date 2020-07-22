@@ -1,0 +1,22 @@
+@import '~react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+
+input[type=number] {
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+        -webkit-appearance: none; 
+        margin: 0;
+    }
+}
+
+#js-form-create-sell-posts {
+    .rdw-editor-main {
+        background: #fff;
+        padding: 5px;
+        margin-top: -4px;
+        min-height: 300px;
+    }
+
+    .rdw-editor-wrapper {
+        border: 1px solid #e2e2e2;
+    }
+}
