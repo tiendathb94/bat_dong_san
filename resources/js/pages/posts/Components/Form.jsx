@@ -20,10 +20,14 @@ class Form extends Component {
             errorByFields: {},
             priceUnits: [],
             totalPrice: '',
+            direction: []
         }
 
         this.addressField = React.createRef()
         this.imageLibraryUpload = React.createRef()
+        this.totalAreaField = React.createRef()
+        this.priceField = React.createRef()
+        this.priceUnitField = React.createRef()
     }
 
     onSyncAddress = (address) => {
@@ -50,11 +54,23 @@ class Form extends Component {
         if (event.target.name == 'slugParent') {
             this.getPriceUnit(event.target.value)
         }
+        if (event.target.name == 'price' || event.target.name == 'price_unit' || event.target.name == 'total_area') {
+            this.setTotalPrice()
+        }
+    }
+
+    componentDidMount = () => {
+        this.getDirection();
     }
 
     async getPriceUnit (slug) {
-        const response = await axios.get(`${config.api.baseUrl}/price-unit?slug=${slug}`)
+        const response = await axios.get(`${config.api.baseUrl}/posts/price-unit?slug=${slug}`)
         this.setState({ priceUnits: response.data })
+    }
+
+    async getDirection () {
+        const response = await axios.get(`${config.api.baseUrl}/posts/direction`)
+        this.setState({ direction: response.data })
     }
 
     onContentChange = (editorState) => {
@@ -66,21 +82,120 @@ class Form extends Component {
     }
 
     setTotalPrice = () => {
-        var {total_area, price, price_unit}
+        var total_area = this.totalAreaField.current.value
+        var price = this.priceField.current.value
+        var price_unit = this.priceUnitField.current.value
+        var textTotalPrice = '';
+        var totalPrice = 0;
+        if (price && price_unit) {
+            if (total_area) {
+                switch(price_unit) {
+                    case '3':
+                        totalPrice = price * 100000 * total_area;
+                        textTotalPrice = this.convertTitlePrice(totalPrice)
+                        break
+                    case '4':
+                        totalPrice = price * 1000000 * total_area
+                        textTotalPrice = this.convertTitlePrice(totalPrice)
+                        break
+                    case '7':
+                        totalPrice = price * 100000 * total_area
+                        textTotalPrice = this.convertTitlePrice(totalPrice) + '/tháng'
+                        break
+                    case '8':
+                        totalPrice = price * 1000000 * total_area
+                        textTotalPrice = this.convertTitlePrice(totalPrice) + '/tháng'
+                        break
+                    case '9':
+                        totalPrice = price * 1000 * total_area
+                        textTotalPrice = this.convertTitlePrice(totalPrice) + '/tháng'
+                        break
+                    case '1':
+                        totalPrice = price * 1000000;
+                        textTotalPrice = this.convertTitlePrice(totalPrice)
+                        break
+                    case '2':
+                        totalPrice = price * 1000000000
+                        textTotalPrice = this.convertTitlePrice(totalPrice)
+                        break
+                    case '5':
+                        totalPrice = price * 100000
+                        textTotalPrice = this.convertTitlePrice(totalPrice) + '/tháng'
+                        break
+                    case '6':
+                        totalPrice = price * 1000000
+                        textTotalPrice = this.convertTitlePrice(totalPrice) + '/tháng'
+                        break
+                    default:
+                        totalPrice = 0
+                        textTotalPrice = 'thỏa thuận'
+                }
+            } else {
+                switch(price_unit) {
+                    case '1':
+                        totalPrice = price * 1000000;
+                        textTotalPrice = this.convertTitlePrice(totalPrice)
+                        break
+                    case '2':
+                        totalPrice = price * 1000000000
+                        textTotalPrice = this.convertTitlePrice(totalPrice)
+                        break
+                    case '5':
+                        totalPrice = price * 100000
+                        textTotalPrice = this.convertTitlePrice(totalPrice) + '/tháng'
+                        break
+                    case '6':
+                        totalPrice = price * 1000000
+                        textTotalPrice = this.convertTitlePrice(totalPrice) + '/tháng'
+                        break
+                    default:
+                        totalPrice = 0
+                        textTotalPrice = 'thỏa thuận'
+                }
+            }
+        } else {
+            totalPrice = 0
+            textTotalPrice = 'Thỏa thuận'
+        }
+        this.setState({
+            totalPrice: textTotalPrice,
+            formValues: {
+                ...this.state.formValues,
+                total_price: totalPrice
+            }
+        })
+    }
+
+    convertTitlePrice = (price) => {
+        if (price >= 1000000000) return price/1000000000 + ' tỷ'
+        if (price >= 1000000) return price/1000000 + ' triệu'
+        if (price >= 100000) return price/100000 + ' trăm nghìn'
+        if (price >= 1000) return price/1000 + ' nghìn'
+        return price
+    }
+
+    onSubmitData = () => {
+
     }
 
     render () {
         return (
             <div>
                 <div className="row">
+                    <div className="col">
+                        <h4>Thông tin cơ bản</h4>
+                    </div>
+                </div>
+
+                <div className="row">
                     <div className="col col-sm-12">
-                        <label htmlFor="title">Tiêu đề</label>
-                        <input type="text" className="form-control" id="title"/>
+                        <label htmlFor="title">Tiêu đề <span className="text-danger">(*)</span></label>
+                        <input type="text" className="form-control" id="title" name="title"/>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col col-sm-12 col-md-6">
-                        <label htmlFor="form">Hình thức</label>
+                        <label htmlFor="form">Hình thức <span className="text-danger">(*)</span></label>
                         <select onChange={this.onChange} className="form-control" id="form" name="slugParent">
                             <option value="">-- Hình thức --</option>
                             {
@@ -122,7 +237,7 @@ class Form extends Component {
                     <div className="col col-sm-12 col-md-6">
                         <label htmlFor="">Diện tích</label>
                         <div className="w-75 d-flex align-items-center">
-                            <input type="number" onChange={this.onChange} className="form-control mr-3" name="total_area"/>
+                            <input type="number" ref={this.totalAreaField} onChange={this.onChange} className="form-control mr-3" name="total_area"/>
                             <span>m2</span>
                         </div>
                     </div>
@@ -131,11 +246,11 @@ class Form extends Component {
                 <div className="row">
                     <div className="col col-sm-12 col-md-6">
                         <label htmlFor="">Giá</label>
-                        <input onChange={this.onChange}  type="number" className="form-control mr-3" name="price"/>
+                        <input onChange={this.onChange} ref={this.priceField}  type="number" className="form-control mr-3" name="price"/>
                     </div>
                     <div className="col col-sm-12 col-md-6">
                         <label htmlFor="">Đơn vị</label>
-                        <select onChange={this.onChange}  name="price_unit" id="" className="form-control">
+                        <select onChange={this.onChange} ref={this.priceUnitField} name="price_unit" id="" className="form-control">
                             <option value="">Thỏa thuận</option>
                             {
                                 Object.keys(this.state.priceUnits).map((key) => (<option key={key} value={key}>{this.state.priceUnits[key]}</option>))
@@ -146,13 +261,13 @@ class Form extends Component {
                 
                 <div className="row mt-3">
                     <div className="col">
-                        <p>Tổng giá tiền {this.state.totalPrice}</p>
+                        <p>Tổng giá tiền <span className="text-danger">{this.state.totalPrice}</span></p>
                     </div>
                 </div>
 
                 <div className="row">
                     <div className="col">
-                        <label htmlFor="">Mô tả</label>
+                        <label htmlFor="">Mô tả <span className="text-danger">(*)</span></label>
                         <Editor
                             editorState={this.state.formValues.content}
                             onEditorStateChange={this.onContentChange}
@@ -170,8 +285,76 @@ class Form extends Component {
                 </div>
 
                 <div className="row mt-3">
+                    <div className="col">
+                        <h4>Thông tin khác</h4>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col col-sm-12 col-md-6">
+                        <label htmlFor="">Mặt tiền (m)</label>
+                        <input type="text" className="form-control" id="" name="facade"/>
+                    </div>
+                    <div className="col col-sm-12 col-md-6">
+                        <label htmlFor="">Đường vào (m)</label>
+                        <input type="text" className="form-control" id="" name="way_in"/>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col col-sm-12 col-md-6">
+                        <label htmlFor="">Hướng nhà</label>
+                        <select onChange={this.onChange} className="form-control" id="" name="direction_house">
+                            {
+                                this.state.direction.map((value, key) => (<option key={key} value={key}>{value}</option>))
+                            }
+                        </select>
+                    </div>
+                    <div className="col col-sm-12 col-md-6">
+                        <label htmlFor="">Hướng ban công</label>
+                        <select onChange={this.onChange} className="form-control" id="" name="direction_balcony">
+                            {
+                                this.state.direction.map((value, key) => (<option key={key} value={key}>{value}</option>))
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col col-sm-12 col-md-6">
+                        <label htmlFor="">Số tầng</label>
+                        <input type="number" onChange={this.onChange} className="form-control" id="" name="number_of_floors"/>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col col-sm-12 col-md-6">
+                        <label htmlFor="">Số phòng ngủ</label>
+                        <input type="number" onChange={this.onChange} className="form-control" id="" name="number_of_bedroom"/>
+                    </div>
+                    <div className="col col-sm-12 col-md-6">
+                        <label htmlFor="">Số toilet</label>
+                        <input type="number" onChange={this.onChange} className="form-control" id="" name="number_of_toilet"/>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col">
+                        <label htmlFor="">Nội thất</label>
+                        <textarea onChange={this.onChange} name="furniture" className="form-control" id="" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col">
+                        <label htmlFor="">Thông tin pháp lý</label>
+                        <textarea onChange={this.onChange} className="form-control" placeholder="Ví dụ: đã có sổ đỏ, sổ hồng,..." name="legal_information" id="" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <div className="row mt-3">
                     <div className="col d-flex justify-content-center">
-                        <button type="button" className="btn btn-success mr-3">Đăng tin</button>
+                        <button type="button" onClick={this.onSubmitData} className="btn btn-success mr-3">Đăng tin</button>
                         <button type="button" className="btn btn-primary">Xem trước</button>
                     </div>
                 </div>

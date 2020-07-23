@@ -3,9 +3,12 @@
 namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class Post extends Model
 {
+    use Sluggable;
+
     const MILLION = 'Triệu';
     const BILLION = 'Tỷ';
     const HUNDRED_THOUSAND_PER_M2 = 'Trăm nghìn/m2';
@@ -32,4 +35,27 @@ class Post extends Model
             9 => self::THOUSAND_PER_M2_MONTH
         ]
     ];
+
+    const DIRECTIONS = [
+        0 => 'KXĐ',
+        1 => 'Đông',
+        2 => 'Tây',
+        3 => 'Nam',
+        4 => 'Bắc',
+        5 => 'Đông-Bắc',
+        6 => 'Tây-Bắc',
+        7 => 'Tây-Nam',
+        8 => 'Đông-Nam'
+    ];
+
+    protected $fillable = [
+        'title', 'slug', 'form', 'content', 'price_unit', 'status', 'facade', 'way_in',
+        'direction_house', 'direction_balcony', 'number_of_floors', 'number_of_bedroom',
+        'number_of_toilet', 'furniture', 'legal_information', 'total_area', 'price', 'total_price'
+    ];
+
+    public function sluggable()
+    {
+        return ['slug' => ['source' => 'title']];
+    }
 }

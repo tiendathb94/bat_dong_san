@@ -24,7 +24,7 @@ class CategoryField extends Component {
     }
 
     async componentDidUpdate (prevProps) {
-        if(prevProps.slugParent !== this.state.slugParent) {
+        if(this.state.slugParent && prevProps.slugParent !== this.state.slugParent) {
             await this.fetchCategories()
         }
     }

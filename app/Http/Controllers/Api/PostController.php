@@ -12,4 +12,9 @@ class PostController extends Controller
     {
         return Post::CATEGORIES[$request->slug];
     }
+
+    public function getDirection()
+    {
+        return Post::DIRECTIONS;
+    }
 }
