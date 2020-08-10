@@ -13,7 +13,7 @@ class Address extends Model
      *
      * @var array
      */
-    protected $fillable = ['province_id', 'district_id', 'ward_id', 'address'];
+    protected $fillable = ['province_id', 'district_id', 'ward_id', 'address', 'addressable_type', 'addressable_id'];
 
     protected $with = ['district', 'province', 'ward'];
 

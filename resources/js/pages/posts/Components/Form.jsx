@@ -6,6 +6,8 @@ import axios from "axios"
 import config from "../../../config"
 import { Editor } from 'react-draft-wysiwyg'
 import ImageLibraryUpload from "../../../containers/image_ library_upload"
+import draftToHtml from "draftjs-to-html"
+import { convertToRaw, EditorState } from "draft-js"
 
 const FORM_FIELD = [
     {slug: 'nha-dat-ban', title: 'Nhà đất bán'},
@@ -16,11 +18,14 @@ class Form extends Component {
         super(props)
 
         this.state = {
-            formValues: {},
+            formValues: {
+            },
             errorByFields: {},
             priceUnits: [],
             totalPrice: '',
-            direction: []
+            direction: [],
+            errors: [],
+            editorState: EditorState.createEmpty()
         }
 
         this.addressField = React.createRef()
@@ -42,6 +47,14 @@ class Form extends Component {
                 }
             }
         })
+    }
+
+    renderFieldError (fieldName) {
+        if (!this.state.errorByFields[fieldName]) {
+            return ''
+        }
+
+        return <div className="text-danger form-text">{this.state.errorByFields[fieldName]}</div>
     }
 
     getAddressValue (fieldName) {
@@ -74,7 +87,7 @@ class Form extends Component {
     }
 
     onContentChange = (editorState) => {
-        this.setState({ formValues: { ...this.state.formValues, content: editorState } })
+        this.setState({ editorState })
     }
 
     onChangeProject = (value, name) => {
@@ -174,13 +187,82 @@ class Form extends Component {
         return price
     }
 
-    onSubmitData = () => {
+    validate () {
+        const errorByFields = {}
 
+        // Validate required fields
+        const requiredFields = ['title', 'slugParent']
+        for (let i = 0; i < requiredFields.length; i++) {
+            const fieldName = requiredFields[i]
+            if (!this.state.formValues[fieldName]) {
+                errorByFields[fieldName] = 'Bạn không được bỏ trống trường này'
+            }
+        }
+        this.setState({ errorByFields })
+        const addressValid = this.addressField.current.validate()
+
+        return Object.keys(errorByFields).length < 1 && addressValid
+    }
+
+    onSubmitData = async () => {
+        if (!this.validate()) {
+            window.scrollTo(0, 0)
+            return
+        }
+        const { formValues} = this.state;
+        formValues['total_area'] = this.totalAreaField.current.value
+        formValues['price_unit'] = this.priceUnitField.current.value
+        formValues['content'] = draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()))
+        try {
+            this.setState({ loading: true })
+
+            // Create project
+            const response = await axios.post(`${config.api.baseUrl}/posts`, formValues);
+            const data = response.data
+            await this.imageLibraryUpload.current.doUpload(
+                'App\\Entities\\Post',
+                data.data.post.id,
+                'post',
+            )
+            this.setState({
+                loading: false,
+                message: 'Thêm thành công'
+            })
+            window.location.href = '/quan-ly-tin-rao-vat-ban-nha-dat';
+        } catch (e) {
+            if (e.response && e.response.data) {
+                window.scrollTo(0, 0)
+                if (e.response.data.errors) {
+                    const stateErrors = []
+                    const errors = Object.values(e.response.data.errors)
+                    for (let i = 0; i < errors.length; i++) {
+                        stateErrors.push(errors[i].join(' '))
+                    }
+                    this.setState({ errors: stateErrors, loading: false, })
+                } else {
+                    this.setState({ errors: e.response.data.message || 'Đã có lỗi sảy ra vui lòng thử lại', loading: false, })
+                }
+                setTimeout(() => {
+                    this.setState({
+                        errors: {}
+                    })
+                }, 5000)
+            }
+        }
     }
 
     render () {
         return (
             <div>
+                {
+                    this.state.errors.length > 0 && <div className="row">
+                        <div className="col alert alert-danger" role="alert">
+                            <ul className="mb-0">
+                                {this.state.errors.map((err) => <li key={err}>{err}</li>)}
+                            </ul>
+                        </div>
+                    </div>
+                }
                 <div className="row">
                     <div className="col">
                         <h4>Thông tin cơ bản</h4>
@@ -190,7 +272,8 @@ class Form extends Component {
                 <div className="row">
                     <div className="col col-sm-12">
                         <label htmlFor="title">Tiêu đề <span className="text-danger">(*)</span></label>
-                        <input type="text" className="form-control" id="title" name="title"/>
+                        <input onChange={this.onChange} type="text" className="form-control" id="title" name="title"/>
+                        {this.renderFieldError('title')}
                     </div>
                 </div>
                 <div className="row">
@@ -202,6 +285,7 @@ class Form extends Component {
                                 FORM_FIELD.map(item => (<option key={item.slug} value={item.slug}>{item.title}</option>))
                             }
                         </select>
+                        {this.renderFieldError('slugParent')}
                     </div>
                     <div className="col col-sm-12 col-md-6">
                         <CategoryField
@@ -269,9 +353,10 @@ class Form extends Component {
                     <div className="col">
                         <label htmlFor="">Mô tả <span className="text-danger">(*)</span></label>
                         <Editor
-                            editorState={this.state.formValues.content}
+                            editorState={this.state.editorState}
                             onEditorStateChange={this.onContentChange}
                         />
+                        {this.renderFieldError('content')}
                     </div>
                 </div>
                 
@@ -293,11 +378,11 @@ class Form extends Component {
                 <div className="row">
                     <div className="col col-sm-12 col-md-6">
                         <label htmlFor="">Mặt tiền (m)</label>
-                        <input type="text" className="form-control" id="" name="facade"/>
+                        <input onChange={this.onChange} type="text" className="form-control" id="" name="facade"/>
                     </div>
                     <div className="col col-sm-12 col-md-6">
                         <label htmlFor="">Đường vào (m)</label>
-                        <input type="text" className="form-control" id="" name="way_in"/>
+                        <input onChange={this.onChange} type="text" className="form-control" id="" name="way_in"/>
                     </div>
                 </div>
 
@@ -355,7 +440,6 @@ class Form extends Component {
                 <div className="row mt-3">
                     <div className="col d-flex justify-content-center">
                         <button type="button" onClick={this.onSubmitData} className="btn btn-success mr-3">Đăng tin</button>
-                        <button type="button" className="btn btn-primary">Xem trước</button>
                     </div>
                 </div>
             </div>

@@ -99,7 +99,7 @@
               </li>
             @endif
               <li class="nav-item">
-                  <a class="nav-link bds-button" href="#">
+                  <a class="nav-link bds-button" href="{{ route('posts.create_sell') }}">
                       <span> Tạo tin rao vặt </span>
                   </a>
               </li>

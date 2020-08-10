@@ -10,6 +10,7 @@
     <div class="container">
         <div class="row my-5">
             <!-- Sidebar -->
+            @if($user)
             <div class="col-lg-3 col-12 order-2 order-lg-1">
                 <div class="box-header">
                     <h3>Trang cá nhân</h3>
@@ -29,6 +30,7 @@
 
                 @include('default.partials.personal-sidebar-menu')
             </div>
+            @endif
 
             <!-- Main content -->
             <div class="col-lg-9 col-12 p-lg-0 order-1 order-lg-2">

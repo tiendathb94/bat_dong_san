@@ -28,4 +28,9 @@ class Category extends Model
     {
         return $this->statistics->where('name', Statistic::COUNT_VIEWS)->where('day_id', '>', Carbon::now()->subDay(7)->format('Ymd'))->sum('value');
     }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }

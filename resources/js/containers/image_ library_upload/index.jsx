@@ -39,7 +39,8 @@ class ImageLibraryUpload extends Component {
     // Call from parent component
     async doUpload (libraryableType, libraryableId, libraryType, metaData = []) {
         await this.deleteUploadedLibraries()
-
+        console.log('libraryableId', libraryableId)
+        console.log(this.state.selectedFiles)
         if (!this.state.selectedFiles || !this.state.selectedFiles.length) {
             return
         }

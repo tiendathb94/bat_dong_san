@@ -9,6 +9,7 @@ use App\Http\Requests\ImageLibraryRequest;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use App\Entities\Post;
 
 class ImageLibraryController extends Controller
 {
@@ -26,30 +27,21 @@ class ImageLibraryController extends Controller
         }
 
         $savedFiles = [];
-        try {
-            DB::beginTransaction();
-            $uploadedFiles = $request->file('files');
-            if ($uploadedFiles) {
-                foreach ($uploadedFiles as $file) {
-                    $uploadedFilePath = $file->storePublicly('/public/uploads/images/library');
-                    $savedFiles[] = $uploadedFilePath;
-                    $targetEntity->imageLibraries()->create([
-                        'library_type' => $libraryType,
-                        'file_path' => str_replace('public', '', $uploadedFilePath),
-                        'user_id' => $user->id,
-                        'meta_data' => json_encode($metaData),
-                    ]);
-                }
+        $uploadedFiles = $request->file('files');
+        if ($uploadedFiles) {
+            foreach ($uploadedFiles as $file) {
+                $uploadedFilePath = $file->storePublicly('/public/uploads/images/library');
+                $savedFiles[] = $uploadedFilePath;
+                $targetEntity->imageLibraries()->create([
+                    'library_type' => $libraryType,
+                    'file_path' => str_replace('public', '', $uploadedFilePath),
+                    'user_id' => $user->id,
+                    'meta_data' => json_encode($metaData),
+                ]);
             }
-
-            DB::commit();
-            return response()->json($targetEntity->imageLibraries);
-        } catch (\Exception $e) {
-            DB::rollback();
-            File::delete($savedFiles);
         }
 
-        return response()->json(['message' => 'Đã có lỗi xảy ra khi lưu thư viện ảnh'], 500);
+        return response()->json($targetEntity->imageLibraries);
     }
 
     public function deleteLibraries(Request $request)
@@ -78,6 +70,8 @@ class ImageLibraryController extends Controller
         switch ($type) {
             case Project::class:
                 return Project::query()->find($id);
+            case Post::class:
+                return Post::query()->find($id);
         }
 
         return false;

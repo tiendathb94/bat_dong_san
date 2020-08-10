@@ -14,6 +14,7 @@ class ImageLibrary extends Model
 
     const PROGRESS = 'progress';
     const GALLERY = 'gallery';
+    const POST = 'post';
 
     public function libraryable()
     {
@@ -49,10 +50,13 @@ class ImageLibrary extends Model
 
     public function getGalleryImageAttribute()
     {
-        return '/storage' . self::where('image_libraryable_id', $this->image_libraryable_id)
-            ->where('image_libraryable_type', Project::class)
-            ->where('library_type', self::GALLERY)
-            ->first()
-            ->file_path;
+        $image = self::where('image_libraryable_id', $this->image_libraryable_id)
+        ->where('image_libraryable_type', Project::class)
+        ->where('library_type', self::GALLERY)
+        ->first();
+        if ($image) {
+            return '/storage' . $image->file_path;
+        }
+        return '';
     }
 }

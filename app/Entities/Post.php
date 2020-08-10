@@ -51,11 +51,16 @@ class Post extends Model
     protected $fillable = [
         'title', 'slug', 'form', 'content', 'price_unit', 'status', 'facade', 'way_in',
         'direction_house', 'direction_balcony', 'number_of_floors', 'number_of_bedroom',
-        'number_of_toilet', 'furniture', 'legal_information', 'total_area', 'price', 'total_price'
+        'number_of_toilet', 'furniture', 'legal_information', 'total_area', 'price', 'total_price', 'category_id', 'user_id'
     ];
 
     public function sluggable()
     {
         return ['slug' => ['source' => 'title']];
+    }
+
+    public function imageLibraries()
+    {
+        return $this->morphMany('App\Entities\ImageLibrary', 'image_libraryable');
     }
 }

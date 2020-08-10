@@ -97,9 +97,7 @@ class CategoriesTabllerSeeder extends Seeder
         ];
 
         
-        foreach(  $data as $i ) {
-            DB::table('categories')->insert($i);
-        }
+        DB::table('categories')->insert($data);
 
     }
 }
