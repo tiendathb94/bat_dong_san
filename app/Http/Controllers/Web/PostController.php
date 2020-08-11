@@ -14,11 +14,14 @@ class PostController extends Controller
         return view($this->_config['view']);
     }
 
-    public function listSell()
+    public function listSell(Request $request)
     {
         $categorySellHouse = Category::whereSlug(Post::SELL_HOUSE)->first();
         $categoryLeaseHouse = Category::whereSlug(Post::LEASE_HOUSE)->first();
-        $posts = Post::whereIn('category_id', [$categorySellHouse->id, $categoryLeaseHouse->id])->orderByDesc('created_at')->paginate(config('app.paginate'));
-        return view($this->_config['view'], ['posts' => $posts]);
+        $posts = Post::whereIn('form', [$categorySellHouse->id, $categoryLeaseHouse->id])->orderByDesc('created_at');
+        if($request->title) {
+            $posts->where('title', 'like', "%$request->title%");
+        }
+        return view($this->_config['view'], ['posts' => $posts->paginate(20)]);
     }
 }

@@ -36,6 +36,18 @@ class Post extends Model
         ]
     ];
 
+    const PRICE_NAME = [
+        1 => self::MILLION,
+        2 => self::BILLION,
+        3 => self::HUNDRED_THOUSAND_PER_M2,
+        4 => self::MILLION_PER_M2,
+        5 => self::HUNDRED_THOUSAND_PER_MONTH,
+        6 => self::MILLION_PER_MONTH,
+        7 => self::HUNDRED_THOUSAND_PER_M2_MONTH,
+        8 => self::MILLION_PER_M2_MONTH,
+        9 => self::THOUSAND_PER_M2_MONTH
+    ];
+
     const DIRECTIONS = [
         0 => 'KXĐ',
         1 => 'Đông',
@@ -54,6 +66,8 @@ class Post extends Model
         'number_of_toilet', 'furniture', 'legal_information', 'total_area', 'price', 'total_price', 'category_id', 'user_id'
     ];
 
+    protected $with = ['imageLibraries', 'address'];
+
     public function sluggable()
     {
         return ['slug' => ['source' => 'title']];
@@ -62,5 +76,15 @@ class Post extends Model
     public function imageLibraries()
     {
         return $this->morphMany('App\Entities\ImageLibrary', 'image_libraryable');
+    }
+
+    public function getPriceUnitNameAttribute()
+    {
+        return $this->price_unit ? self::PRICE_NAME[$this->price_unit] : '';
+    }
+
+    public function address()
+    {
+        return $this->morphOne('App\Entities\Address', 'addressable');
     }
 }

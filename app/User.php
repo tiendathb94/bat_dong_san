@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Entities\News;
+use App\Entities\Post;
 
 class User extends Authenticatable
 {
@@ -86,5 +87,10 @@ class User extends Authenticatable
     public function getDateOfBirthFormatAttribute()
     {
         return \Carbon\Carbon::parse($this->date_of_birth)->format(config('app.format.date'));
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
     }
 }

@@ -20,7 +20,7 @@ function personalMenuItemsDefinition()
             'heading' => 'Quản lý tin rao',
             'items' => [
                 [
-                    'route_name' => '',
+                    'route_name' => 'posts.list_sell',
                     'label' => 'Quản lý tin rao bán/cho thuê'
                 ],
                 [
@@ -35,10 +35,6 @@ function personalMenuItemsDefinition()
                     'route_name' => '',
                     'label' => 'Đăng tin cần mua/cần thuê'
                 ],
-                [
-                    'route_name' => '',
-                    'label' => 'Quản lý tin nháp'
-                ]
             ],
         ],
         [

@@ -212,6 +212,7 @@ class Form extends Component {
         const { formValues} = this.state;
         formValues['total_area'] = this.totalAreaField.current.value
         formValues['price_unit'] = this.priceUnitField.current.value
+        formValues['price'] = this.priceField.current.value
         formValues['content'] = draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()))
         try {
             this.setState({ loading: true })

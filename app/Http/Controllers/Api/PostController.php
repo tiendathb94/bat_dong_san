@@ -41,4 +41,11 @@ class PostController extends Controller
         ];
         return response()->json($data);
     }
+
+    public function changeStatus($id)
+    {
+        $post = auth()->user()->posts()->whereId($id)->firstOrFail();
+        $post->status = $post->status ? 0 : 1;
+        $post->save();
+    }
 }
