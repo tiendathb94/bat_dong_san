@@ -24,4 +24,9 @@ class PostController extends Controller
         }
         return view($this->_config['view'], ['posts' => $posts->paginate(20)]);
     }
+
+    public function createBuy()
+    {
+        return view($this->_config['view']);
+    }
 }

@@ -32,7 +32,7 @@ function personalMenuItemsDefinition()
                     'label' => 'Quản lý tin cần mua/cần thuê'
                 ],
                 [
-                    'route_name' => '',
+                    'route_name' => 'posts.create_buy',
                     'label' => 'Đăng tin cần mua/cần thuê'
                 ],
             ],
