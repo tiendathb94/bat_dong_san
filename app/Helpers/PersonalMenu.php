@@ -28,7 +28,7 @@ function personalMenuItemsDefinition()
                     'label' => 'Đăng tin rao bán/cho thuê'
                 ],
                 [
-                    'route_name' => '',
+                    'route_name' => 'posts.list_buy',
                     'label' => 'Quản lý tin cần mua/cần thuê'
                 ],
                 [
