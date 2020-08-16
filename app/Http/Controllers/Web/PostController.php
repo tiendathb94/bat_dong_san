@@ -98,7 +98,7 @@ class PostController extends Controller
                 'meta_data' => '',
             ]);
             DB::commit();
-            return  redirect()->route('default.pages.posts.list_buy')->with('success', 'Đăng thành bài thành công!');
+            return  redirect()->route('posts.list_buy')->with('success', 'Đăng thành bài thành công!');
         } catch (Exception $e) {
             DB::rollBack();
             throw new Exception($e->getMessage());
