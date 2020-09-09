@@ -25,8 +25,14 @@ class AppServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
-    {    
-        Schema::defaultStringLength(191);
+    {
+
         ImageLibrary::observe(ImageLibraryObserver::class);
+
+        // force HTTPS in production
+        if ($this->app->environment('production')) {
+            \URL::forceScheme('https');
+        }
+
     }
 }
