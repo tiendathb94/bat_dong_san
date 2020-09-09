@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Entities\ImageLibrary;
 use App\Observers\ImageLibraryObserver;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {

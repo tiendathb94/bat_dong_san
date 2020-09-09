@@ -20,6 +20,8 @@ class Post extends Model
     const THOUSAND_PER_M2_MONTH = 'Nghìn/m2/tháng';
     const SELL_HOUSE = 'nha-dat-ban';
     const LEASE_HOUSE = 'nha-dat-cho-thue';
+    const HOUSE_BUY = 'nha-dat-can-mua';
+    const HOUSE_RENT = 'nha-dat-can-thue';
     const CATEGORIES = [
         self::SELL_HOUSE => [
             1 => self::MILLION,
@@ -86,5 +88,10 @@ class Post extends Model
     public function address()
     {
         return $this->morphOne('App\Entities\Address', 'addressable');
+    }
+
+    public function categories()
+    {
+        return $this->hasMany('App\Entities\Category');
     }
 }
