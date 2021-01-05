@@ -33,6 +33,7 @@ class NewsController extends Controller
         try{
             $data = $request->only('title', 'meta_content', 'content', 'project_id', 'category_id');
             $data['thumbnail'] = $this->storeFileReturnName($request->thumbnail);
+            
             $data['user_id'] = Auth::user()->id;
             $data['status'] = News::AWAITING_REVIEW;
             $this->news->create($data);

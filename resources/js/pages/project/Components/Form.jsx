@@ -334,7 +334,7 @@ class Form extends Component {
                     <div className="col col-sm-12 col-md-6">
                         <CategoryField
                             label="Loại hình phát triển"
-                            destinationEntity="App\Entities\Project"
+                            destinationEntity="App\Entities\News"
                             onChange={this.onChangeCategory}
                             message={this.state.errorByFields.category_id}
                             value={parseInt(this.state.formValues.category_id)}

@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('gender')->nullable();
             $table->string('type')->nullable();
             $table->string('tax')->nullable();
+            $table->integer('active')->default(1);
             $table->rememberToken();
             $table->timestamps();
         });

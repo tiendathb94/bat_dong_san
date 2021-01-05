@@ -87,28 +87,28 @@ function personalMenuItemsDefinition()
                 ]
             ],
         ],
-        [
-            'heading' => 'Quản lý sản phẩm',
-            'items' => [
-                [
-                    'route_name' => 'news.create',
-                    'label' => 'Đăng sản phẩm',
-                    'permission' => 'news.create'
-                ],
-                [
-                    'route_name' => 'pages.user.news',
-                    'label' => 'Quản lý sản phẩm đã đăng',
-                    'permission' => 'pages.user.news'
-                ]
-            ],
-        ],
+        // [
+        //     'heading' => 'Quản lý sản phẩm',
+        //     'items' => [
+        //         [
+        //             'route_name' => 'news.create',
+        //             'label' => 'Đăng sản phẩm',
+        //             'permission' => 'news.create'
+        //         ],
+        //         [
+        //             'route_name' => 'pages.user.news',
+        //             'label' => 'Quản lý sản phẩm đã đăng',
+        //             'permission' => 'pages.user.news'
+        //         ]
+        //     ],
+        // ],
         [
             'heading' => 'Quản lý thành viên',
             'items' => [
                 [
-                    'route_name' => 'news.create',
+                    'route_name' => 'admin.index',
                     'label' => 'Danh sách thành viên',
-                    'permission' => 'news.create'
+                    // 'permission' => 'pages.user.news'
                 ]
             ],
         ]

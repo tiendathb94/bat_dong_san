@@ -33,7 +33,8 @@ class User extends Authenticatable
         'facebook',
         'skype',
         'zalo',
-        'viber'
+        'viber',
+        'active'
     ];
 
     /**
