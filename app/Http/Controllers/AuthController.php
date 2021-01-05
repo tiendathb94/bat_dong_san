@@ -61,11 +61,12 @@ class AuthController extends Controller
             $dataSave['type'] = (int)$request->type;
             $dataSave['gender'] = (int)$request->gender;
             $dataSave['password'] = bcrypt($request->password);
+            $dataSave['created_at'] = date('Y-m-d H:i:s');
             $dataSave['remember_token'] = (new Token())->Unique('users', 'remember_token', 60);
 
             DB::beginTransaction();
 
-            DB::table('users')->insert($dataSave);
+            User::insert($dataSave);
 
             Mail::send('templateEmail.welcome', ['dataSave' => $dataSave], function ($m) use ($dataSave) {
                 $m->from('hello@app.com', 'Bất động sản');

@@ -84,8 +84,9 @@ class NewsController extends Controller
 
     public function edit( $slug ) {
         $news = News::where('slug', $slug)->firstOrFail();
+        $categories = Category::where('destination_entity', News::class)->get();
         $data = [
-            'categories' => getAllCategoriesNews(),
+            'categories' => $categories,
             'news' => $news,
             'pathImageThumbnail' => '/storage' . News::PATH_IMAGE
         ];

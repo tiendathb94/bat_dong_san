@@ -29,7 +29,7 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-        return view($this->_config['view']);
+        return redirect("user/information");
     }
 
     public function approveNews(Request $request)

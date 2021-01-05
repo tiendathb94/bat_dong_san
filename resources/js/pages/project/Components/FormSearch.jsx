@@ -42,7 +42,7 @@ class FormSearch extends Component {
     }
 
     getProjectCategories = async () => {
-        const response = await axios.get(`${config.api.baseUrl}/category/by-destination-entity?destination_entity=App\\Entities\\Project`);
+        const response = await axios.get(`${config.api.baseUrl}/category/by-destination-entity?destination_entity=App\Entities\Project`);
         this.setState({
             projectCategories: response.data
         })

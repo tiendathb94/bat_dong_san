@@ -31,6 +31,7 @@ class CategoryField extends Component {
 
     async fetchCategories () {
         const response = await axios.get(`${config.api.baseUrl}/category/by-destination-entity?destination_entity=${this.props.destinationEntity}&slug_parent=${this.state.slugParent}`)
+        console.log(`${config.api.baseUrl}/category/by-destination-entity?destination_entity=${this.props.destinationEntity}&slug_parent=${this.state.slugParent}`)
         this.setState({ categories: response.data })
     }
 

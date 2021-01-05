@@ -143,7 +143,9 @@ class Form extends Component {
 
 
     onClickSaveProjectButton = async () => {
-        var times = $('.datepicker').val().split('/');
+        
+        // var times = $('.datepicker').val().split('/');
+        var times = ["2021","01","05"];
         var date_upload_file = times[2] + '-' + times[1] + '-' + times[0];
         var date_sort = date_upload_file.replace(/-/g, '')
 

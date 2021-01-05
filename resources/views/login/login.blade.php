@@ -55,8 +55,10 @@
                     <label class="label">Địa chỉ email</label>
                     <input type="password" class="form-control" name="password"  placeholder="*******">
                 </div>
-                <button type="submit" class="btn btn-primary">Đăng nhập ngay</button>
-                <a style="text-decoration: underline;color:#3490dc;cursor:pointer" href="/new-password">Quên mật khẩu</a>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Đăng nhập ngay</button>
+                    <a style="text-decoration: underline;color:#3490dc;cursor:pointer" href="/new-password">Quên mật khẩu</a>
+                </div>
                 <div style="margin-top: 20px;">
                     <div style=" display: flex">
                         <a style="width: 49%; height: 34px; font-size: 16px" href="{{ url('/auth/redirect/facebook') }}" class="btn btn-primary"><i class="fa fa-facebook"></i> Facebook</a>

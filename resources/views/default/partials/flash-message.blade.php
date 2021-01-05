@@ -1,4 +1,4 @@
-@if(session('message')['text'])
+@if(session('message') && session('message')['text'])
 <div class="alert alert-{{ session('message')['status'] }} fs-12">{{ session('message')['text'] }}</div>
 @php(session()->forget('message'))
 @endif

@@ -34,7 +34,7 @@ class PostCategoriesSeeder extends Seeder
 
         $buyHouse = Category::create([
             'name' => 'Nhà đất cần mua',
-            'slug' => 'nha-dat-cam-mua',
+            'slug' => 'nha-dat-can-mua',
             'thumbnail' => '',
             'destination_entity' => Post::class,
             'created_at' => now(),
@@ -43,7 +43,7 @@ class PostCategoriesSeeder extends Seeder
 
         $needEmployHouse = Category::create([
             'name' => 'Nhà đất cần thuê',
-            'slug' => 'nha-dat-cam-thue',
+            'slug' => 'nha-dat-can-thue',
             'thumbnail' => '',
             'destination_entity' => Post::class,
             'created_at' => now(),
