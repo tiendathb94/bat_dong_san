@@ -1,5 +1,5 @@
 <?php
 
-Route::get('/', function () {
-    return view('default.layouts.default');
-})->name('home');
+Route::get('/', 'Web\HomeController@index')->defaults('_config', [
+    'view' => 'home'
+])->name('home');

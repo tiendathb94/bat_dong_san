@@ -51,7 +51,7 @@ class ProjectController extends Controller
         }
 
         $paginate = $qb->paginate(15);
-
+        
         return view($this->_config['view'], [
             'projects' => $paginate,
             'categories' => Category::query()->where('destination_entity', Project::class)->get(),

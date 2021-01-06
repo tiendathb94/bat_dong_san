@@ -24,7 +24,6 @@ function checkPermission($permName)
     if (isset($rolesMappedNames['super_admin'])) {
         return true;
     }
-
     if (!$permissions) {
         $permissions = Permissions::whereIn('role_id', array_values($rolesMappedNames))->pluck('route')->toArray();
     }

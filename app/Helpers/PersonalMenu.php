@@ -108,7 +108,7 @@ function personalMenuItemsDefinition()
                 [
                     'route_name' => 'admin.index',
                     'label' => 'Danh sách thành viên',
-                    // 'permission' => 'pages.user.news'
+                    'permission' => 'admin.index'
                 ]
             ],
         ]

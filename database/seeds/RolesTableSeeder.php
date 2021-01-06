@@ -17,6 +17,7 @@ class RolesTableSeeder extends Seeder
             ['name' => 'super_admin', 'id' => 1],
             ['name' => 'add_news', 'id' => 2],
             ['name' => 'approve_news', 'id' => 3],
+            ['name' => 'list_user', 'id' => 4],
         ]);
     }
 }
