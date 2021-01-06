@@ -28,14 +28,14 @@
                         <div class="p-title textTitle">
                             <a href="/ban-nha-mat-pho-pho-xa-dan-phuong-phuong-lien/ban-87m2-tien-hon-4-1m-y-6-tang-gia-28-5-ty-lh-phu-tran-098-9585039-pr28433325" title="{{$post->title}}">{{$post->title}}<span class="hidden-mobile box" style="font-size: inherit;"></span></a>
                         </div>
-                        <div class="product-price">{{$post->price}} tỷ</div>
-                            <span class="ic_dot">·</span>
-                            <div class="pro-m2">{{$post->total_area}} m²</div>
+                        <div class="product-price">{{$post->price}} {{$post->price_unit_name}}</div>
+                        <span class="ic_dot">·</span>
+                        <div class="pro-m2">{{$post->total_area}} m²</div>
                         <div class="product-address">
                         @php($address = $post->address)
                         @if($address)
-                            <a href="/ban-nha-mat-pho-dong-da-hn" title="Đống Đa">{{ $address->address }}</a>,
-                            <a href="/ban-nha-mat-pho-ha-noi" title="Hà Nội">{{ $address->province->name }}</a>
+                            <a href="/ban-nha-mat-pho-dong-da-hn" title="{{ $address->address }}">{{ $address->address }}</a>,
+                            <a href="/ban-nha-mat-pho-ha-noi" title="{{ $address->province->name }}">{{ $address->province->name }}</a>
                         @endif
                         </div>
                         <div class="product-date">

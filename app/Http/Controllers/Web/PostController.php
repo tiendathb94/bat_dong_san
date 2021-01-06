@@ -24,24 +24,36 @@ class PostController extends Controller
 
     public function listSell(Request $request)
     {
+        $user = auth()->user();
+        $user_id = $user->id;
+        $checkPermission = checkRule($user);
         $categorySellHouse = Category::whereSlug(Post::SELL_HOUSE)->first();
         $categoryLeaseHouse = Category::whereSlug(Post::LEASE_HOUSE)->first();
-        $posts = Post::whereIn('form', [$categorySellHouse->id, $categoryLeaseHouse->id])->orderByDesc('created_at');
+        $posts = Post::whereIn('form', [$categorySellHouse->id, $categoryLeaseHouse->id]);
+        if(!$checkPermission){
+            $posts = $posts->where('user_id',$user_id);
+        }
         if($request->title) {
             $posts->where('title', 'like', "%$request->title%");
         }
-        return view($this->_config['view'], ['posts' => $posts->paginate(20)]);
+        return view($this->_config['view'], ['posts' => $posts->orderByDesc('created_at')->paginate(20)]);
     }
 
     public function listBuy(Request $request)
     {
+        $user = auth()->user();
+        $user_id = $user->id;
+        $checkPermission = checkRule($user);
         $categoryBuyHouse = Category::whereSlug(Post::HOUSE_BUY)->first();
         $categoryRentHouse = Category::whereSlug(Post::HOUSE_RENT)->first();
-        $posts = Post::whereIn('form', [$categoryBuyHouse->id, $categoryRentHouse->id])->orderByDesc('created_at');
+        $posts = Post::whereIn('form', [$categoryBuyHouse->id, $categoryRentHouse->id]);
+        if(!$checkPermission){
+            $posts = $posts->where('user_id',$user_id);
+        }
         if($request->title) {
             $posts->where('title', 'like', "%$request->title%");
         }
-        return view($this->_config['view'], ['posts' => $posts->paginate(10)]);
+        return view($this->_config['view'], ['posts' => $posts->orderByDesc('created_at')->paginate(10)]);
     }
 
     public function createBuy()
@@ -81,6 +93,7 @@ class PostController extends Controller
                 'price' => $request->price,
                 'user_id' => $user_id,
                 'status' => 0,
+                'approval' => 1
             ]);
             
             $address['addressable_id'] = $createPost->id;

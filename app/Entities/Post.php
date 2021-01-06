@@ -61,7 +61,10 @@ class Post extends Model
         7 => 'Tây-Nam',
         8 => 'Đông-Nam'
     ];
-
+    const StatusPending = 1;
+    const StatusApproved = 2;
+    const StatusDeclined = 3;
+    
     protected $fillable = [
         'title', 'slug', 'form', 'content', 'price_unit', 'status', 'facade', 'way_in',
         'direction_house', 'direction_balcony', 'number_of_floors', 'number_of_bedroom',

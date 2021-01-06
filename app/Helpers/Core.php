@@ -35,6 +35,13 @@ function checkPermission($permName)
     return false;
 }
 
+function checkRule($user)
+{
+    $roles = $user->roles->pluck("name");
+    $checkPermission = in_array("super_admin",$roles->toArray());
+    return $checkPermission;
+}
+
 function getDifferentTime($time)
 {
     $text = '';

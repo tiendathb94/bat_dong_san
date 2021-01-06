@@ -36,10 +36,12 @@ class CreatePostsTable extends Migration
             $table->unsignedDouble('price')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->integer('total_price')->nullable();
+            $table->tinyInteger('approval')->nullable();
             $table->timestamps();
 
             // Index
             $table->index('status');
+            $table->index('approval');
             $table->index(['price', 'price_unit']);
             $table->index('form');
             $table->index('direction_house');
