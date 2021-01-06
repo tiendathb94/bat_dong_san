@@ -29,7 +29,8 @@ class SocialController extends Controller
                 'fullname'     => $getInfo->name,
                 'email'    => $getInfo->email,
                 'provider' => $provider,
-                'provider_id' => $getInfo->id
+                'provider_id' => $getInfo->id,
+                'email_verified_at' => date('Y-m-d H:i:s')
             ]);
         }
         return $user;
